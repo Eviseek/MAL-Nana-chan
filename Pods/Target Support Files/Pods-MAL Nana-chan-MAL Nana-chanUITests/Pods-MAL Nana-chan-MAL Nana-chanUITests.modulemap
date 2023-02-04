@@ -1,0 +1,6 @@
+framework module Pods_MAL_Nana_chan_MAL_Nana_chanUITests {
+  umbrella header "Pods-MAL Nana-chan-MAL Nana-chanUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
