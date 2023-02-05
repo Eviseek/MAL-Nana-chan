@@ -18,16 +18,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Item Section Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="hNi-Ln-gVx">
-                        <rect key="frame" x="10" y="5" width="321.33333333333331" height="64"/>
+                        <rect key="frame" x="10" y="5" width="321.33333333333331" height="229"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="edr-bK-FQZ">
-                        <rect key="frame" x="0.0" y="74" width="420" height="175"/>
+                        <rect key="frame" x="0.0" y="239" width="420" height="10"/>
                         <color key="backgroundColor" systemColor="systemBlueColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="175" id="9FD-62-Zgb"/>
+                            <constraint firstAttribute="height" constant="10" id="R5E-xe-24x"/>
                         </constraints>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="safeArea" id="JFm-dA-F52">
                             <size key="itemSize" width="128" height="150"/>
@@ -37,7 +37,7 @@
                         </collectionViewFlowLayout>
                     </collectionView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yHf-OF-G1n">
-                        <rect key="frame" x="341.33333333333331" y="5" width="73.666666666666686" height="64"/>
+                        <rect key="frame" x="341.33333333333331" y="5" width="73.666666666666686" height="229"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button"/>
@@ -62,6 +62,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="itemCollectionView" destination="edr-bK-FQZ" id="P7l-oX-Ijb"/>
+                <outlet property="itemCollectionViewHeight" destination="R5E-xe-24x" id="F8m-Kv-17H"/>
                 <outlet property="itemSectionNameLabel" destination="hNi-Ln-gVx" id="w0W-TU-htv"/>
                 <outlet property="itemSeeAllButton" destination="yHf-OF-G1n" id="VEW-9F-yL9"/>
             </connections>

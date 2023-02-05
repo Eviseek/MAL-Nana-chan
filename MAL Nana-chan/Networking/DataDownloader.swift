@@ -17,9 +17,7 @@ struct DataDownloader {
     let authenticatedHeaders: HTTPHeaders = [
     ]
     
-    func get<T>(_ url: String, completion: @escaping (T?) -> Void) where T: Codable {
-        
-        let url = "https://api.myanimelist.net/v2/anime/1"
+    func fetch<T>(_ url: String, completion: @escaping (T?) -> Void) where T: Codable {
         
         AF.request(url, headers: unauthenticatedHeaders).responseDecodable(of: T.self, completionHandler: { response in
             debugPrint(response)

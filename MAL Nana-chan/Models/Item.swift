@@ -10,4 +10,5 @@ import Foundation
 struct Item {
     var title: String
     var image: String?
+    var score: Float?
 }

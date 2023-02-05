@@ -9,14 +9,14 @@ import Foundation
 
 struct Response: Codable {
     var data: [Node]
-    var paging: Paging
+    var paging: Paging?
 }
 
 struct Node: Codable {
-    var anime: Anime
+    var node: Anime
 }
 
 struct Paging: Codable {
-    var previous: String
-    var next: String
+    var previous: String?
+    var next: String?
 }

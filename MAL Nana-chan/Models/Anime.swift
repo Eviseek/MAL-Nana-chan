@@ -16,7 +16,7 @@ struct Anime: Codable {
     var start_date: String?
     var end_date: String?
     var synopsis: String?
-    var mean: Float?
+    var mean: Float? //score
     var rank: Int?
     var popularity: Int?
     var num_list_users: Int?

@@ -8,6 +8,7 @@ target 'MAL Nana-chan' do
   # Pods for MAL Nana-chan
   pod 'Alamofire'
   pod 'OAuthSwift'
+  pod 'AlamofireImage'
 
   target 'MAL Nana-chanTests' do
     inherit! :search_paths
