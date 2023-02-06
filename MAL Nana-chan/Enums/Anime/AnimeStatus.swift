@@ -8,7 +8,15 @@
 import Foundation
 
 enum AnimeStatus: String, Codable {
-    case finished_airing = "Finished Airing"
-    case currently_airing = "Currently Airing"
-    case not_yet_aired = "Not Yet Aired"
+    case finished_airing
+    case currently_airing
+    case not_yet_aired 
+    
+    func getStatus() -> String {
+        switch self {
+        case .finished_airing: return "Finished Airing"
+        case .currently_airing: return "Currently Airing"
+        case .not_yet_aired: return "Not Yet Aired"
+        }
+    }
 }

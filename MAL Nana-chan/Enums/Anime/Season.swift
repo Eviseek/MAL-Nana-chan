@@ -12,4 +12,13 @@ enum Season: String, Codable {
     case spring
     case summer
     case fall
+    
+    func getSeason() -> String {
+        switch self {
+        case .winter: return "Winter"
+        case .spring: return "Spring"
+        case .summer: return "Summer"
+        case .fall: return "Fall"
+        }
+    }
 }

@@ -15,4 +15,16 @@ enum MediaType: String, Codable {
     case special
     case ona
     case music
+    
+    func getType() -> String {
+        switch self {
+        case .unknown: return "Unknown"
+        case .tv: return "TV series"
+        case .ova: return "OVA"
+        case .movie: return "Movie"
+        case .special: return "Special"
+        case .ona: return "ONA"
+        case .music: return "Music"
+        }
+    }
 }

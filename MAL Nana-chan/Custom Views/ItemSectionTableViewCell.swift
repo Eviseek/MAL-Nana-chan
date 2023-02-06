@@ -23,6 +23,7 @@ class ItemSectionTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        itemSeeAllButton.layer.cornerRadius = 5
         
         let nib = UINib(nibName: Identifiers.ItemCollectionViewCell.rawValue, bundle: nil)
         itemCollectionView.register(nib, forCellWithReuseIdentifier: "ItemCollectionViewCell")
@@ -34,6 +35,21 @@ class ItemSectionTableViewCell: UITableViewCell {
         
         
     }
+    
+    @IBAction func seeAllButtonClicked(_ sender: UIButton) {
+        
+        
+    }
+    
+    func itemSelected(id: Int) {
+        print("item selected")
+        if let controller = parentVC?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailViewController") as? ItemDetailViewController {
+            print("success, will be pushing")
+            controller.id = id
+            parentVC?.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
+    
     
     func fillCollectionView(items: [Item]) {
         self.items = items
@@ -65,6 +81,11 @@ extension ItemSectionTableViewCell: UICollectionViewDataSource {
 extension ItemSectionTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: Sizes.itemCollectionViewCellWidth.rawValue, height: Sizes.itemCollectionViewCellHeight.rawValue)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("selected \(items[indexPath.item].id)")
+        itemSelected(id: items[indexPath.item].id)
     }
     
 }

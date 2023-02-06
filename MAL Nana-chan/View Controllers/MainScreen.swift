@@ -10,7 +10,7 @@ import OAuthSwift
 
 class MainScreen: UIViewController {
     
-    var viewModel: MainScreenViewModel? = nil
+    private var viewModel: MainScreenViewModel? = nil
     
     
     @IBOutlet weak var tableView: UITableView!

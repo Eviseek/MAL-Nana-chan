@@ -43,7 +43,7 @@ class MainScreenViewModel {
         var items = [Item]()
         
         for data in data {
-            items.append(Item(title: data.node.title, image: data.node.main_picture?.medium ?? nil, score: data.node.mean ?? nil))
+            items.append(Item(id: data.node.id, title: data.node.title, image: data.node.main_picture?.medium ?? nil, score: data.node.mean ?? nil))
         }
         
         var section = Section(items: items)

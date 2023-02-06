@@ -9,6 +9,6 @@ import Foundation
 
 enum Sizes: CGFloat {
     case itemCollectionViewCellHeight = 220.0
-    case itemCollectionViewCellWidth = 140.0
+    case itemCollectionViewCellWidth = 145.0
     
 }

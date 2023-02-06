@@ -8,6 +8,7 @@
 import Foundation
 
 struct Item {
+    var id: Int
     var title: String
     var image: String?
     var score: Float?
