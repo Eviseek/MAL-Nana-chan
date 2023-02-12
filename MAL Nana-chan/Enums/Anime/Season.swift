@@ -19,6 +19,7 @@ enum Season: String, Codable {
         case .spring: return "Spring"
         case .summer: return "Summer"
         case .fall: return "Fall"
+        default: return "Winter"
         }
     }
 }

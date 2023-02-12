@@ -14,7 +14,7 @@ enum URLs: String {
     case animeSeasonalURL = "https://api.myanimelist.net/v2/anime/season"
     case animeSuggestionsURL = "https://api.myanimelist.net/v2/anime/suggestions"
     
-    case animeURLAll = "https://api.myanimelist.net/v2/anime/{id}?fields=synopsis,mean,status,num_episodes,start_season,media_type,average_episode_duration"
+    case animeURLAll = "https://api.myanimelist.net/v2/anime/{id}?fields=synopsis,mean,status,num_episodes,start_season,media_type,average_episode_duration,genres"
     
 //    func get(_ id: String?, _ season: Season?, _ year: String?) -> String {
 //        switch self {

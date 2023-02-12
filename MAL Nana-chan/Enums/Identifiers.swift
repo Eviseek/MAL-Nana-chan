@@ -18,4 +18,7 @@ enum Identifiers: String {
     
     case ItemSectionTableViewCell = "ItemSectionTableViewCell"
     case ItemSectionTableView = "ItemSectionTableView"
+    
+    
+    case GenreCollectionViewCell
 }
