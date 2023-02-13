@@ -14,6 +14,7 @@ struct Response: Codable {
 
 struct Node: Codable {
     var node: Anime
+    var relation_type_formatted: String?
 }
 
 struct Paging: Codable {

@@ -31,8 +31,6 @@ class ItemSectionTableViewCell: UITableViewCell {
         itemCollectionView.delegate = self
         
         itemCollectionViewHeight.constant = Sizes.itemCollectionViewCellHeight.rawValue
-        print(itemCollectionViewHeight)
-        
         
     }
     

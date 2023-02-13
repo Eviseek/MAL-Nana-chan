@@ -35,6 +35,9 @@ struct Anime: Codable {
     var average_episode_duration: Int?
     var rating: Rating?
     var studios: [AnimeStudio]?
+    var related_anime: [Node]? //can get only from anime detail call
+    var related_manga: [Node]? //can get only from anime detail call
+    var recommendations: [Node]? //can get only from anime detail call
     
 }
 

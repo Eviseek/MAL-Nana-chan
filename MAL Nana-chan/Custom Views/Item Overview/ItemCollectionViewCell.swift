@@ -16,6 +16,9 @@ class ItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var cellHeight: NSLayoutConstraint!
     @IBOutlet weak var cellWidth: NSLayoutConstraint!
     
+    @IBOutlet weak var itemTypeView: UIView!
+    @IBOutlet weak var itemTypeLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
