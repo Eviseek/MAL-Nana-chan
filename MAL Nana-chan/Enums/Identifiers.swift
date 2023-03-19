@@ -19,6 +19,10 @@ enum Identifiers: String {
     case ItemSectionTableViewCell = "ItemSectionTableViewCell"
     case ItemSectionTableView = "ItemSectionTableView"
     
+    case YTEmbedTableViewCell = "YoutubeEmbedTableViewCell"
+    
+    case RSTableViewCell = "RecentSearchesTableViewCell"
+    
     
     case GenreCollectionViewCell
 }

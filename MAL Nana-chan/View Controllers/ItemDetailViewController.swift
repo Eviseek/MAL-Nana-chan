@@ -79,7 +79,7 @@ class ItemDetailViewController: UIViewController {
         durationLabel.text = (viewModel?.anime?.average_episode_duration ?? 0 / 60).description
         synopsisTextView.text = viewModel?.anime?.synopsis
         synopsisTextView.sizeToFit()
-        if let season = viewModel?.anime?.start_season?.season.getSeason(), let year = viewModel?.anime?.start_season?.year {
+        if let season = viewModel?.anime?.start_season?.season.stringValue(), let year = viewModel?.anime?.start_season?.year {
             seasonLabel.text = "\(season) \(year)"
         }
         genreCollectionView.reloadData()

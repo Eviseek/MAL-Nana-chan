@@ -27,7 +27,7 @@ class ItemDetailViewModel {
     //TODO: type
     private func getItemDetail() {
         guard let id = id else { return }
-        dataDownloader.fetch(URLs.animeURLAll.rawValue.getURLWithId(id)) { (anime: Anime?) in
+        dataDownloader.fetchData(URLs.animeURLAll.rawValue.getURLWithId(id)) { (anime: Anime?) in
             self.anime = anime
             if anime != nil {
                 self.viewController.updateView()

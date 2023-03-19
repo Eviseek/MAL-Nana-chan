@@ -17,13 +17,25 @@ struct DataDownloader {
     let authenticatedHeaders: HTTPHeaders = [
     ]
     
-    func fetch<T>(_ url: String, completion: @escaping (T?) -> Void) where T: Codable {
+    func fetchData<T>(_ url: String, completion: @escaping (T?) -> Void) where T: Codable {
         
-        AF.request(url, headers: unauthenticatedHeaders).responseDecodable(of: T.self, completionHandler: { response in
-            debugPrint(response)
-            completion(response.value)
-        })
+        if (url.contains("myanimelist")) {
+            
+            AF.request(url, headers: unauthenticatedHeaders).responseDecodable(of: T.self, completionHandler: { response in
+               // debugPrint(response)
+                completion(response.value)
+            })
+            
+        } else {
+            
+            AF.request(url).responseDecodable(of: T.self, completionHandler: { response in
+               // debugPrint(response)
+                completion(response.value)
+            })
+            
+        }
     }
+
     
     private func decode() {
         
