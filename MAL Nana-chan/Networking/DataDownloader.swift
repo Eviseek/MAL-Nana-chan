@@ -10,6 +10,8 @@ import Alamofire
 
 struct DataDownloader {
     
+    static let dataDownloader = DataDownloader()
+    
     let unauthenticatedHeaders: HTTPHeaders = [
         "X-MAL-CLIENT-ID": "f46d47449490d772ff01a31f241aaa5d"
     ]
@@ -22,7 +24,8 @@ struct DataDownloader {
         if (url.contains("myanimelist")) {
             
             AF.request(url, headers: unauthenticatedHeaders).responseDecodable(of: T.self, completionHandler: { response in
-               // debugPrint(response)
+               
+                debugPrint(response)
                 completion(response.value)
             })
             

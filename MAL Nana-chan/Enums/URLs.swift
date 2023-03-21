@@ -16,6 +16,10 @@ enum URLs: String {
     
     case animeURLAll = "https://api.myanimelist.net/v2/anime/{id}?fields=synopsis,mean,status,num_episodes,start_season,media_type,average_episode_duration,genres,recommendations,related_anime,related_manga"
     
+    case animeSearchURL = "https://api.myanimelist.net/v2/anime?q={query}&fields=mean,status,num_episodes,media_type"
+    case mangaSearchURL = "https://api.myanimelist.net/v2/manga?q="
+
+    
     //GET Jikan urls
     case jikanPromoURL = "https://api.jikan.moe/v4/watch/promos"
     

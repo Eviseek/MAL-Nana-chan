@@ -738,9 +738,43 @@
                     <view key="view" contentMode="scaleToFill" id="Iev-YT-Vh6">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="lih-I4-VZf">
+                                <rect key="frame" x="0.0" y="103" width="390" height="707"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <searchBar contentMode="redraw" placeholder="Search anime and manga" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dv0-af-GiI">
+                                <rect key="frame" x="0.0" y="47" width="390" height="56"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="name"/>
+                                <connections>
+                                    <outlet property="delegate" destination="mJA-do-IF4" id="BlP-La-LHd"/>
+                                </connections>
+                            </searchBar>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No items found." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wrU-Vu-m3r">
+                                <rect key="frame" x="117.66666666666669" y="409.33333333333331" width="155" height="25.333333333333314"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Lli-xu-ZzJ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Lli-xu-ZzJ" firstAttribute="trailing" secondItem="lih-I4-VZf" secondAttribute="trailing" id="9iS-sP-Ai1"/>
+                            <constraint firstItem="dv0-af-GiI" firstAttribute="top" secondItem="Lli-xu-ZzJ" secondAttribute="top" id="Mm1-Aw-hWS"/>
+                            <constraint firstItem="wrU-Vu-m3r" firstAttribute="centerX" secondItem="Iev-YT-Vh6" secondAttribute="centerX" id="NGU-as-KZ4"/>
+                            <constraint firstItem="wrU-Vu-m3r" firstAttribute="centerY" secondItem="Iev-YT-Vh6" secondAttribute="centerY" id="VBD-uq-ia8"/>
+                            <constraint firstItem="Lli-xu-ZzJ" firstAttribute="bottom" secondItem="lih-I4-VZf" secondAttribute="bottom" id="WuN-Pe-lre"/>
+                            <constraint firstItem="lih-I4-VZf" firstAttribute="leading" secondItem="Lli-xu-ZzJ" secondAttribute="leading" id="bmN-0t-A12"/>
+                            <constraint firstItem="dv0-af-GiI" firstAttribute="leading" secondItem="Lli-xu-ZzJ" secondAttribute="leading" id="gGK-qy-4sj"/>
+                            <constraint firstItem="dv0-af-GiI" firstAttribute="trailing" secondItem="Lli-xu-ZzJ" secondAttribute="trailing" id="gyz-W4-xxw"/>
+                            <constraint firstItem="lih-I4-VZf" firstAttribute="top" secondItem="dv0-af-GiI" secondAttribute="bottom" id="yUh-50-O71"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="noResultsLabel" destination="wrU-Vu-m3r" id="WA3-ig-cce"/>
+                        <outlet property="tableView" destination="lih-I4-VZf" id="bV6-Ho-kvO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qzh-Hv-C3i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

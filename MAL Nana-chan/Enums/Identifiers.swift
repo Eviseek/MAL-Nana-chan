@@ -23,6 +23,8 @@ enum Identifiers: String {
     
     case RSTableViewCell = "RecentSearchesTableViewCell"
     
+    case ItemListTableViewCell = "ItemListTableViewCell"
+    
     
     case GenreCollectionViewCell
 }

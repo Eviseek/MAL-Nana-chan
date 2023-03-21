@@ -17,8 +17,12 @@ class ExploreViewController: UIViewController {
     
     private var testingSearches = ["Naruto", "Nana", "FMA", "Shingeki no Kyojin S3"]
     
+    var exploreVM: ExploreViewModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        exploreVM = ExploreViewModel(self)
         
         searchBar.delegate = self
         
@@ -41,18 +45,14 @@ extension ExploreViewController: UITableViewDataSource {
         return UITableViewCell()
     }
     
-    
-    
-    
-    
 }
 
 
 extension ExploreViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("search for")
         if let vc = storyboard?.instantiateViewController(withIdentifier: "SearchResultsViewController") as? SearchResultsViewController {
+            vc.query = searchBar.text
             navigationController?.pushViewController(vc, animated: true)
         }
     }
