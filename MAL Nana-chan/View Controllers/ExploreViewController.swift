@@ -15,8 +15,6 @@ class ExploreViewController: UIViewController {
     @IBOutlet weak var recentSearchesTableView: UITableView!
     @IBOutlet weak var recentSearchesView: UIView!
     
-    private var testingSearches = ["Naruto", "Nana", "FMA", "Shingeki no Kyojin S3"]
-    
     var exploreVM: ExploreViewModel?
     
     override func viewDidLoad() {
@@ -29,36 +27,42 @@ class ExploreViewController: UIViewController {
         let nib = UINib(nibName: Identifiers.RSTableViewCell.rawValue, bundle: nil)
         recentSearchesTableView.register(nib, forCellReuseIdentifier: Identifiers.RSTableViewCell.rawValue)
         recentSearchesTableView.dataSource = self
+        recentSearchesTableView.delegate = self
     }
 }
 
-extension ExploreViewController: UITableViewDataSource {
+extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return testingSearches.count
+        return exploreVM?.recentSearchesArr.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.RSTableViewCell.rawValue, for: indexPath) as? RecentSearchesTableViewCell {
-            cell.rsTitleLabel.text = testingSearches[indexPath.row]
+            cell.rsTitleLabel.text = exploreVM?.recentSearchesArr[indexPath.row]
             return cell
         }
         return UITableViewCell()
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        exploreVM?.searchButtonClicked(query: exploreVM?.recentSearchesArr[indexPath.row])
+    }
 }
-
 
 extension ExploreViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "SearchResultsViewController") as? SearchResultsViewController {
-            vc.query = searchBar.text
-            navigationController?.pushViewController(vc, animated: true)
-        }
+        exploreVM?.searchButtonClicked(query: searchBar.text)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        recentSearchesTableView.reloadData()
         recentSearchesView.isHidden = false
     }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        recentSearchesView.isHidden = true
+    }
 }

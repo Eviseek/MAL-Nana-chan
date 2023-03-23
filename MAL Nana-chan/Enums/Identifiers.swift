@@ -25,6 +25,10 @@ enum Identifiers: String {
     
     case ItemListTableViewCell = "ItemListTableViewCell"
     
+    // User Defaults
+    
+    case RecentSearches = "recentSearchesArr"
+    
     
     case GenreCollectionViewCell
 }

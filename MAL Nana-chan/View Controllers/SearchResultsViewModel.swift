@@ -15,19 +15,32 @@ class SearchResultsViewModel {
     var searchResultsVC: SearchResultsViewController
     var results = [Node]()
     
+    private let defaults = UserDefaults.standard
+    private var recentSearchesArr = [String]()
+    
     init(_ vc: SearchResultsViewController) {
         self.searchResultsVC = vc
     }
     
     func viewDidLoad(query: String) {
-        searchForQuery(query: query)
+        saveToDefaults(query: query)
+        checkQuery(query)
+    }
+    
+    private func checkQuery(_ query: String) {
+        
+        var modified: String = query
+        
+        if query.contains(" ") {
+            modified = query.replacingOccurrences(of: " ", with: "%")
+        }
+        
+        searchForQuery(query: modified)
     }
     
     private func searchForQuery(query: String) {
         
         //TODO: anime or manga
-        
-        print("searching")
         
         var url = URLs.animeSearchURL.rawValue.replacingOccurrences(of: "{query}", with: query)
         print("my url is", url)
@@ -43,5 +56,15 @@ class SearchResultsViewModel {
         
     }
     
-    
+    private func saveToDefaults(query: String) {
+        
+        recentSearchesArr = defaults.object(forKey: Identifiers.RecentSearches.rawValue) as? [String] ?? [String]()
+        
+        //check if there's not the same search already and add
+        if !(recentSearchesArr.contains(query)) {
+            recentSearchesArr.append(query)
+        }
+        
+        defaults.set(recentSearchesArr, forKey: Identifiers.RecentSearches.rawValue)
+    }
 }
