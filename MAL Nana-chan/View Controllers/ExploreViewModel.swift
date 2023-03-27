@@ -35,8 +35,14 @@ class ExploreViewModel {
         }
     }
     
+    func viewWillAppear() {
+        getRecentSearchesFromDefaults()
+        exploreVC.recentSearchesTableView.reloadData()
+    }
+    
     private func getRecentSearchesFromDefaults() {
         recentSearchesArr = defaults.object(forKey: Identifiers.RecentSearches.rawValue) as? [String] ?? [String]()
+        print("got recent searches", recentSearchesArr)
     }
     
     private func showAlert() {

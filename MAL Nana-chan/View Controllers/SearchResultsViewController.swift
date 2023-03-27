@@ -22,10 +22,8 @@ class SearchResultsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let query = query else { return }
-        
         resultsVM = SearchResultsViewModel(self)
-        resultsVM?.viewDidLoad(query: query)
+        resultsVM?.searchButtonClicked()
         
         searchBar.text = query
         searchBar.delegate = self
@@ -33,54 +31,97 @@ class SearchResultsViewController: UIViewController {
         let nib = UINib(nibName: Identifiers.ItemListTableViewCell.rawValue, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: Identifiers.ItemListTableViewCell.rawValue)
         tableView.dataSource = self
+        tableView.delegate = self
     }
     
     @IBAction func itemTypeChanged(_ sender: UISegmentedControl) {
         //TODO: manga
+        resultsVM?.searchButtonClicked()
     }
 }
 
 extension SearchResultsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return resultsVM?.results.count ?? 0
+        if segmentedControl.selectedSegmentIndex == 0 {
+            return resultsVM?.animeResults?.data.count ?? 0
+        } else {
+            return resultsVM?.mangaResults?.data.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.ItemListTableViewCell.rawValue, for: indexPath) as? ItemListTableViewCell {
-            let result = resultsVM?.results[indexPath.row].node
-            var seasonText = ""
-            cell.titleLabel.text = result?.title
-            if let season = result?.start_season?.season {
-                seasonText = season.stringValue()
-                seasonText += " "
+            if segmentedControl.selectedSegmentIndex == 0 {
+                let anime = resultsVM?.animeResults?.data[indexPath.row].node
+                var seasonText = ""
+                
+                cell.titleLabel.text = anime?.title
+                if let season = anime?.start_season?.season {
+                    seasonText = season.stringValue()
+                    seasonText += " "
+                }
+                if let year = anime?.start_season?.year {
+                    seasonText += year.description
+                }
+                cell.seasonLabel.text = seasonText
+                if let score = anime?.mean {
+                    cell.ratingLabel.text = score.description
+                }
+                cell.typeLabel.text = anime?.media_type?.getType()
+                cell.updateEpisodesLabel(type: .anime, number: anime?.num_episodes ?? 0)
+                if (anime?.num_episodes ?? 0) > 0 {
+                    cell.episodesNumberLabel.text = anime?.num_episodes?.description
+                }
+                
+                if let url = URL(string: anime?.main_picture?.medium ?? "") {
+                    cell.itemImageView?.af.setImage(withURL: url)
+                }
+                
+                return cell
+                
+            } else {
+                let manga = resultsVM?.mangaResults?.data[indexPath.row].node
+                cell.titleLabel.text = manga?.title
+                cell.seasonLabel.text = manga?.start_date?.extractSeason()
+                if let score = manga?.mean {
+                    cell.ratingLabel.text = score.description
+                }
+                cell.typeLabel.text = manga?.media_type?.getType()
+                cell.updateEpisodesLabel(type: .manga, number: manga?.num_chapters ?? 0)
+                if (manga?.num_chapters ?? 0) > 0 {
+                    cell.episodesNumberLabel.text = manga?.num_chapters?.description
+                }
+                
+                if let url = URL(string: manga?.main_picture?.medium ?? "") {
+                    cell.itemImageView?.af.setImage(withURL: url)
+                }
+                
+                return cell
+                
             }
-            if let year = result?.start_season?.year {
-                seasonText += year.description
-            }
-            cell.seasonLabel.text = seasonText
-            if let score = result?.mean {
-                cell.ratingLabel.text = score.description
-            }
-            cell.typeLabel.text = result?.media_type?.getType()
-            cell.updateEpisodesLabel(type: .anime, number: result?.num_episodes ?? 0)
-            if (result?.num_episodes ?? 0) > 0 {
-                cell.episodesNumberLabel.text = result?.num_episodes?.description
-            }
-            
-            if let url = URL(string: result?.main_picture?.medium ?? "") {
-                cell.itemImageView?.af.setImage(withURL: url)
-            }
-            return cell
         }
-        
         return UITableViewCell()
     }
 }
 
-extension SearchResultsViewController: UISearchBarDelegate {
+extension SearchResultsViewController: UITableViewDelegate, UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let position = scrollView.contentOffset.y
+        if position > (tableView.contentSize.height - 100 - scrollView.frame.height) {
+            if !(resultsVM?.pagingDone ?? true) && !(resultsVM?.loadingInProgress ?? true) {
+                resultsVM?.loadMore()
+            }
+        }
+    }
+}
     
+extension SearchResultsViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        //TODO: search again
+        query = searchBar.text
+        resultsVM?.searchButtonClicked()
+        UIView.animate(withDuration: 0.5, delay: 0, animations: {
+            self.tableView.contentOffset.y = 0
+        })
     }
     
 }

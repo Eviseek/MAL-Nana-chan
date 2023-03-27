@@ -29,6 +29,11 @@ class ExploreViewController: UIViewController {
         recentSearchesTableView.dataSource = self
         recentSearchesTableView.delegate = self
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        exploreVM?.viewWillAppear()
+    }
 }
 
 extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
@@ -57,7 +62,6 @@ extension ExploreViewController: UISearchBarDelegate {
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        recentSearchesTableView.reloadData()
         recentSearchesView.isHidden = false
     }
     

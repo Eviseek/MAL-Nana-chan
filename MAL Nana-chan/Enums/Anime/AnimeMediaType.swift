@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MediaType: String, Codable {
+enum AnimeMediaType: String, Codable {
     case unknown
     case tv
     case ova

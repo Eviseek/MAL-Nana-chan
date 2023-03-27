@@ -1,0 +1,43 @@
+//
+//  ActivityIndicator.swift
+//  MAL Nana-chan
+//
+//  Created by iOS dev on 27.03.2023.
+//
+
+import Foundation
+import NVActivityIndicatorView
+
+class ActivityIndicator {
+    
+    var activityIndicator: NVActivityIndicatorView
+    var parentFrame = UIView()
+    
+    init() {
+        let frame = CGRect()
+        activityIndicator = NVActivityIndicatorView(frame: frame, type: .lineScalePulseOut, color: UIColor(named: "mal_color"))
+    }
+    
+    func startAnimating(view: UIView) {
+        parentFrame = UIView()
+        parentFrame.backgroundColor = .white
+        parentFrame.frame = view.bounds
+        view.addSubview(parentFrame)
+
+      
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        let indicatorFrame = CGRect(x: (screenWidth - 50) / 2, y: (screenHeight - 50) / 2, width: 50, height: 50)
+//
+//
+//        let activityIndicator = NVActivityIndicatorView(frame: frame, type: .lineScalePulseOut, color: UIColor(named: "mal_color"))
+        activityIndicator.frame = indicatorFrame
+        parentFrame.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+    
+    func stopAnimating() {
+        parentFrame.removeFromSuperview()
+    }
+    
+}

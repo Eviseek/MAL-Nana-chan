@@ -8,13 +8,18 @@
 //TODO: paging attribute is needed, so either change results to Response type or make another var?
 
 import Foundation
-
+import UIKit
 
 class SearchResultsViewModel {
     
     var searchResultsVC: SearchResultsViewController
-    var results = [Node]()
+    var animeResults: Response<Anime>? = nil
+    var mangaResults: Response<Manga>? = nil
     
+    
+    var pagingDone = false
+    var loadingInProgress = false
+    private var type: ItemTypes = .anime
     private let defaults = UserDefaults.standard
     private var recentSearchesArr = [String]()
     
@@ -22,41 +27,115 @@ class SearchResultsViewModel {
         self.searchResultsVC = vc
     }
     
-    func viewDidLoad(query: String) {
-        saveToDefaults(query: query)
-        checkQuery(query)
-    }
-    
-    private func checkQuery(_ query: String) {
+    func searchButtonClicked() {
         
-        var modified: String = query
+        pagingDone = false
+        loadingInProgress = false
         
-        if query.contains(" ") {
-            modified = query.replacingOccurrences(of: " ", with: "%")
+        //checking if we're searching for anime or manga
+        if searchResultsVC.segmentedControl.selectedSegmentIndex == 0 {
+            type = .anime
+        } else if searchResultsVC.segmentedControl.selectedSegmentIndex == 1 {
+            type = .manga
         }
         
-        searchForQuery(query: modified)
+        let query = searchResultsVC.query
+        
+        if (query?.count ?? 0) > 2 {
+            saveToDefaults(query: query!)
+            searchForQuery(query!, type: type)
+        } else {
+            showAlert()
+        }
     }
     
-    private func searchForQuery(query: String) {
+    func loadMore() {
+        
+        if loadingInProgress == false && !pagingDone {
+            
+            loadingInProgress = true
+            
+            if searchResultsVC.segmentedControl.selectedSegmentIndex == 0 {
+                if let nextUrl = animeResults?.paging?.next {
+                    DataDownloader.dataDownloader.fetchData(nextUrl, completion: { (results: Response<Anime>?) in
+                        self.animeResults?.paging = results?.paging
+                        if let data = results?.data {
+                            self.animeResults?.data.append(contentsOf: data)
+                        }
+                        self.loadingInProgress = false
+                        self.searchResultsVC.tableView.reloadData()
+                    })
+                } else {
+                    self.pagingDone = true
+                }
+            } else if searchResultsVC.segmentedControl.selectedSegmentIndex == 1 {
+                print("my next url is", mangaResults?.paging?.next)
+                if let nextUrl = mangaResults?.paging?.next {
+                    
+                    DataDownloader.dataDownloader.fetchData(nextUrl, completion: { (results: Response<Manga>?) in
+                        self.mangaResults?.paging = results?.paging
+                        print("my next paging" ,results?.paging?.next)
+                        if let data = results?.data {
+                            self.mangaResults?.data.append(contentsOf: data)
+                        }
+                        self.loadingInProgress = false
+                        self.searchResultsVC.tableView.reloadData()
+                    })
+                } else {
+                    self.pagingDone = true
+                }
+            }
+        }
+    }
+    
+    private func searchForQuery(_ query: String, type: ItemTypes) {
         
         //TODO: anime or manga
         
-        var url = URLs.animeSearchURL.rawValue.replacingOccurrences(of: "{query}", with: query)
-        print("my url is", url)
-        
-        
-        DataDownloader.dataDownloader.fetchData(url, completion: { (results: Response?) in
-            print(URLs.animeSearchURL.rawValue.appending(query))
-            if let data = results?.data {
-                self.results = data
+        if let url = encodeURL(query: query) {
+            
+            if type == .anime  {
+                
+                print("ANIME")
+                
+                DataDownloader.dataDownloader.fetchData(url, completion: { (results: Response<Anime>?) in
+                    // print(URLs.animeSearchURL.rawValue.appending(query))
+                    if let data = results {
+                        self.animeResults = data
+                    }
+                    self.searchResultsVC.tableView.reloadData()
+                })
+                
+            } else {
+                
+                print("MANGA")
+                
+                DataDownloader.dataDownloader.fetchData(url, completion: { (results: Response<Manga>?) in
+                    // print(URLs.animeSearchURL.rawValue.appending(query))
+                    if let data = results {
+                        self.mangaResults = data
+                    }
+                    self.searchResultsVC.tableView.reloadData()
+                })
+                
             }
-            self.searchResultsVC.tableView.reloadData()
-        })
+        }
         
     }
     
+    private func encodeURL(query: String) -> String? {
+        if type == .anime {
+            let url = URLs.animeSearchURL.rawValue.replacingOccurrences(of: "{query}", with: query)
+            return url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)
+        } else {
+            let url = URLs.mangaSearchURL.rawValue.replacingOccurrences(of: "{query}", with: query)
+            return url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)
+        }
+    }
+    
     private func saveToDefaults(query: String) {
+        
+        print("saving to defaults")
         
         recentSearchesArr = defaults.object(forKey: Identifiers.RecentSearches.rawValue) as? [String] ?? [String]()
         
@@ -66,5 +145,11 @@ class SearchResultsViewModel {
         }
         
         defaults.set(recentSearchesArr, forKey: Identifiers.RecentSearches.rawValue)
+    }
+    
+    private func showAlert() {
+        let alert = UIAlertController(title: "Error", message: "Query must have at least 3 characters.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+        searchResultsVC.present(alert, animated: true, completion: nil)
     }
 }

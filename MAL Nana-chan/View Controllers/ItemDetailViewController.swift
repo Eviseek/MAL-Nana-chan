@@ -68,7 +68,9 @@ class ItemDetailViewController: UIViewController {
     
     func updateView() {
         itemNameLabel.text = viewModel?.anime?.title
-        scoreLabel.text = viewModel?.anime?.mean?.description
+        if let score = viewModel?.anime?.mean {
+            scoreLabel.text = score.description
+        }
         if let url = URL(string: viewModel?.anime?.main_picture?.medium ?? "") {
             mainImageImageView.af.setImage(withURL: url)
         }
@@ -77,7 +79,11 @@ class ItemDetailViewController: UIViewController {
         episodesLabel.text = viewModel?.anime?.num_episodes?.description
         //TODO: lepe osetrit duration
         durationLabel.text = (viewModel?.anime?.average_episode_duration ?? 0 / 60).description
-        synopsisTextView.text = viewModel?.anime?.synopsis
+        if viewModel?.anime?.synopsis != "" {
+            synopsisTextView.text = viewModel?.anime?.synopsis
+        } else {
+            synopsisTextView.text = "No synopsis"
+        }
         synopsisTextView.sizeToFit()
         if let season = viewModel?.anime?.start_season?.season.stringValue(), let year = viewModel?.anime?.start_season?.year {
             seasonLabel.text = "\(season) \(year)"
@@ -106,15 +112,15 @@ extension ItemDetailViewController: UICollectionViewDataSource, UICollectionView
         if collectionView == genreCollectionView {
             return viewModel?.anime?.genres?.count ?? 0
         }
-        if collectionView == relatedAnimeCollectionView {
-            return viewModel?.anime?.related_anime?.count ?? 0
-        }
-        if collectionView == relatedMangaCollectionView {
-            return viewModel?.anime?.related_manga?.count ?? 0
-        }
-        if collectionView == recommendationsCollectionView {
-            return viewModel?.anime?.recommendations?.count ?? 0
-        }
+//        if collectionView == relatedAnimeCollectionView {
+//            return viewModel?.anime?.related_anime?.count ?? 0
+//        }
+//        if collectionView == relatedMangaCollectionView {
+//            return viewModel?.anime?.related_manga?.count ?? 0
+//        }
+//        if collectionView == recommendationsCollectionView {
+//            return viewModel?.anime?.recommendations?.count ?? 0
+  //      }
         return 0
     }
     
@@ -129,39 +135,39 @@ extension ItemDetailViewController: UICollectionViewDataSource, UICollectionView
         
         if collectionView == relatedAnimeCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.ItemCollectionViewCell.rawValue, for: indexPath) as? ItemCollectionViewCell {
-                var item = viewModel?.anime?.related_anime?[indexPath.item]
-                cell.itemTypeView.isHidden = false
-                cell.itemTitleLabel.text = item?.node.title
-                if let url = URL(string: item?.node.main_picture?.medium ?? "") {
-                    cell.itemImageView.af.setImage(withURL: url)
-                }
-                cell.itemTypeLabel.text = item?.relation_type_formatted
+//                var item = viewModel?.anime?.related_anime?[indexPath.item]
+//                cell.itemTypeView.isHidden = false
+//                cell.itemTitleLabel.text = item?.node.title
+//                if let url = URL(string: item?.node.main_picture?.medium ?? "") {
+//                    cell.itemImageView.af.setImage(withURL: url)
+//                }
+//                cell.itemTypeLabel.text = item?.relation_type_formatted
                 return cell
             }
         }
         
         if collectionView == relatedMangaCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.ItemCollectionViewCell.rawValue, for: indexPath) as? ItemCollectionViewCell {
-                if let item = viewModel?.anime?.related_manga?[indexPath.item] {
-                    cell.itemTypeView.isHidden = false
-                    cell.itemTitleLabel.text = item.node.title
-                    if let url = URL(string: item.node.main_picture?.medium ?? "") {
-                        cell.itemImageView.af.setImage(withURL: url)
-                    }
-                    cell.itemTypeLabel.text = item.relation_type_formatted
-                }
+//                if let item = viewModel?.anime?.related_manga?[indexPath.item] {
+//                    cell.itemTypeView.isHidden = false
+//                    cell.itemTitleLabel.text = item.node.title
+//                    if let url = URL(string: item.node.main_picture?.medium ?? "") {
+//                        cell.itemImageView.af.setImage(withURL: url)
+//                    }
+//                    cell.itemTypeLabel.text = item.relation_type_formatted
+            //    }
                 return cell
             }
         }
         
         if collectionView == recommendationsCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.ItemCollectionViewCell.rawValue, for: indexPath) as? ItemCollectionViewCell {
-                var item = viewModel?.anime?.recommendations?[indexPath.item]
-                cell.itemTypeView.isHidden = true
-                cell.itemTitleLabel.text = item?.node.title
-                if let url = URL(string: item?.node.main_picture?.medium ?? "") {
-                    cell.itemImageView.af.setImage(withURL: url)
-                }
+//                var item = viewModel?.anime?.recommendations?[indexPath.item]
+//                cell.itemTypeView.isHidden = true
+//                cell.itemTitleLabel.text = item?.node.title
+//                if let url = URL(string: item?.node.main_picture?.medium ?? "") {
+//                    cell.itemImageView.af.setImage(withURL: url)
+//                }
                 return cell
             }
         }

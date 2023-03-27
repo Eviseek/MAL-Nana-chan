@@ -41,6 +41,9 @@
                     <constraint firstItem="LXi-hN-4i5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="nDf-QB-TE3"/>
                     <constraint firstAttribute="bottom" secondItem="tYw-DW-AsB" secondAttribute="bottom" constant="5" id="sZM-JC-6C5"/>
                 </constraints>
+                <userDefinedRuntimeAttributes>
+                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                </userDefinedRuntimeAttributes>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>

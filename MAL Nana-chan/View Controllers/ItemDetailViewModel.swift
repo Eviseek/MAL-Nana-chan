@@ -9,14 +9,17 @@ import Foundation
 
 class ItemDetailViewModel {
     
+    private let indicator = ActivityIndicator()
+    
     let dataDownloader = DataDownloader()
     
     var anime: Anime? = nil
     
-    var viewController: ItemDetailViewController
+    private var viewController: ItemDetailViewController
     var id: Int?
     
     init(viewController: ItemDetailViewController) { //TODO: type
+        indicator.startAnimating(view: viewController.view)
         self.viewController = viewController
         self.id = viewController.id
         if let id = id {
@@ -31,6 +34,7 @@ class ItemDetailViewModel {
             self.anime = anime
             if anime != nil {
                 self.viewController.updateView()
+                self.indicator.stopAnimating()
             } else {
                 self.viewController.noData()
             }

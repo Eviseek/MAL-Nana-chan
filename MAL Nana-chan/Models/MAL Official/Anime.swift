@@ -25,20 +25,20 @@ struct Anime: Codable {
     var genres: [Genre]?
     var created_at: String?
     var updated_at: String?
-    var media_type: MediaType?
-    var status: AnimeStatus?
+    var media_type: AnimeMediaType? //add manga media type
+    var status: AnimeStatus? //add manga status
     var my_list_status: MyListStatus?
-    var num_episodes: Int?
-    var start_season: StartSeason?
-    var broadcast: Broadcast?
-    var source: AnimeSource?
+    var num_episodes: Int? //num_volumes
+    var start_season: StartSeason? //nil
+    var broadcast: Broadcast? //nil
+    var source: AnimeSource? //nil
     var average_episode_duration: Int?
     var rating: Rating?
     var studios: [AnimeStudio]?
-    var related_anime: [Node]? //can get only from anime detail call
-    var related_manga: [Node]? //can get only from anime detail call
-    var recommendations: [Node]? //can get only from anime detail call
-    
+   // var related_anime: [Node]? //can get only from anime detail call
+  //  var related_manga: [Node]? //can get only from anime detail call
+  //  var recommendations: [Node]? //can get only from anime detail call
+  
 }
 
 struct Picture: Codable {

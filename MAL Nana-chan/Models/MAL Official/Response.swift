@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct Response: Codable {
-    var data: [Node]
+struct Response<T: Codable>: Codable {
+    var data: [Node<T>]
     var paging: Paging?
 }
 
-struct Node: Codable {
-    var node: Anime
+struct Node<T: Codable>: Codable {
+    var node: T
     var relation_type_formatted: String?
 }
 

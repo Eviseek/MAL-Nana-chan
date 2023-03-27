@@ -10,6 +10,8 @@ target 'MAL Nana-chan' do
   pod 'OAuthSwift'
   pod 'AlamofireImage'
   pod 'youtube-ios-player-helper'
+  pod 'NVActivityIndicatorView'
+  pod 'SkeletonView'
 
   target 'MAL Nana-chanTests' do
     inherit! :search_paths

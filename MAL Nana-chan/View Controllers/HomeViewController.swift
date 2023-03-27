@@ -7,6 +7,7 @@
 
 import UIKit
 import OAuthSwift
+import NVActivityIndicatorView
 
 class HomeViewController: UIViewController {
     
@@ -18,6 +19,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         viewModel = HomeViewModel(viewController: self)
         
         let nib = UINib(nibName: Identifiers.ItemSectionTableViewCell.rawValue, bundle: nil)
@@ -27,7 +30,22 @@ class HomeViewController: UIViewController {
         tableView.register(ytNib, forCellReuseIdentifier: Identifiers.YTEmbedTableViewCell.rawValue)
         
         tableView.dataSource = self
-
+        
+//        let whiteFrame = UIView()
+//        whiteFrame.backgroundColor = .white
+//        whiteFrame.frame = view.bounds
+//        //whiteFrame.frame.size.height -= 50
+//        view.addSubview(whiteFrame)
+//
+//
+//        let screenWidth = UIScreen.main.bounds.width
+//        let screenHeight = UIScreen.main.bounds.height
+//        let frame = CGRect(x: (screenWidth - 50) / 2, y: (screenHeight - 50) / 2, width: 50, height: 50)
+//
+//
+//        let activityIndicator = NVActivityIndicatorView(frame: frame, type: .lineScalePulseOut, color: UIColor(named: "mal_color"))
+//        whiteFrame.addSubview(activityIndicator)
+//        activityIndicator.startAnimating()
     }
     
 }

@@ -8,24 +8,26 @@
 import Foundation
 import UIKit
 
+extension String {
+    
+    func extractSeason() -> String {
+        let dateString = self
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateFormatter.date(from: dateString)
+        
+        guard date != nil else { return "Unknown season"}
+        
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month], from: date!)
+        
+        if let month = components.month, let year = components.year {
+            var season = SeasonManager().getSeasonForMonth(month)
+            let seasonStr = "\(season.stringValue()) \(year)"
+            return seasonStr
+        }
+      
+        return "Unknown season"
+    }
+}
 
-extension UIViewController {
-
-func showToast(message : String, font: UIFont) {
-
-    let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
-    toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-    toastLabel.textColor = UIColor.white
-    toastLabel.font = font
-    toastLabel.textAlignment = .center;
-    toastLabel.text = message
-    toastLabel.alpha = 1.0
-    toastLabel.layer.cornerRadius = 10;
-    toastLabel.clipsToBounds  =  true
-    self.view.addSubview(toastLabel)
-    UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: {
-         toastLabel.alpha = 0.0
-    }, completion: {(isCompleted) in
-        toastLabel.removeFromSuperview()
-    })
-} }
