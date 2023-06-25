@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OuJ-SN-ub6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OuJ-SN-ub6">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--See All View Controller-->
+        <scene sceneID="ScZ-S5-ePp">
+            <objects>
+                <viewController storyboardIdentifier="SeeAllViewController" id="d0m-Tj-Wug" customClass="SeeAllViewController" customModule="MAL_Nana_chan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dYl-IV-Nba">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xFJ-go-iLg">
+                                <rect key="frame" x="0.0" y="47" width="390" height="763"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dXj-h4-jM1"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="xFJ-go-iLg" firstAttribute="leading" secondItem="dXj-h4-jM1" secondAttribute="leading" id="9Q9-jU-Feu"/>
+                            <constraint firstItem="xFJ-go-iLg" firstAttribute="top" secondItem="dXj-h4-jM1" secondAttribute="top" id="ti0-fb-Jox"/>
+                            <constraint firstItem="dXj-h4-jM1" firstAttribute="bottom" secondItem="xFJ-go-iLg" secondAttribute="bottom" id="uST-Mi-t3b"/>
+                            <constraint firstItem="dXj-h4-jM1" firstAttribute="trailing" secondItem="xFJ-go-iLg" secondAttribute="trailing" id="zFf-Kc-ItW"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="xFJ-go-iLg" id="Z83-wT-viN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r1h-u3-oDi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1908" y="-707"/>
+        </scene>
         <!--Home-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -56,8 +87,30 @@
                     <view key="view" contentMode="scaleToFill" id="bne-cl-zkZ">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="yUM-Fb-Fbj">
+                                <rect key="frame" x="0.0" y="122" width="390" height="639"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FGJ-ze-9yn">
+                                <rect key="frame" x="0.0" y="91" width="390" height="32"/>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                            </segmentedControl>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="j54-LK-1Si"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="j54-LK-1Si" firstAttribute="bottom" secondItem="yUM-Fb-Fbj" secondAttribute="bottom" id="025-BT-xei"/>
+                            <constraint firstItem="yUM-Fb-Fbj" firstAttribute="top" secondItem="FGJ-ze-9yn" secondAttribute="bottom" id="8fc-SR-Ym0"/>
+                            <constraint firstItem="j54-LK-1Si" firstAttribute="trailing" secondItem="yUM-Fb-Fbj" secondAttribute="trailing" id="DYb-XR-gwb"/>
+                            <constraint firstItem="FGJ-ze-9yn" firstAttribute="top" secondItem="j54-LK-1Si" secondAttribute="top" id="O4n-gJ-QTU"/>
+                            <constraint firstItem="j54-LK-1Si" firstAttribute="trailing" secondItem="FGJ-ze-9yn" secondAttribute="trailing" id="ofO-M6-NuK"/>
+                            <constraint firstItem="FGJ-ze-9yn" firstAttribute="leading" secondItem="j54-LK-1Si" secondAttribute="leading" id="okp-Ub-Pb8"/>
+                            <constraint firstItem="yUM-Fb-Fbj" firstAttribute="leading" secondItem="j54-LK-1Si" secondAttribute="leading" id="zon-wT-cT9"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Animelist" image="list.clipboard.fill" catalog="system" selectedImage="list.clipboard.fill" id="Ubk-yQ-DUY">
                         <color key="badgeColor" name="MAL Blue color"/>
@@ -653,7 +706,11 @@
             <objects>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="w10-ui-hKr" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="PLY-SW-vC2"/>
+                    <navigationItem key="navigationItem" id="PLY-SW-vC2">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="person" catalog="system" id="3P7-1t-Uwj">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LSS-3T-fst">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -671,6 +728,21 @@
             </objects>
             <point key="canvasLocation" x="980" y="-28.436018957345969"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="PLK-86-Z27">
+            <objects>
+                <viewController id="ttw-gE-qtV" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="t9Y-lz-KwZ">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Ge8-D7-ssL"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zzM-fL-c8h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1908" y="2055"/>
+        </scene>
         <!--Explore-->
         <scene sceneID="Vtf-n1-Zh7">
             <objects>
@@ -679,7 +751,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="WYT-0J-0fz">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="WYT-0J-0fz">
                                 <rect key="frame" x="0.0" y="147" width="390" height="614"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
@@ -693,7 +765,7 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pQW-OL-9yf">
                                 <rect key="frame" x="0.0" y="147" width="390" height="614"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="r9o-iD-Zz2">
+                                    <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="r9o-iD-Zz2">
                                         <rect key="frame" x="0.0" y="0.0" width="390" height="614"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </tableView>
@@ -804,9 +876,10 @@
         <image name="house.fill" catalog="system" width="128" height="104"/>
         <image name="list.clipboard.fill" catalog="system" width="103" height="128"/>
         <image name="magnifyingglass.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="person" catalog="system" width="128" height="121"/>
         <image name="star.leadinghalf.filled" catalog="system" width="128" height="116"/>
         <namedColor name="MAL Blue color">
-            <color red="0.1803921568627451" green="0.31764705882352939" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.1803921568627451" green="0.31764705882352939" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

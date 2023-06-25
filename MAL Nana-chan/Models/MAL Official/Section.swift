@@ -9,5 +9,6 @@ import Foundation
 
 struct Section {
     var name: String = "Unnamed Section"
-    var items: [Item]
+    var items: [Item]? = nil
+    var url: String? = nil
 }

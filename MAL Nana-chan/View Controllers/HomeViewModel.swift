@@ -11,10 +11,10 @@ class HomeViewModel {
     
     let indicator = ActivityIndicator()
     
-    var viewController: HomeViewController
+    private var viewController: HomeViewController
     
-    let dataDownloader = DataDownloader()
-    let seasonManager = SeasonManager()
+    private let dataDownloader = DataDownloader()
+    private let seasonManager = SeasonManager()
     
     var sections = [Section]()
     
@@ -38,14 +38,14 @@ class HomeViewModel {
         }
     }
     
-    
+    //TODO: optimize the url strings getting
     private func getData(completion: @escaping () -> ()) {
         
         let group = DispatchGroup()
         group.enter()
         dataDownloader.fetchData("https://api.myanimelist.net/v2/anime/season/2020/spring?fields=mean") { (response: Response<Anime>?) in
             if let data = response?.data {
-                self.createSection(sectionName: "Spring 2020 anime", data: data)
+                self.createSection(sectionName: "Spring 2020 anime", data: data, url: "https://api.myanimelist.net/v2/anime/season/2020/spring?fields=mean")
               //  print(data)
             }
             group.leave()
@@ -56,7 +56,7 @@ class HomeViewModel {
         var year = Calendar.current.component(.year, from: Date()) //Today's year
         dataDownloader.fetchData("https://api.myanimelist.net/v2/anime/season/\(year)/\(season.lowercased())?fields=mean") { (response: Response<Anime>?) in
             if let data = response?.data {
-                self.createSection(sectionName: "This season (\(season) \(year)) anime", data: data)
+                self.createSection(sectionName: "This season (\(season) \(year)) anime", data: data, url: "https://api.myanimelist.net/v2/anime/season/\(year)/\(season.lowercased())?fields=mean")
                // print(data)
             }
             group.leave()
@@ -72,7 +72,7 @@ class HomeViewModel {
         }
         dataDownloader.fetchData("https://api.myanimelist.net/v2/anime/season/\(nextSeasonYear)/\(nextSeason.lowercased())?fields=mean") { (response: Response<Anime>?) in
             if let data = response?.data {
-                self.createSection(sectionName: "Upcoming (\(nextSeason) \(nextSeasonYear)) anime", data: data)
+                self.createSection(sectionName: "Upcoming (\(nextSeason) \(nextSeasonYear)) anime", data: data, url: "https://api.myanimelist.net/v2/anime/season/\(nextSeasonYear)/\(nextSeason.lowercased())?fields=mean")
                // print(data)
             }
             group.leave()
@@ -94,7 +94,7 @@ class HomeViewModel {
         }
     }
     
-    private func createSection(sectionName: String?, data: [Node<Anime>]) {
+    private func createSection(sectionName: String?, data: [Node<Anime>], url: String?) {
         
         var items = [Item]()
         
@@ -102,7 +102,7 @@ class HomeViewModel {
             items.append(Item(id: data.node.id, title: data.node.title, image: data.node.main_picture?.medium ?? nil, score: data.node.mean ?? nil))
         }
         
-        var section = Section(items: items)
+        var section = Section(items: items, url: url)
         
         if let sectionName = sectionName {
             section.name = sectionName

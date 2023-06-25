@@ -22,6 +22,7 @@ enum URLs: String {
     
     //GET Jikan urls
     case jikanPromoURL = "https://api.jikan.moe/v4/watch/promos"
+    case jikanRecommendationsAnimeURL = "https://api.jikan.moe/v4/recommendations/anime"
     
 //    func get(_ id: String?, _ season: Season?, _ year: String?) -> String {
 //        switch self {

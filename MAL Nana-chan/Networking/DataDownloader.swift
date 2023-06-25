@@ -32,7 +32,7 @@ struct DataDownloader {
         } else {
             
             AF.request(url).responseDecodable(of: T.self, completionHandler: { response in
-               // debugPrint(response)
+             //   debugPrint(response)
                 completion(response.value)
             })
             

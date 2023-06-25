@@ -19,7 +19,12 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         viewModel = HomeViewModel(viewController: self)
-        
+      
+        tableViewSetUp()
+      
+    }
+    
+    private func tableViewSetUp() {
         let nib = UINib(nibName: Identifiers.ItemSectionTableViewCell.rawValue, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: Identifiers.ItemSectionTableViewCell.rawValue)
         
@@ -52,7 +57,7 @@ extension HomeViewController: UITableViewDataSource {
                     var alternativePath = indexPath.row - 1
                     cell.parentVC = self
                     cell.itemSectionNameLabel.text = viewModel?.sections[alternativePath].name
-                    cell.fillCollectionView(items: viewModel?.sections[alternativePath].items ?? [Item]())
+                    cell.fillCollectionView(section: viewModel?.sections[alternativePath] ?? Section())
                     return cell
                 }
             }
@@ -60,7 +65,7 @@ extension HomeViewController: UITableViewDataSource {
             if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.ItemSectionTableViewCell.rawValue) as? ItemSectionTableViewCell {
                 cell.parentVC = self
                 cell.itemSectionNameLabel.text = viewModel?.sections[indexPath.row].name
-                cell.fillCollectionView(items: viewModel?.sections[indexPath.row].items ?? [Item]())
+                cell.fillCollectionView(section: viewModel?.sections[indexPath.row] ?? Section())
                 return cell
             }
         }

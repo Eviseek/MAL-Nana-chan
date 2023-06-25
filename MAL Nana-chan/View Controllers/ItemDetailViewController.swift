@@ -17,7 +17,6 @@ class ItemDetailViewController: UIViewController {
     @IBOutlet weak var recommendationsCollectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var collectionViewWidth: NSLayoutConstraint!
     @IBOutlet weak var titlesViewHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
@@ -28,11 +27,8 @@ class ItemDetailViewController: UIViewController {
     @IBOutlet weak var synonymsListLabel: UILabel!
     @IBOutlet weak var englishListLabel: UILabel!
     @IBOutlet weak var japaneseListLabel: UILabel!
-    
     @IBOutlet weak var synopsisTextView: UITextView!
-    
     @IBOutlet weak var mainImageImageView: UIImageView!
-    
     @IBOutlet weak var genreCollectionView: UICollectionView!
     @IBOutlet weak var relatedAnimeCollectionView: UICollectionView!
     @IBOutlet weak var relatedMangaCollectionView: UICollectionView!

@@ -11,11 +11,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemListTableViewCell" rowHeight="280" id="KGk-i7-Jjw" customClass="ItemListTableViewCell" customModule="MAL_Nana_chan" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="336" height="280"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemListTableViewCell" rowHeight="190" id="KGk-i7-Jjw" customClass="ItemListTableViewCell" customModule="MAL_Nana_chan" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="373" height="190"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="336" height="280"/>
+                <rect key="frame" x="0.0" y="0.0" width="373" height="190"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kNu-0g-qND" userLabel="Image Container View">
@@ -68,7 +68,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vgE-6I-tEl">
-                        <rect key="frame" x="125" y="9.9999999999999982" width="206" height="19.333333333333329"/>
+                        <rect key="frame" x="125" y="9.9999999999999982" width="243" height="19.333333333333329"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -99,13 +99,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item season" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PxE-vd-jYk">
-                        <rect key="frame" x="125" y="93.333333333333329" width="206" height="18"/>
+                        <rect key="frame" x="125" y="93.333333333333329" width="243" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hv3-ve-oLh">
-                        <rect key="frame" x="249" y="155" width="77" height="35"/>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hv3-ve-oLh">
+                        <rect key="frame" x="286" y="155" width="77" height="35"/>
                         <color key="backgroundColor" systemColor="systemGray5Color"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="77" id="S6k-wx-7EB"/>
@@ -116,7 +116,7 @@
                         <buttonConfiguration key="configuration" style="plain" image="pencil.circle.fill" catalog="system" title="List"/>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="episodes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agq-7U-td4">
-                        <rect key="frame" x="194.33333333333334" y="72.333333333333329" width="116.66666666666666" height="18"/>
+                        <rect key="frame" x="194.33333333333337" y="72.333333333333329" width="153.66666666666663" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -163,14 +163,14 @@
                 <outlet property="typeContainerView" destination="XYH-lD-u1k" id="V4D-ES-Ut4"/>
                 <outlet property="typeLabel" destination="7gE-mV-FSv" id="iLt-vb-fBp"/>
             </connections>
-            <point key="canvasLocation" x="141.98473282442748" y="71.126760563380287"/>
+            <point key="canvasLocation" x="170.22900763358777" y="39.436619718309863"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="pencil.circle.fill" catalog="system" width="128" height="123"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <namedColor name="MAL Blue color">
-            <color red="0.1803921568627451" green="0.31764705882352939" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.1803921568627451" green="0.31764705882352939" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -19,6 +19,19 @@ class ExploreViewModel {
         print("CREATED")
         self.exploreVC = exploreVC
         getRecentSearchesFromDefaults()
+        fetchData()
+    }
+    
+    private func fetchData() {
+        DataDownloader.dataDownloader.fetchData(URLs.jikanRecommendationsAnimeURL.rawValue) { (result: Recommendation?) in
+            print("result is?")
+            if let result = result {
+                print(result)
+                self.exploreVC.fillUpRecommendations(recommendation: result)
+            } else {
+                print("result is not")
+            }
+        }
     }
     
     func searchButtonClicked(query: String?) {

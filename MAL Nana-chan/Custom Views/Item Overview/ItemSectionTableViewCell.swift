@@ -15,8 +15,8 @@ class ItemSectionTableViewCell: UITableViewCell {
     @IBOutlet weak var itemCollectionView: UICollectionView!
     @IBOutlet weak var itemCollectionViewHeight: NSLayoutConstraint!
     
-    var items: [Item] = []
     var height = 0
+    var itemSection: Section? = nil
     
     var parentVC: UIViewController? = nil
     
@@ -35,8 +35,10 @@ class ItemSectionTableViewCell: UITableViewCell {
     }
     
     @IBAction func seeAllButtonClicked(_ sender: UIButton) {
-        
-        
+        if let seeAllVC = parentVC?.storyboard?.instantiateViewController(withIdentifier: "SeeAllViewController") as? SeeAllViewController {
+            seeAllVC.sectionContent = itemSection
+            parentVC?.navigationController?.pushViewController(seeAllVC, animated: true)
+        }
     }
     
     func itemSelected(id: Int) {
@@ -48,25 +50,26 @@ class ItemSectionTableViewCell: UITableViewCell {
         }
     }
     
-    
-    func fillCollectionView(items: [Item]) {
-        self.items = items
+    func fillCollectionView(section: Section) {
+        self.itemSection = section
         itemCollectionView.reloadData()
     }
+    
 }
 
 extension ItemSectionTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
+        return itemSection?.items?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCollectionViewCell", for: indexPath) as? ItemCollectionViewCell {
-            cell.itemTitleLabel.text = items[indexPath.item].title
-            if let score = items[indexPath.row].score {
+            var item = itemSection?.items?[indexPath.item]
+            cell.itemTitleLabel.text = item?.title
+            if let score = item?.score {
                 cell.itemRankLabel.text = score.description
             }
-            if let downloadedImg = URL(string: items[indexPath.item].image ?? "") {
+            if let downloadedImg = URL(string: item?.image ?? "") {
                 cell.itemImageView.af.setImage(withURL: downloadedImg)
             }
             return cell
@@ -83,7 +86,7 @@ extension ItemSectionTableViewCell: UICollectionViewDelegateFlowLayout, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
      //   print("selected \(items[indexPath.item].id)")
-        itemSelected(id: items[indexPath.item].id)
+        itemSelected(id: itemSection?.items?[indexPath.item].id ?? 0)
     }
     
 }
