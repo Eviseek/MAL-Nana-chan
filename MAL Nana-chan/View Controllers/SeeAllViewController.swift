@@ -49,7 +49,7 @@ class SeeAllViewController: UIViewController {
 
 extension SeeAllViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("number of items is \(sectionContent?.items?.count)")
+        print("number of items is \(sectionContent?.items.count)")
         return items?.count ?? 0
     }
     

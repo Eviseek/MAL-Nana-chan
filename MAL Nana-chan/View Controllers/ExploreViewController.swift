@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import AlamofireImage
 
 class ExploreViewController: UIViewController {
     
@@ -18,6 +19,9 @@ class ExploreViewController: UIViewController {
     private var exploreVM: ExploreViewModel?
     
     private var recommendations = [RecommendationData]()
+    private var popularAnime = Section(name: "10 popular anime")
+    
+    private var numberOfRec = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +38,8 @@ class ExploreViewController: UIViewController {
     }
     
     private func tableViewSetUp() {
+        exploreTableView.separatorStyle = .none
+        
         let nib = UINib(nibName: Identifiers.RSTableViewCell.rawValue, bundle: nil)
         recentSearchesTableView.register(nib, forCellReuseIdentifier: Identifiers.RSTableViewCell.rawValue)
         recentSearchesTableView.dataSource = self
@@ -44,11 +50,17 @@ class ExploreViewController: UIViewController {
         exploreTableView.register(exploreItemNib, forCellReuseIdentifier: "ItemSectionTableViewCell")
         exploreTableView.register(exploreRecNib, forCellReuseIdentifier: "RecommendationTableViewCell")
         exploreTableView.dataSource = self
-     //   exploreTableView.delegate = self
+        //   exploreTableView.delegate = self
     }
     
     func fillUpRecommendations(recommendation: Recommendation) {
         self.recommendations = recommendation.data
+        exploreTableView.reloadData()
+    }
+    
+    func fillPopularAnime(anime: [Item]) {
+        self.popularAnime.items = anime
+        print("items are \(anime)")
         exploreTableView.reloadData()
     }
 }
@@ -56,12 +68,17 @@ class ExploreViewController: UIViewController {
 extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         if tableView == recentSearchesTableView {
             return exploreVM?.recentSearchesArr.count ?? 0
         }
+        
         if tableView == exploreTableView {
             print("this is explore")
-            return recommendations.count
+            if recommendations.count >= numberOfRec {
+                return (popularAnime.items.count + numberOfRec) //show only a limited number of recommendations
+            }
+            return (popularAnime.items.count + recommendations.count)
         }
         return 0
     }
@@ -71,14 +88,27 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
         
         if tableView == exploreTableView {
             if indexPath.row == 0 {
-                if let exploreItemCell = tableView.dequeueReusableCell(withIdentifier: "ItemSectionTableViewCell", for: indexPath) as? ItemSectionTableViewCell {
-                    //TODO: what section?
-                    return exploreItemCell
+                if let exploreCVCell = tableView.dequeueReusableCell(withIdentifier: "ItemSectionTableViewCell", for: indexPath) as? ItemSectionTableViewCell {
+                    exploreCVCell.itemSectionNameLabel.text = popularAnime.name
+                    exploreCVCell.fillCollectionView(section: popularAnime)
+                    exploreCVCell.seeAllButton.isHidden = true
+                    return exploreCVCell
                 }
             }
             
             if let exploreCell = tableView.dequeueReusableCell(withIdentifier: "RecommendationTableViewCell", for: indexPath) as? RecommendationTableViewCell {
                 //TODO: download and get data from jikan
+                let leftRec = recommendations[indexPath.row].entry?[0]
+                let rightRec = recommendations[indexPath.row].entry?[1]
+                if let str = leftRec?.images.jpg.imageUrl, let url = URL(string: str) {
+                    exploreCell.leftRecImageView.af.setImage(withURL: url)
+                }
+                exploreCell.leftRecTitleLabel.text = leftRec?.title
+                if let str = rightRec?.images.jpg.imageUrl, let url = URL(string: str) {
+                    exploreCell.rightRecImageView.af.setImage(withURL: url)
+                }
+                exploreCell.rightRecTitleLabel.text = rightRec?.title
+                exploreCell.selectionStyle = .none
                 return exploreCell
             }
         }
@@ -95,6 +125,7 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         exploreVM?.searchButtonClicked(query: exploreVM?.recentSearchesArr[indexPath.row])
     }
+    
 }
 
 extension ExploreViewController: UISearchBarDelegate {

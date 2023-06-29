@@ -14,6 +14,7 @@ class ItemSectionTableViewCell: UITableViewCell {
     @IBOutlet weak var itemSeeAllButton: UIButton!
     @IBOutlet weak var itemCollectionView: UICollectionView!
     @IBOutlet weak var itemCollectionViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var seeAllButton: UIButton!
     
     var height = 0
     var itemSection: Section? = nil
@@ -52,6 +53,7 @@ class ItemSectionTableViewCell: UITableViewCell {
     
     func fillCollectionView(section: Section) {
         self.itemSection = section
+        print("collection view \(section)")
         itemCollectionView.reloadData()
     }
     
@@ -59,12 +61,12 @@ class ItemSectionTableViewCell: UITableViewCell {
 
 extension ItemSectionTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return itemSection?.items?.count ?? 0
+        return itemSection?.items.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCollectionViewCell", for: indexPath) as? ItemCollectionViewCell {
-            var item = itemSection?.items?[indexPath.item]
+            var item = itemSection?.items[indexPath.item]
             cell.itemTitleLabel.text = item?.title
             if let score = item?.score {
                 cell.itemRankLabel.text = score.description
@@ -86,7 +88,7 @@ extension ItemSectionTableViewCell: UICollectionViewDelegateFlowLayout, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
      //   print("selected \(items[indexPath.item].id)")
-        itemSelected(id: itemSection?.items?[indexPath.item].id ?? 0)
+        itemSelected(id: itemSection?.items[indexPath.item].id ?? 0)
     }
     
 }

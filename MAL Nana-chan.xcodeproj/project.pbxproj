@@ -71,6 +71,7 @@
 		DDE1759E2A48BD3700334FC7 /* RecommendationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE1759C2A48BD3700334FC7 /* RecommendationTableViewCell.swift */; };
 		DDE1759F2A48BD3700334FC7 /* RecommendationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDE1759D2A48BD3700334FC7 /* RecommendationTableViewCell.xib */; };
 		DDE175A12A48C9FE00334FC7 /* Recommendation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE175A02A48C9FE00334FC7 /* Recommendation.swift */; };
+		DDE175A32A4E298C00334FC7 /* RecommendationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE175A22A4E298C00334FC7 /* RecommendationDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +166,7 @@
 		DDE1759C2A48BD3700334FC7 /* RecommendationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationTableViewCell.swift; sourceTree = "<group>"; };
 		DDE1759D2A48BD3700334FC7 /* RecommendationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecommendationTableViewCell.xib; sourceTree = "<group>"; };
 		DDE175A02A48C9FE00334FC7 /* Recommendation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendation.swift; sourceTree = "<group>"; };
+		DDE175A22A4E298C00334FC7 /* RecommendationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -347,6 +349,7 @@
 				DDBFE26D2A45E4A10023574B /* SettingsViewController.swift */,
 				DDBFE26F2A45E6180023574B /* SeeAllViewController.swift */,
 				DDBFE2712A45E63B0023574B /* SeeAllViewModel.swift */,
+				DDE175A22A4E298C00334FC7 /* RecommendationDetailViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -675,6 +678,7 @@
 				6AF2CD77298E92A000F32BE8 /* Identifiers.swift in Sources */,
 				6AB6610929C7B9EB007DCD27 /* RecentSearchesTableViewCell.swift in Sources */,
 				6AB660FA29C79148007DCD27 /* ExploreViewModel.swift in Sources */,
+				DDE175A32A4E298C00334FC7 /* RecommendationDetailViewController.swift in Sources */,
 				6AB660F829C7913E007DCD27 /* ExploreViewController.swift in Sources */,
 				6ABCA00B29CF15D200374CD7 /* MangaStatus.swift in Sources */,
 				6A9FD11129903677006DCEE9 /* Sizes.swift in Sources */,

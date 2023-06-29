@@ -30,7 +30,7 @@ class seeAllViewModel {
     }
     
     private func fetchData() {
-        DataDownloader.dataDownloader.fetchData(appendFields(fields: fields, url: ""), completion: { (result: Response<Anime>?) in
+        DataDownloader.dataDownloader.fetchData(appendFields(fields: fields, url: sectionContent.url ?? ""), completion: { (result: Response<Anime>?) in
             if let data = result?.data {
                 //creating a new array so I can pass all anime to view controller
                 for single in data {

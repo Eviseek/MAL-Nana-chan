@@ -23,6 +23,9 @@ class ExploreViewModel {
     }
     
     private func fetchData() {
+        
+        
+        
         DataDownloader.dataDownloader.fetchData(URLs.jikanRecommendationsAnimeURL.rawValue) { (result: Recommendation?) in
             print("result is?")
             if let result = result {
@@ -32,6 +35,26 @@ class ExploreViewModel {
                 print("result is not")
             }
         }
+        
+        
+        DataDownloader.dataDownloader.fetchData(URLs.animePopularURL.rawValue) { (result: Response<Anime>?) in
+            if let data = result?.data {
+                var section = Section()
+                for anime in data {
+                    let item = Item(id: anime.node.id, title: anime.node.title, image: anime.node.main_picture?.medium, score: anime.node.mean)
+                    section.items.append(item)
+                    print("appended item \(item)")
+                    print("appending items")
+                }
+                print("passing items")
+                print("items in section are \(section.items)")
+                self.exploreVC.fillPopularAnime(anime: section.items)
+            } else {
+                print("NOT FETCHED popular anime")
+                //TODO: result not fetched
+            }
+        }
+        
     }
     
     func searchButtonClicked(query: String?) {
