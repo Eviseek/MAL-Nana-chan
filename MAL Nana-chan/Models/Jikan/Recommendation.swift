@@ -14,7 +14,7 @@ struct Recommendation: Codable {
 }
 
 struct RecommendationData: Codable {
-    var entry: [RecEntry]? = nil
+    var entry: [RecEntry] 
     var content: String?
 }
 

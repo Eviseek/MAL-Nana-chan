@@ -23,9 +23,6 @@ class ExploreViewModel {
     }
     
     private func fetchData() {
-        
-        
-        
         DataDownloader.dataDownloader.fetchData(URLs.jikanRecommendationsAnimeURL.rawValue) { (result: Recommendation?) in
             print("result is?")
             if let result = result {
@@ -55,6 +52,13 @@ class ExploreViewModel {
             }
         }
         
+    }
+    
+    func recommendationSelected(with recommendation: RecommendationData) {
+        if let controller = exploreVC.storyboard?.instantiateViewController(withIdentifier: "RecommendationDetailViewController") as? RecommendationDetailViewController {
+            controller.recommendation = recommendation
+            exploreVC.navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     func searchButtonClicked(query: String?) {

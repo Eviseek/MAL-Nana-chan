@@ -22,7 +22,7 @@ class ItemDetailViewModel {
         indicator.startAnimating(view: viewController.view)
         self.viewController = viewController
         self.id = viewController.id
-        if let id = id {
+        if let _ = id {
             getItemDetail()
         }
     }

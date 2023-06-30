@@ -50,7 +50,7 @@ class ExploreViewController: UIViewController {
         exploreTableView.register(exploreItemNib, forCellReuseIdentifier: "ItemSectionTableViewCell")
         exploreTableView.register(exploreRecNib, forCellReuseIdentifier: "RecommendationTableViewCell")
         exploreTableView.dataSource = self
-        //   exploreTableView.delegate = self
+        exploreTableView.delegate = self
     }
     
     func fillUpRecommendations(recommendation: Recommendation) {
@@ -76,9 +76,9 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == exploreTableView {
             print("this is explore")
             if recommendations.count >= numberOfRec {
-                return (popularAnime.items.count + numberOfRec) //show only a limited number of recommendations
+                return (1 + numberOfRec) //1 is for the popular anime collection view and the resst for to show only a limited number of recommendations
             }
-            return (popularAnime.items.count + recommendations.count)
+            return (1 + recommendations.count)
         }
         return 0
     }
@@ -97,17 +97,18 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             if let exploreCell = tableView.dequeueReusableCell(withIdentifier: "RecommendationTableViewCell", for: indexPath) as? RecommendationTableViewCell {
+                print("this is index \(indexPath.row)")
                 //TODO: download and get data from jikan
-                let leftRec = recommendations[indexPath.row].entry?[0]
-                let rightRec = recommendations[indexPath.row].entry?[1]
-                if let str = leftRec?.images.jpg.imageUrl, let url = URL(string: str) {
+                let leftRec = recommendations[indexPath.row].entry[0]
+                let rightRec = recommendations[indexPath.row].entry[1]
+                if let url = URL(string: leftRec.images.jpg.imageUrl) {
                     exploreCell.leftRecImageView.af.setImage(withURL: url)
                 }
-                exploreCell.leftRecTitleLabel.text = leftRec?.title
-                if let str = rightRec?.images.jpg.imageUrl, let url = URL(string: str) {
+                exploreCell.leftRecTitleLabel.text = leftRec.title
+                if let url = URL(string: rightRec.images.jpg.imageUrl) {
                     exploreCell.rightRecImageView.af.setImage(withURL: url)
                 }
-                exploreCell.rightRecTitleLabel.text = rightRec?.title
+                exploreCell.rightRecTitleLabel.text = rightRec.title
                 exploreCell.selectionStyle = .none
                 return exploreCell
             }
@@ -123,7 +124,13 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        exploreVM?.searchButtonClicked(query: exploreVM?.recentSearchesArr[indexPath.row])
+        if tableView == recentSearchesTableView {
+            exploreVM?.searchButtonClicked(query: exploreVM?.recentSearchesArr[indexPath.row])
+        }
+        if tableView == exploreTableView && indexPath.row > 0 { //recommendations start at 1st position
+            print("clicked")
+            exploreVM?.recommendationSelected(with: recommendations[indexPath.row])
+        }
     }
     
 }
