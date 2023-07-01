@@ -19,7 +19,6 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         viewModel = HomeViewModel(viewController: self)
-      
         tableViewSetUp()
       
     }
@@ -72,8 +71,6 @@ extension HomeViewController: UITableViewDataSource {
         
         return UITableViewCell()
     }
-    
-    
     
 }
 

@@ -75,6 +75,10 @@
 		DDE175A52A4EE6CE00334FC7 /* RecommendationDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE175A42A4EE6CE00334FC7 /* RecommendationDetailViewModel.swift */; };
 		DDE175AE2A4F0BB200334FC7 /* AnimelistItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE175AC2A4F0BB200334FC7 /* AnimelistItemTableViewCell.swift */; };
 		DDE175AF2A4F0BB200334FC7 /* AnimelistItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDE175AD2A4F0BB200334FC7 /* AnimelistItemTableViewCell.xib */; };
+		DDE175B12A4F828100334FC7 /* AnimelistDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE175B02A4F828100334FC7 /* AnimelistDetailViewController.swift */; };
+		DDE175B72A508F6E00334FC7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE175B62A508F6E00334FC7 /* LoginViewController.swift */; };
+		DDE175B92A508F9300334FC7 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE175B82A508F9300334FC7 /* LoginViewModel.swift */; };
+		DDE175BD2A50932A00334FC7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE175BC2A50932A00334FC7 /* TabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +177,10 @@
 		DDE175A42A4EE6CE00334FC7 /* RecommendationDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationDetailViewModel.swift; sourceTree = "<group>"; };
 		DDE175AC2A4F0BB200334FC7 /* AnimelistItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimelistItemTableViewCell.swift; sourceTree = "<group>"; };
 		DDE175AD2A4F0BB200334FC7 /* AnimelistItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnimelistItemTableViewCell.xib; sourceTree = "<group>"; };
+		DDE175B02A4F828100334FC7 /* AnimelistDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimelistDetailViewController.swift; sourceTree = "<group>"; };
+		DDE175B62A508F6E00334FC7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		DDE175B82A508F9300334FC7 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		DDE175BC2A50932A00334FC7 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,6 +365,10 @@
 				DDBFE2712A45E63B0023574B /* SeeAllViewModel.swift */,
 				DDE175A22A4E298C00334FC7 /* RecommendationDetailViewController.swift */,
 				DDE175A42A4EE6CE00334FC7 /* RecommendationDetailViewModel.swift */,
+				DDE175B02A4F828100334FC7 /* AnimelistDetailViewController.swift */,
+				DDE175B62A508F6E00334FC7 /* LoginViewController.swift */,
+				DDE175B82A508F9300334FC7 /* LoginViewModel.swift */,
+				DDE175BC2A50932A00334FC7 /* TabBarController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -695,10 +707,12 @@
 				6AF2CD87298EC22B00F32BE8 /* AnimeStatus.swift in Sources */,
 				6AF2CD8F298EC58700F32BE8 /* AnimeSource.swift in Sources */,
 				6AD269CD298E89BA00931579 /* ItemSectionTableViewCell.swift in Sources */,
+				DDE175B92A508F9300334FC7 /* LoginViewModel.swift in Sources */,
 				6AF2CD73298E8E5E00F32BE8 /* Section.swift in Sources */,
 				6AB93F5929CCE374002A529C /* ItemTypes.swift in Sources */,
 				6AF2CD85298EC22300F32BE8 /* AnimeMediaType.swift in Sources */,
 				6AF2CD79298E93E700F32BE8 /* AuthenticationHandler.swift in Sources */,
+				DDE175BD2A50932A00334FC7 /* TabBarController.swift in Sources */,
 				6ABCA00829CF14F500374CD7 /* MangaMediaType.swift in Sources */,
 				6AF2CD95298EC9A300F32BE8 /* DataDownloader.swift in Sources */,
 				6AF2CD77298E92A000F32BE8 /* Identifiers.swift in Sources */,
@@ -712,6 +726,7 @@
 				6AD26996298E879C00931579 /* AppDelegate.swift in Sources */,
 				6AF2CD91298EC5F400F32BE8 /* Rating.swift in Sources */,
 				6AF2CD93298EC6D000F32BE8 /* Response.swift in Sources */,
+				DDE175B72A508F6E00334FC7 /* LoginViewController.swift in Sources */,
 				6AB6610C29C7BCBF007DCD27 /* SearchResultsViewController.swift in Sources */,
 				DDE175A52A4EE6CE00334FC7 /* RecommendationDetailViewModel.swift in Sources */,
 				6A9FD11A29995168006DCEE9 /* GenreCollectionViewCell.swift in Sources */,
@@ -733,6 +748,7 @@
 				6AB660FC29C79170007DCD27 /* AnimelistViewController.swift in Sources */,
 				6AB93F5B29CCE78F002A529C /* Extensions.swift in Sources */,
 				6ADFDF8E29C8F9560033BC9E /* ItemListTableViewCell.swift in Sources */,
+				DDE175B12A4F828100334FC7 /* AnimelistDetailViewController.swift in Sources */,
 				6AD26998298E879C00931579 /* SceneDelegate.swift in Sources */,
 				6AF2CD8B298EC4DF00F32BE8 /* Season.swift in Sources */,
 				DDE175AE2A4F0BB200334FC7 /* AnimelistItemTableViewCell.swift in Sources */,

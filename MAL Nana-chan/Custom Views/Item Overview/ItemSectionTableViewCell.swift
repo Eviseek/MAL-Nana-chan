@@ -87,7 +87,7 @@ extension ItemSectionTableViewCell: UICollectionViewDelegateFlowLayout, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-     //   print("selected \(items[indexPath.item].id)")
+        print("selected \(itemSection?.items[indexPath.item].id)")
         itemSelected(id: itemSection?.items[indexPath.item].id ?? 0)
     }
     

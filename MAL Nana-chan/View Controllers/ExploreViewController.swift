@@ -85,13 +85,13 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
         if tableView == exploreTableView {
             if indexPath.row == 0 {
                 if let exploreCVCell = tableView.dequeueReusableCell(withIdentifier: "ItemSectionTableViewCell", for: indexPath) as? ItemSectionTableViewCell {
                     exploreCVCell.itemSectionNameLabel.text = popularAnime.name
                     exploreCVCell.fillCollectionView(section: popularAnime)
                     exploreCVCell.seeAllButton.isHidden = true
+                    exploreCVCell.parentVC = self
                     return exploreCVCell
                 }
             }

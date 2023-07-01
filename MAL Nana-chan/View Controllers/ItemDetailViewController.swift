@@ -101,6 +101,16 @@ class ItemDetailViewController: UIViewController {
         //TODO: send action to viewModel
     }
     
+    @IBAction func addToList(_ sender: UIButton) {
+        if let picker = storyboard?.instantiateViewController(withIdentifier: "AnimelistDetailViewController") as? AnimelistDetailViewController {
+            if let sheet = picker.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+            }
+            present(picker, animated: true)
+        }
+    }
+    
+    
 }
 
 extension ItemDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
