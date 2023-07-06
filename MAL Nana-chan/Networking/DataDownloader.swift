@@ -12,18 +12,28 @@ struct DataDownloader {
     
     static let dataDownloader = DataDownloader()
     
-    let unauthenticatedHeaders: HTTPHeaders = [
-        "X-MAL-CLIENT-ID": "f46d47449490d772ff01a31f241aaa5d"
-    ]
+    //function to set up either authenticated header or unautheticated
+    private func getHeader() -> HTTPHeaders {
+        
+        var headers: HTTPHeaders = []
+        
+        if let token = TokenHandler.handler.getToken() {
+            print("auth header")
+            headers.add(name: "Authorization", value: "Bearer " + token)
+        } else {
+            print("not auth header")
+            headers.add(name: Identifiers.headerAuthID.rawValue, value: "f46d47449490d772ff01a31f241aaa5d")
+        }
+        
+        return headers
+    }
     
-    let authenticatedHeaders: HTTPHeaders = [
-    ]
     
     func fetchData<T>(_ url: String, completion: @escaping (T?) -> Void) where T: Codable {
         
         if (url.contains("myanimelist")) {
             
-            AF.request(url, headers: unauthenticatedHeaders).responseDecodable(of: T.self, completionHandler: { response in
+            AF.request(url, headers: getHeader()).responseDecodable(of: T.self, completionHandler: { response in
                
                 debugPrint(response)
                 completion(response.value)

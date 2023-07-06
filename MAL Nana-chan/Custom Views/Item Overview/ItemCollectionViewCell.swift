@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class ItemCollectionViewCell: UICollectionViewCell {
 
@@ -21,6 +22,8 @@ class ItemCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        contentView.showSkeleton()
         
         //TODO: zeptat se proc to takto nejde
 //        cellHeight.constant = Sizes.itemCollectionViewCellHeight.rawValue

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -96,6 +97,12 @@
                 <constraint firstItem="Rqe-Eq-600" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="qBh-WP-k6I"/>
             </constraints>
             <size key="customSize" width="195" height="303"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                <userDefinedRuntimeAttribute type="number" keyPath="skeletonCornerRadius">
+                    <real key="value" value="0.0"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="cellHeight" destination="74D-qb-cJo" id="Xod-x7-fse"/>
                 <outlet property="cellWidth" destination="yr3-lZ-0A6" id="8Jd-tx-Hig"/>
@@ -111,7 +118,7 @@
     <resources>
         <image name="star.leadinghalf.filled" catalog="system" width="128" height="116"/>
         <namedColor name="MAL Blue color">
-            <color red="0.1803921568627451" green="0.31764705882352939" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.1803921568627451" green="0.31764705882352939" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

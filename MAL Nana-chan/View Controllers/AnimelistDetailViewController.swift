@@ -27,14 +27,17 @@ class AnimelistDetailViewController: UIViewController {
     
     @IBOutlet weak var itemScoreTextField: UITextField!
     
-    private var selectedState: UserAnimeStatus = .plan_to_watch
     private let manager = UserAnimeStatusManager()
+    private let viewModel = AnimelistDetailViewModel()
+    
+    var anime: Anime?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpButtonTags()
         
-        //TODO: get status if user already has item in their list and project it here
+        guard let anime = anime else { return }
+        viewModel.viewDidLoad(vc: self, anime: anime)
+        setUpButtonTags()
         
     }
     
@@ -48,7 +51,7 @@ class AnimelistDetailViewController: UIViewController {
     
     //TODO: move to model?
     //function that is accessing statusView and its stackViews to find buttons and change their appearance
-    private func changeButtonsState(_ selected: Int) {
+    func changeButtonsState(_ selected: Int) {
         for subview in statusContentView.subviews { //accessing subviews of statusContentView
             if subview is UIStackView { //if subviews is stackView then access it again
                 for button in subview.subviews {
@@ -80,7 +83,7 @@ class AnimelistDetailViewController: UIViewController {
         print("selected tag is \(sender.tag)")
         let selectedTag = sender.tag
         changeButtonsState(selectedTag)
-        selectedState = manager.getStatusForTag(selectedTag)
+        viewModel.selectedState = manager.getStatusForTag(selectedTag)
     }
     
     

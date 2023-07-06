@@ -57,13 +57,13 @@ extension SeeAllViewController: UITableViewDataSource {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ItemListTableViewCell") as? ItemListTableViewCell {
             var item = items?[indexPath.row]
             cell.titleLabel.text = item?.title
-            cell.typeLabel.text = item?.media_type?.rawValue
-            cell.episodesTitleLabel.text = item?.num_episodes?.description ?? "?"
+            cell.typeLabel.text = item?.mediaType?.rawValue
+            cell.episodesTitleLabel.text = item?.episodesCount?.description ?? "?"
             cell.seasonLabel.text = "Season unavailable"
-            if let seasonText = item?.start_season?.season, let yearText = item?.start_season?.year { //unwrapping before passing to label
+            if let seasonText = item?.startSeason?.season, let yearText = item?.startSeason?.year { //unwrapping before passing to label
                 cell.seasonLabel.text = "\(seasonText) \(yearText)"
             }
-            if let url = URL(string: item?.main_picture?.medium ?? "") { //downloading the image from net
+            if let url = URL(string: item?.mainPicture?.medium ?? "") { //downloading the image from net
                 cell.itemImageView.af.setImage(withURL: url)
             }
             return cell

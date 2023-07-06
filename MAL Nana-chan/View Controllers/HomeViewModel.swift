@@ -99,7 +99,7 @@ class HomeViewModel {
         var items = [Item]()
         
         for data in data {
-            items.append(Item(id: data.node.id, title: data.node.title, image: data.node.main_picture?.medium ?? nil, score: data.node.mean ?? nil))
+            items.append(Item(id: data.node.id, title: data.node.title, image: data.node.mainPicture?.medium ?? nil, score: data.node.score ?? nil))
         }
         
         var section = Section(items: items, url: url)

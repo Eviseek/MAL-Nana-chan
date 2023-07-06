@@ -13,7 +13,7 @@
         <!--Login View Controller-->
         <scene sceneID="ApN-3Q-uV8">
             <objects>
-                <viewController id="h1p-Ik-fms" customClass="LoginViewController" customModule="MAL_Nana_chan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="h1p-Ik-fms" customClass="LoginViewController" customModule="MAL_Nana_chan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uzz-JL-sdz">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -832,7 +832,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Plan to watch"/>
                                                 <connections>
-                                                    <action selector="buttonSelected:" destination="ttw-gE-qtV" eventType="touchUpInside" id="5BB-qF-Iie"/>
+                                                    <action selector="buttonSelected:" destination="ttw-gE-qtV" eventType="touchUpInside" id="iiT-IH-KiW"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bDK-1n-WNZ">
@@ -842,7 +842,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Completed"/>
                                                 <connections>
-                                                    <action selector="buttonSelected:" destination="ttw-gE-qtV" eventType="touchUpInside" id="ZDk-de-svw"/>
+                                                    <action selector="buttonSelected:" destination="ttw-gE-qtV" eventType="touchUpInside" id="gtN-p1-WU5"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -857,7 +857,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="On hold"/>
                                                 <connections>
-                                                    <action selector="buttonSelected:" destination="ttw-gE-qtV" eventType="touchUpInside" id="b1u-Ez-CLR"/>
+                                                    <action selector="buttonSelected:" destination="ttw-gE-qtV" eventType="touchUpInside" id="NMa-Ss-RvD"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mHU-U4-3vc">
@@ -867,7 +867,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Watching"/>
                                                 <connections>
-                                                    <action selector="buttonSelected:" destination="ttw-gE-qtV" eventType="touchUpInside" id="LSo-9Y-DvE"/>
+                                                    <action selector="buttonSelected:" destination="ttw-gE-qtV" eventType="touchUpInside" id="LXe-zQ-MZ7"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -882,7 +882,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Dropped"/>
                                         <connections>
-                                            <action selector="buttonSelected:" destination="ttw-gE-qtV" eventType="touchUpInside" id="ZkV-TE-Mde"/>
+                                            <action selector="buttonSelected:" destination="ttw-gE-qtV" eventType="touchUpInside" id="fWc-e5-BCX"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -945,7 +945,7 @@
                                 <rect key="frame" x="10" y="552.33333333333337" width="370" height="88.666666666666629"/>
                                 <subviews>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ceu-ik-h61">
-                                        <rect key="frame" x="90" y="2" width="275" height="36"/>
+                                        <rect key="frame" x="90.333333333333343" y="2.3333333333332575" width="274.66666666666663" height="36"/>
                                     </datePicker>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sMl-C1-3TU">
                                         <rect key="frame" x="10" y="9.9999999999999982" width="75.333333333333329" height="20.333333333333329"/>
@@ -960,7 +960,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="iDJ-if-KXf">
-                                        <rect key="frame" x="83" y="45" width="282" height="36"/>
+                                        <rect key="frame" x="82.666666666666657" y="45.333333333333258" width="282.33333333333337" height="36"/>
                                     </datePicker>
                                 </subviews>
                                 <constraints>

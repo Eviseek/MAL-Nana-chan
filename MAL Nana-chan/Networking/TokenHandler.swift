@@ -6,19 +6,31 @@
 //
 
 import Foundation
+import KeychainAccess
 
-struct TokenHandler {
+class TokenHandler {
     
-    func requestNewToken() {
+    static let handler = TokenHandler()
+    var keychain: Keychain
+    
+    init() {
+        keychain = Keychain(service: "com.eviseek.MAL-Nana-chan")
+    }
+    
+    private func requestNewToken() {
         
     }
     
-    func checkToken() {
+    private func checkToken() {
         
     }
     
-    func saveToken() {
-        
+    func saveToken(_ token: String) {
+        keychain[Identifiers.keychainToken.rawValue] = token
+    }
+    
+    func getToken() -> String? {
+        return keychain[Identifiers.keychainToken.rawValue]
     }
     
 }

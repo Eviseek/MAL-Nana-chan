@@ -11,7 +11,7 @@ import OAuthSwift
 
 /*
  token
- eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjA4NDUyOTRhM2NlZWMwZGMyNmMwODdhNGRhZmIwZjBiMzRlZmNiOTYwYWJhZDM0M2U1MjI0YTEwNjIyN2IwNjBlYjc2NzMzMzliODcwOTk3In0.eyJhdWQiOiJmNDZkNDc0NDk0OTBkNzcyZmYwMWEzMWYyNDFhYWE1ZCIsImp0aSI6IjA4NDUyOTRhM2NlZWMwZGMyNmMwODdhNGRhZmIwZjBiMzRlZmNiOTYwYWJhZDM0M2U1MjI0YTEwNjIyN2IwNjBlYjc2NzMzMzliODcwOTk3IiwiaWF0IjoxNjc1NTI4MDY3LCJuYmYiOjE2NzU1MjgwNjcsImV4cCI6MTY3Nzk0NzI2Nywic3ViIjoiMTE4NzU4NzEiLCJzY29wZXMiOltdfQ.g-96d8i_2nXqxsxBRJnw5TZ0GkzAjBKxOBQjtNXh1IEVerKDmC70sWZ2W8Dniq65MVPlEqwqZ0p_A-iOafyGN1dxOOkzQVatW-PrOphAMgqNx4CIQQ9wBuhJM17YcLZTwrvkZc4yVJaJ0duI-Ng7aYSKrBGvLzwy6Hr3oNke-P3D1kAe5lhs2BEikNbgEXz1fhmymQJETzPIJdUet_G4c2ivmj1loevsqxn1omxnGNYfFInZLQCHpWgtfSOsQuTumRVteiTEmIJKmkJtm7SXkQ-XaW59o8RrxDubklPslG3aZWbsme4GgKncaQydj8dDBTs20uHTNIeTdgod7-6ILg
+ eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImFiY2RhN2U4MTZiN2VmOTAxMTIxNjFkNGZkNjRjNGYwNDU3YmIxMjFlM2YyOWU0YTg2OTdhODM2ODg5YTZkMTY0YmQ5OWVhZWU3MTlmN2ExIn0.eyJhdWQiOiJmNDZkNDc0NDk0OTBkNzcyZmYwMWEzMWYyNDFhYWE1ZCIsImp0aSI6ImFiY2RhN2U4MTZiN2VmOTAxMTIxNjFkNGZkNjRjNGYwNDU3YmIxMjFlM2YyOWU0YTg2OTdhODM2ODg5YTZkMTY0YmQ5OWVhZWU3MTlmN2ExIiwiaWF0IjoxNjg4Njc0MzQyLCJuYmYiOjE2ODg2NzQzNDIsImV4cCI6MTY5MTM1Mjc0Miwic3ViIjoiMTE4NzU4NzEiLCJzY29wZXMiOltdfQ.hnwiTAiJRzP0mrAlr89l8mxS7bDZ3yDbrdycgdMMkgdX1slxo7zLjDnc6H9DxXgOeV3Zn2VFOAntax9fn-p_8J-Q_Rl7cX5McMzSiw41qVWr8rWuY9CymZu6NgmZAFna7BN8PM1b8X4hOqML9H5KzooS3eSPaZiC8nIChGeSbdwHJ7FAAGWN2i6ct9C9wEQClHWr1kpZ8bEXIGKEBgUEItkQIKzpEjEyJ4MpkaN2dyHWgLRG9iIA1wZZZIySte7icoVmtwFmnjawy0HpZN_6xZponErSm3xGA47xninGyHgR5YaExk54runoLUBHA8tOfagLQQq7u4SdK1uuK3-biw
  */
 
 struct AuthenticationHandler {
@@ -40,13 +40,13 @@ struct AuthenticationHandler {
             codeVerifier: codeVerifier) { result in
             switch result {
             case .success(let (credential, response, parameters)):
-            debugPrint(response)
+                debugPrint(response)
                 print("token")
-              print(credential.oauthToken)
-              // Do your request
+                print(credential.oauthToken)
+                TokenHandler.handler.saveToken(credential.oauthToken)
             case .failure(let error):
                 debugPrint(error)
-              print(error.localizedDescription)
+                print(error.localizedDescription)
             }
         }
     }

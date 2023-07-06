@@ -14,12 +14,14 @@ enum URLs: String {
     case animeSeasonalURL = "https://api.myanimelist.net/v2/anime/season"
     case animeSuggestionsURL = "https://api.myanimelist.net/v2/anime/suggestions"
     
-    case animeURLAll = "https://api.myanimelist.net/v2/anime/{id}?fields=synopsis,mean,status,num_episodes,start_season,media_type,average_episode_duration,genres,recommendations,related_anime,related_manga"
+    case animeURLAll = "https://api.myanimelist.net/v2/anime/{id}?fields=synopsis,mean,status,num_episodes,start_season,media_type,average_episode_duration,genres,recommendations,related_anime,related_manga,my_list_status"
     
-    case animeSearchURL = "https://api.myanimelist.net/v2/anime?q={query}&fields=mean,status,num_episodes,media_type,start_season"
+    case animeSearchURL = "https://api.myanimelist.net/v2/anime?q={query}&fields=mean,status,num_episodes,media_type,start_season,my_list_status"
     case mangaSearchURL = "https://api.myanimelist.net/v2/manga?q={query}&fields=mean,status,num_chapters,media_type,start_date"
     
     case animePopularURL = "https://api.myanimelist.net/v2/anime/ranking?ranking_type=bypopularity&limit=10&fields=mean"
+    
+    case myAnimelistURL = "https://api.myanimelist.net/v2/users/@me/animelist?fields=list_status"
 
     
     //GET Jikan urls

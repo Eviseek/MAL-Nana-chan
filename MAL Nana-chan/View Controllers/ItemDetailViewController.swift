@@ -64,24 +64,24 @@ class ItemDetailViewController: UIViewController {
     
     func updateView() {
         itemNameLabel.text = viewModel?.anime?.title
-        if let score = viewModel?.anime?.mean {
+        if let score = viewModel?.anime?.score {
             scoreLabel.text = score.description
         }
-        if let url = URL(string: viewModel?.anime?.main_picture?.medium ?? "") {
+        if let url = URL(string: viewModel?.anime?.mainPicture?.medium ?? "") {
             mainImageImageView.af.setImage(withURL: url)
         }
-        typeLabel.text = viewModel?.anime?.media_type?.getType()
+        typeLabel.text = viewModel?.anime?.mediaType?.getType()
         statusLabel.text = viewModel?.anime?.status?.getStatus()
-        episodesLabel.text = viewModel?.anime?.num_episodes?.description
+        episodesLabel.text = viewModel?.anime?.episodesCount?.description
         //TODO: lepe osetrit duration
-        durationLabel.text = (viewModel?.anime?.average_episode_duration ?? 0 / 60).description
+        durationLabel.text = (viewModel?.anime?.episodeDurationSec ?? 0 / 60).description
         if viewModel?.anime?.synopsis != "" {
             synopsisTextView.text = viewModel?.anime?.synopsis
         } else {
             synopsisTextView.text = "No synopsis"
         }
         synopsisTextView.sizeToFit()
-        if let season = viewModel?.anime?.start_season?.season.stringValue(), let year = viewModel?.anime?.start_season?.year {
+        if let season = viewModel?.anime?.startSeason?.season.stringValue(), let year = viewModel?.anime?.startSeason?.year {
             seasonLabel.text = "\(season) \(year)"
         }
         genreCollectionView.reloadData()

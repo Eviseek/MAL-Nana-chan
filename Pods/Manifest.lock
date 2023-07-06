@@ -3,6 +3,7 @@ PODS:
   - AlamofireImage (4.2.0):
     - Alamofire (~> 5.4)
   - GradientProgressBar (3.0.0)
+  - KeychainAccess (4.2.2)
   - NVActivityIndicatorView (5.1.1):
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
@@ -14,6 +15,7 @@ DEPENDENCIES:
   - Alamofire
   - AlamofireImage
   - GradientProgressBar (~> 3.0)
+  - KeychainAccess
   - NVActivityIndicatorView
   - OAuthSwift
   - SkeletonView
@@ -24,6 +26,7 @@ SPEC REPOS:
     - Alamofire
     - AlamofireImage
     - GradientProgressBar
+    - KeychainAccess
     - NVActivityIndicatorView
     - OAuthSwift
     - SkeletonView
@@ -33,11 +36,12 @@ SPEC CHECKSUMS:
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
   AlamofireImage: 34a2d90b0e5fe6a5605f85ae4b7b01e784c60192
   GradientProgressBar: 5447e7686fed1bd363507d817d533db8d43cb29e
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   OAuthSwift: 75efbb5bd9a4b2b71a37bd7e986bf3f55ddd54c6
   SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
   youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: 6c091b916d5de88032b3c94f0a0d300406ad98bb
+PODFILE CHECKSUM: 715b1f723ac9979864c7a914fa3944b9d30370ed
 
 COCOAPODS: 1.12.1

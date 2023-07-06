@@ -56,24 +56,24 @@ extension SearchResultsViewController: UITableViewDataSource {
                 var seasonText = ""
                 
                 cell.titleLabel.text = anime?.title
-                if let season = anime?.start_season?.season {
+                if let season = anime?.startSeason?.season {
                     seasonText = season.stringValue()
                     seasonText += " "
                 }
-                if let year = anime?.start_season?.year {
+                if let year = anime?.startSeason?.year {
                     seasonText += year.description
                 }
                 cell.seasonLabel.text = seasonText
-                if let score = anime?.mean {
+                if let score = anime?.score {
                     cell.ratingLabel.text = score.description
                 }
-                cell.typeLabel.text = anime?.media_type?.getType()
-                cell.updateEpisodesLabel(type: .anime, number: anime?.num_episodes ?? 0)
-                if (anime?.num_episodes ?? 0) > 0 {
-                    cell.episodesNumberLabel.text = anime?.num_episodes?.description
+                cell.typeLabel.text = anime?.mediaType?.getType()
+                cell.updateEpisodesLabel(type: .anime, number: anime?.episodesCount ?? 0)
+                if (anime?.episodesCount ?? 0) > 0 {
+                    cell.episodesNumberLabel.text = anime?.episodesCount?.description
                 }
                 
-                if let url = URL(string: anime?.main_picture?.medium ?? "") {
+                if let url = URL(string: anime?.mainPicture?.medium ?? "") {
                     cell.itemImageView?.af.setImage(withURL: url)
                 }
                 

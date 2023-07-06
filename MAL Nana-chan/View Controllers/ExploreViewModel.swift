@@ -38,7 +38,7 @@ class ExploreViewModel {
             if let data = result?.data {
                 var section = Section()
                 for anime in data {
-                    let item = Item(id: anime.node.id, title: anime.node.title, image: anime.node.main_picture?.medium, score: anime.node.mean)
+                    let item = Item(id: anime.node.id, title: anime.node.title, image: anime.node.mainPicture?.medium, score: anime.node.score)
                     section.items.append(item)
                     print("appended item \(item)")
                     print("appending items")

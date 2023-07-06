@@ -9,72 +9,117 @@ import Foundation
 
 struct Anime: Codable {
     
-    var id: Int
-    var title: String
-    var main_picture: Picture?
-    var alternative_titles: AlternativeTitles?
-    var start_date: String?
-    var end_date: String?
-    var synopsis: String?
-    var mean: Float? //score
-    var rank: Int?
-    var popularity: Int?
-    var num_list_users: Int?
-    var num_scoring_users: Int?
-    var nsfw: NSFWValue?
-    var genres: [Genre]?
-    var created_at: String?
-    var updated_at: String?
-    var media_type: AnimeMediaType? //add manga media type
-    var status: AnimeStatus? //add manga status
-    var my_list_status: MyListStatus?
-    var num_episodes: Int? //num_volumes
-    var start_season: StartSeason? //nil
-    var broadcast: Broadcast? //nil
-    var source: AnimeSource? //nil
-    var average_episode_duration: Int?
-    var rating: Rating?
-    var studios: [AnimeStudio]?
-   // var related_anime: [Node]? //can get only from anime detail call
-  //  var related_manga: [Node]? //can get only from anime detail call
-  //  var recommendations: [Node]? //can get only from anime detail call
+    let id: Int
+    let title: String
+    let mainPicture: Picture?
+    let alternativeTitle: AlternativeTitles?
+    let startDate: String?
+    let endDate: String?
+    let synopsis: String?
+    let score: Float? //score
+    let rank: Int?
+    let popularity: Int?
+    let listUsersCount: Int?
+    let scoringUsersCount: Int?
+    let nsfw: NSFWValue?
+    let genres: [Genre]?
+    let createdAt: String?
+    let updatedAt: String?
+    let mediaType: AnimeMediaType? //add manga media type
+    let status: AnimeStatus? //add manga status
+    var myListStatus: MyListStatus?
+    let episodesCount: Int? //num_volumes
+    let startSeason: StartSeason? //nil
+    let broadcast: Broadcast? //nil
+    let source: AnimeSource? //nil
+    let episodeDurationSec: Int?
+    let rating: Rating?
+    let studios: [AnimeStudio]?
+   // let related_anime: [Node]? //can get only from anime detail call
+  //  let related_manga: [Node]? //can get only from anime detail call
+  //  let recommendations: [Node]? //can get only from anime detail call
+    
+    private enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case title = "title"
+        case mainPicture = "main_picture"
+        case alternativeTitle = "alternative_titles"
+        case startDate = "start_date"
+        case endDate = "end_date"
+        case synopsis = "synopsis"
+        case score = "mean"
+        case rank = "rank"
+        case popularity = "popularity"
+        case scoringUsersCount = "num_scoring_users"
+        case listUsersCount = "num_list_users"
+        case nsfw = "nsfw"
+        case genres = "genres"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+        case mediaType = "media_type"
+        case status = "status"
+        case myListStatus = "my_list_status"
+        case episodesCount = "num_episodes"
+        case startSeason = "start_season"
+        case broadcast = "broadcast"
+        case source = "source"
+        case episodeDurationSec = "average_episode_duration"
+        case rating = "rating"
+        case studios = "studios"
+    }
   
 }
 
 struct Picture: Codable {
-    var large: String?
-    var medium: String
+    let large: String?
+    let medium: String
 }
 
 struct AlternativeTitles: Codable {
-    var synonyms: [String]?
-    var en: String?
-    var ja: String?
+    let synonyms: [String]?
+    let en: String?
+    let ja: String?
 }
 
 struct Genre: Codable {
-    var id: Int
-    var name: String
+    let id: Int
+    let name: String
 }
 
 struct MyListStatus: Codable {
-    var status: UserAnimeStatus?
+    var status: UserAnimeStatus
     var score: Int
-    var num_episodes_watched: Int
-    var is_rewatching: Bool
-    var start_date: String?
-    var finish_date: String?
-    var priority: Int
-    var num_times_rewatched: Int
-    var rewatch_value: Int
-    var tags: [String]
-    var comments: String
-    var updated_at: String
+    var episodesWatchedCount: Int
+    var isRewatching: Bool
+    var startDate: String?
+    let finishDate: String?
+    var priority: Int?
+    var rewatchedCount: Int?
+    var rewarchValue: Int?
+    var tags: [String]?
+    var comments: String?
+    var updatedAt: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case status = "status"
+        case score = "score"
+        case episodesWatchedCount = "num_episodes_watched"
+        case isRewatching = "is_rewatching"
+        case startDate = "start_date"
+        case finishDate = "finish_date"
+        case priority = "priority"
+        case rewatchedCount = "num_times_rewatched"
+        case rewarchValue = "rewatch_value"
+        case tags = "tags"
+        case comments = "comments"
+        case updatedAt = "updated_at"
+    }
+    
 }
 
 struct StartSeason: Codable {
-    var year: Int
-    var season: Season
+    let year: Int
+    let season: Season
 }
 
 struct Broadcast: Codable {
@@ -84,7 +129,7 @@ struct Broadcast: Codable {
 
 struct AnimeStudio: Codable {
     var id: Int
-    var name: String
+    let name: String
 }
 
 

@@ -31,4 +31,10 @@ enum Identifiers: String {
     
     
     case GenreCollectionViewCell
+    
+    //Keychain
+    case keychainToken = "userToken"
+    
+    //Alamofire header
+    case headerAuthID = "X-MAL-CLIENT-ID"
 }

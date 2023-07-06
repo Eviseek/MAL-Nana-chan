@@ -13,6 +13,7 @@ target 'MAL Nana-chan' do
   pod 'NVActivityIndicatorView'
   pod 'SkeletonView'
   pod 'GradientProgressBar', '~> 3.0'
+  pod 'KeychainAccess'
 
   target 'MAL Nana-chanTests' do
     inherit! :search_paths
