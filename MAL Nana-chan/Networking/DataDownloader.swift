@@ -19,6 +19,7 @@ struct DataDownloader {
         
         if let token = TokenHandler.handler.getToken() {
             print("auth header")
+            headers.add(name: "Content-Type", value: "application/x-www-form-urlencoded")
             headers.add(name: "Authorization", value: "Bearer " + token)
         } else {
             print("not auth header")
@@ -47,6 +48,34 @@ struct DataDownloader {
             })
             
         }
+    }
+    
+    func changeList(_ url: String, params: MyListStatus, completion: @escaping () -> Void) {
+        
+//        var listHeaders: HTTPHeaders = []
+//        listHeaders.add(name: "status", value: params.status.rawValue)
+//        listHeaders.add(name: "score", value: params.score.description)
+//        if let episodesCount = params.episodesWatchedCount {
+//            listHeaders.add(name: "num_watched_episodes", value: episodesCount.description)
+//        }
+//        if let token = TokenHandler.handler.getToken() {
+//            listHeaders.add(name: "Authorization", value: "Bearer " + token)
+//        }
+//
+//        print("my headers look: \(listHeaders)")
+        
+        var parameters = [
+            "status": params.status.rawValue,
+            "score" : "0"
+        ]
+        
+        print("parameters \(parameters)")
+        
+        AF.request(url, method: .put, parameters: parameters, headers: getHeader()).response { AFdata in
+            debugPrint(AFdata)
+            completion()
+        }
+            
     }
 
     

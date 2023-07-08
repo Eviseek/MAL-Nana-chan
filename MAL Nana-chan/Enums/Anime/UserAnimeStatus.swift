@@ -39,4 +39,14 @@ struct UserAnimeStatusManager {
         }
     }
     
+    func getTagForStatus(_ status: UserAnimeStatus) -> Int {
+        switch status {
+        case .completed: return 1
+        case .onHold: return 2
+        case .watching: return 3
+        case .dropped: return 4
+        case .planToWatch: return 5
+        }
+    }
+    
 }

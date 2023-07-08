@@ -41,6 +41,16 @@ class ItemDetailViewModel {
         }
     }
     
+    func addToListClicked() {
+        if let picker = viewController.storyboard?.instantiateViewController(withIdentifier: "AnimelistDetailViewController") as? AnimelistDetailViewController {
+            if let sheet = picker.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+            }
+            picker.anime = anime
+            viewController.present(picker, animated: true)
+        }
+    }
+    
     
     
 }

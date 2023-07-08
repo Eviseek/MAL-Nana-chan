@@ -371,10 +371,10 @@
 				DDE175A22A4E298C00334FC7 /* RecommendationDetailViewController.swift */,
 				DDE175A42A4EE6CE00334FC7 /* RecommendationDetailViewModel.swift */,
 				DDE175B02A4F828100334FC7 /* AnimelistDetailViewController.swift */,
+				DD47B54C2A5760530088CCAB /* AnimelistDetailViewModel.swift */,
 				DDE175B62A508F6E00334FC7 /* LoginViewController.swift */,
 				DDE175B82A508F9300334FC7 /* LoginViewModel.swift */,
 				DDE175BC2A50932A00334FC7 /* TabBarController.swift */,
-				DD47B54C2A5760530088CCAB /* AnimelistDetailViewModel.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";

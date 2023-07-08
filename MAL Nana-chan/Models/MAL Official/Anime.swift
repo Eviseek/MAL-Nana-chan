@@ -89,8 +89,8 @@ struct Genre: Codable {
 struct MyListStatus: Codable {
     var status: UserAnimeStatus
     var score: Int
-    var episodesWatchedCount: Int
-    var isRewatching: Bool
+    var episodesWatchedCount: Int?
+    var isRewatching: Bool?
     var startDate: String?
     let finishDate: String?
     var priority: Int?
@@ -98,7 +98,7 @@ struct MyListStatus: Codable {
     var rewarchValue: Int?
     var tags: [String]?
     var comments: String?
-    var updatedAt: String
+    var updatedAt: String?
     
     private enum CodingKeys: String, CodingKey {
         case status = "status"

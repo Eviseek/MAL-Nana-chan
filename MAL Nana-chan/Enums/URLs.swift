@@ -23,6 +23,7 @@ enum URLs: String {
     
     case myAnimelistURL = "https://api.myanimelist.net/v2/users/@me/animelist?fields=list_status"
 
+    case patchAnimelistURL = "https://api.myanimelist.net/v2/anime/{id}/my_list_status"
     
     //GET Jikan urls
     case jikanPromoURL = "https://api.jikan.moe/v4/watch/promos"
