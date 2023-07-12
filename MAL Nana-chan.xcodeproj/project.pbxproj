@@ -67,6 +67,9 @@
 		CFEE35991A38D20105081586 /* Pods_MAL_Nana_chan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A2977A77402BD6558967761 /* Pods_MAL_Nana_chan.framework */; };
 		DD47B54B2A57290A0088CCAB /* UserAnimelist.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47B54A2A57290A0088CCAB /* UserAnimelist.swift */; };
 		DD47B54D2A5760530088CCAB /* AnimelistDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47B54C2A5760530088CCAB /* AnimelistDetailViewModel.swift */; };
+		DD47B5502A5B481A0088CCAB /* AnimelistControlCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47B54E2A5B481A0088CCAB /* AnimelistControlCollectionViewCell.swift */; };
+		DD47B5512A5B481A0088CCAB /* AnimelistControlCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD47B54F2A5B481A0088CCAB /* AnimelistControlCollectionViewCell.xib */; };
+		DD47B5542A5EF0430088CCAB /* SelectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47B5532A5EF0430088CCAB /* SelectableView.swift */; };
 		DDBFE26E2A45E4A10023574B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBFE26D2A45E4A10023574B /* SettingsViewController.swift */; };
 		DDBFE2702A45E6180023574B /* SeeAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBFE26F2A45E6180023574B /* SeeAllViewController.swift */; };
 		DDBFE2722A45E63B0023574B /* SeeAllViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBFE2712A45E63B0023574B /* SeeAllViewModel.swift */; };
@@ -171,6 +174,9 @@
 		D2FB31D41D3C6318FFF8112C /* Pods_MAL_Nana_chanTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MAL_Nana_chanTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD47B54A2A57290A0088CCAB /* UserAnimelist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAnimelist.swift; sourceTree = "<group>"; };
 		DD47B54C2A5760530088CCAB /* AnimelistDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimelistDetailViewModel.swift; sourceTree = "<group>"; };
+		DD47B54E2A5B481A0088CCAB /* AnimelistControlCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimelistControlCollectionViewCell.swift; sourceTree = "<group>"; };
+		DD47B54F2A5B481A0088CCAB /* AnimelistControlCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnimelistControlCollectionViewCell.xib; sourceTree = "<group>"; };
+		DD47B5532A5EF0430088CCAB /* SelectableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableView.swift; sourceTree = "<group>"; };
 		DDBFE26D2A45E4A10023574B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		DDBFE26F2A45E6180023574B /* SeeAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllViewController.swift; sourceTree = "<group>"; };
 		DDBFE2712A45E63B0023574B /* SeeAllViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllViewModel.swift; sourceTree = "<group>"; };
@@ -391,8 +397,7 @@
 				6ADFDF8C29C8F9560033BC9E /* ItemListTableViewCell.swift */,
 				6ADFDF8D29C8F9560033BC9E /* ItemListTableViewCell.xib */,
 				DDE175A72A4F0B5200334FC7 /* Recommendation */,
-				DDE175AC2A4F0BB200334FC7 /* AnimelistItemTableViewCell.swift */,
-				DDE175AD2A4F0BB200334FC7 /* AnimelistItemTableViewCell.xib */,
+				DD47B5522A5B48230088CCAB /* Animelist views */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -402,6 +407,7 @@
 			children = (
 				6AB660FF29C7938D007DCD27 /* MAL Official */,
 				6AB6610229C79649007DCD27 /* Jikan */,
+				DD47B5532A5EF0430088CCAB /* SelectableView.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -437,6 +443,17 @@
 				D2FB31D41D3C6318FFF8112C /* Pods_MAL_Nana_chanTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DD47B5522A5B48230088CCAB /* Animelist views */ = {
+			isa = PBXGroup;
+			children = (
+				DDE175AC2A4F0BB200334FC7 /* AnimelistItemTableViewCell.swift */,
+				DDE175AD2A4F0BB200334FC7 /* AnimelistItemTableViewCell.xib */,
+				DD47B54E2A5B481A0088CCAB /* AnimelistControlCollectionViewCell.swift */,
+				DD47B54F2A5B481A0088CCAB /* AnimelistControlCollectionViewCell.xib */,
+			);
+			path = "Animelist views";
 			sourceTree = "<group>";
 		};
 		DDE175A62A4F0AC100334FC7 /* Recent Searches */ = {
@@ -576,6 +593,7 @@
 				6AD2699D298E879C00931579 /* Main.storyboard in Resources */,
 				6A9FD11B29995168006DCEE9 /* GenreCollectionViewCell.xib in Resources */,
 				6AB6610629C797B9007DCD27 /* YoutubeEmbedTableViewCell.xib in Resources */,
+				DD47B5512A5B481A0088CCAB /* AnimelistControlCollectionViewCell.xib in Resources */,
 				6AD269CE298E89BA00931579 /* ItemSectionTableViewCell.xib in Resources */,
 				DDE175AF2A4F0BB200334FC7 /* AnimelistItemTableViewCell.xib in Resources */,
 			);
@@ -740,6 +758,7 @@
 				6A9FD115299196DD006DCEE9 /* ItemDetailViewModel.swift in Sources */,
 				6AF2CD7E298EBF9300F32BE8 /* Anime.swift in Sources */,
 				6A9FD10E2990224A006DCEE9 /* URLs.swift in Sources */,
+				DD47B5502A5B481A0088CCAB /* AnimelistControlCollectionViewCell.swift in Sources */,
 				6AF2CD75298E8FE500F32BE8 /* HomeViewModel.swift in Sources */,
 				6AB6610529C797B9007DCD27 /* YoutubeEmbedTableViewCell.swift in Sources */,
 				6AF2CD89298EC23500F32BE8 /* UserAnimeStatus.swift in Sources */,
@@ -759,6 +778,7 @@
 				DD47B54B2A57290A0088CCAB /* UserAnimelist.swift in Sources */,
 				6AF2CD8B298EC4DF00F32BE8 /* Season.swift in Sources */,
 				DDE175AE2A4F0BB200334FC7 /* AnimelistItemTableViewCell.swift in Sources */,
+				DD47B5542A5EF0430088CCAB /* SelectableView.swift in Sources */,
 				DD47B54D2A5760530088CCAB /* AnimelistDetailViewModel.swift in Sources */,
 				DDBFE2722A45E63B0023574B /* SeeAllViewModel.swift in Sources */,
 				6AB660FE29C79177007DCD27 /* AnimelistViewModel.swift in Sources */,

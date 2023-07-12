@@ -21,8 +21,10 @@ enum URLs: String {
     
     case animePopularURL = "https://api.myanimelist.net/v2/anime/ranking?ranking_type=bypopularity&limit=10&fields=mean"
     
-    case myAnimelistURL = "https://api.myanimelist.net/v2/users/@me/animelist?fields=list_status"
+    case myAnimelistURL = "https://api.myanimelist.net/v2/users/@me/animelist?fields=list_status,mean,status,num_episodes,media_type,start_season" //all my animelist
+    case myAnimelistWithStatusURL = "https://api.myanimelist.net/v2/users/@me/animelist?fields=list_status,mean,status,num_episodes,media_type,start_season&status={status}" //only specific status, like watching, plan to watch, etc
 
+    //url to save changes to animelist
     case patchAnimelistURL = "https://api.myanimelist.net/v2/anime/{id}/my_list_status"
     
     //GET Jikan urls
@@ -40,6 +42,15 @@ enum URLs: String {
 //    }
 
     
+}
+
+struct URLManager {
+    func getAnimelistURLForStatus(_ status: UserAnimeStatus) -> String {
+        let original = URLs.myAnimelistWithStatusURL.rawValue
+        let new = original.replacingOccurrences(of: "{status}", with: status.rawValue)
+        print("url with status is \(new)")
+        return new
+    }
 }
 
 extension String {

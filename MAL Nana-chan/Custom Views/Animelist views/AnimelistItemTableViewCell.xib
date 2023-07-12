@@ -129,6 +129,7 @@
             <connections>
                 <outlet property="itemImageView" destination="Pkj-hW-pV5" id="RiA-zP-nAG"/>
                 <outlet property="itemScoreLabel" destination="1sm-oI-Mgw" id="fdJ-Xo-6wp"/>
+                <outlet property="itemSeasonLabel" destination="fgZ-qF-qtd" id="mZJ-gh-zhh"/>
                 <outlet property="itemTitleLabel" destination="3DR-qL-rlp" id="TgV-0b-zxK"/>
                 <outlet property="itemTypeLabel" destination="rO5-Td-BlZ" id="XPE-eZ-8df"/>
                 <outlet property="progressBar" destination="hAH-ur-DhV" id="PTI-kX-BeY"/>
