@@ -11,6 +11,9 @@ import AlamofireImage
 
 class AnimelistViewController: UIViewController {
     
+    @IBOutlet weak var notLoggedView: UIView!
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var loadingOverlay: UIView!
     @IBOutlet weak var collectionview: UICollectionView!
     @IBOutlet weak var tableview: UITableView!
     
@@ -52,9 +55,14 @@ class AnimelistViewController: UIViewController {
     func updateCollectionView() {
         collectionview.reloadData()
     }
+    
+    @IBAction func loginButtonClicked(_ sender: UIButton) {
+        viewModel.loginButtonClicked()
+    }
+    
 }
 
-extension AnimelistViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension AnimelistViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.getAvailableStatuses().count
     }
@@ -65,9 +73,15 @@ extension AnimelistViewController: UICollectionViewDataSource, UICollectionViewD
             cell.statusLabel.text = status.name
             if status.isSelected {
                 print("cell selected at \(indexPath.item)")
-                cell.statusLabel.textColor = .flatOrange
+                cell.statusLabel.font = UIFont.systemFont(ofSize: cell.statusLabel.font.pointSize, weight: .bold)
+                cell.selectedLineView.isHidden = false
+                let visibleRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
+                if !(visibleRect.contains(cell.frame)) {
+                    //TODO
+                }
             } else {
-                cell.statusLabel.textColor = .blue
+                cell.statusLabel.font = UIFont.systemFont(ofSize: cell.statusLabel.font.pointSize, weight: .regular)
+                cell.selectedLineView.isHidden = true
             }
             return cell
         }
@@ -79,6 +93,11 @@ extension AnimelistViewController: UICollectionViewDataSource, UICollectionViewD
         viewModel.cellSelected(index: indexPath.item)
         //TODO: show another view
         
+    }
+    //TODO: dodelat collection view flow layout - roztahnout cell, pridat animaci
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        print("dlow layout del")
+        return collectionView.bounds.size
     }
     
     

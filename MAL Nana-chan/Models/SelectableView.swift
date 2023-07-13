@@ -9,5 +9,6 @@ import Foundation
 
 struct SelectableView {
     var name: String
+    var status: UserAnimeStatus?
     var isSelected: Bool = false
 }

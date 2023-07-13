@@ -24,7 +24,7 @@ class seeAllViewModel {
     init(viewController: SeeAllViewController, content: Section) {
         self.viewController = viewController
         self.sectionContent = content
-        indicator.startAnimating(view: viewController.view)
+        indicator.startAnimating(view: viewController.view, background: nil)
         dataDownloader = DataDownloader()
         fetchData()
     }

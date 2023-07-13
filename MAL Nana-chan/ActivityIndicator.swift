@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import NVActivityIndicatorView
 
 class ActivityIndicator {
@@ -18,12 +19,15 @@ class ActivityIndicator {
         activityIndicator = NVActivityIndicatorView(frame: frame, type: .lineScalePulseOut, color: UIColor(named: "mal_color"))
     }
     
-    func startAnimating(view: UIView) {
+    func startAnimating(view: UIView, background: UIColor?) {
         parentFrame = UIView()
-        parentFrame.backgroundColor = .white
+        if let background = background {
+            parentFrame.backgroundColor = background
+        } else {
+            parentFrame.backgroundColor = .white
+        }
         parentFrame.frame = view.bounds
         view.addSubview(parentFrame)
-
       
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height

@@ -10,6 +10,7 @@ import UIKit
 class AnimelistControlCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var selectedLineView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

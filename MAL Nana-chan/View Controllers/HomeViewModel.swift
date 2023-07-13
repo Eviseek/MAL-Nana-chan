@@ -26,7 +26,7 @@ class HomeViewModel {
     
     init(viewController: HomeViewController) {
         self.viewController = viewController
-        indicator.startAnimating(view: viewController.view)
+        indicator.startAnimating(view: viewController.view, background: nil)
         viewDidLoad()
     }
     

@@ -10,11 +10,17 @@ import KeychainAccess
 
 class TokenHandler {
     
+    public static var isUserLoggedIn: Bool = false
     static let handler = TokenHandler()
     var keychain: Keychain
     
     init() {
         keychain = Keychain(service: "com.eviseek.MAL-Nana-chan")
+        if let token = getToken() {
+            TokenHandler.isUserLoggedIn = true
+        } else {
+            TokenHandler.isUserLoggedIn = false
+        }
     }
     
     private func requestNewToken() {
@@ -27,6 +33,12 @@ class TokenHandler {
     
     func saveToken(_ token: String) {
         keychain[Identifiers.keychainToken.rawValue] = token
+        TokenHandler.isUserLoggedIn = true
+    }
+    
+    func deleteToken() {
+        try? keychain.remove(Identifiers.keychainToken.rawValue)
+        TokenHandler.isUserLoggedIn = false
     }
     
     func getToken() -> String? {

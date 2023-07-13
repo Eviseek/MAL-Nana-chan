@@ -19,7 +19,7 @@ class ItemDetailViewModel {
     var id: Int?
     
     init(viewController: ItemDetailViewController) { //TODO: type
-        indicator.startAnimating(view: viewController.view)
+        indicator.startAnimating(view: viewController.view, background: nil)
         self.viewController = viewController
         self.id = viewController.id
         if let _ = id {
