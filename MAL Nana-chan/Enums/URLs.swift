@@ -45,11 +45,15 @@ enum URLs: String {
 }
 
 struct URLManager {
-    func getAnimelistURLForStatus(_ status: UserAnimeStatus) -> String {
-        let original = URLs.myAnimelistWithStatusURL.rawValue
-        let new = original.replacingOccurrences(of: "{status}", with: status.rawValue)
-        print("url with status is \(new)")
-        return new
+    func getAnimelistURLForStatus(_ status: UserAnimeStatus?) -> String {
+        if let status = status {
+            let original = URLs.myAnimelistWithStatusURL.rawValue
+            let new = original.replacingOccurrences(of: "{status}", with: status.rawValue)
+            print("url with status is \(new)")
+            return new
+        } else {
+            return URLs.myAnimelistURL.rawValue
+        }
     }
 }
 

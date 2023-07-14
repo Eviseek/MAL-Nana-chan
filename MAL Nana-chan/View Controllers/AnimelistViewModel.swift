@@ -28,33 +28,42 @@ class AnimelistViewModel {
     
     func viewDidLoad(vc: AnimelistViewController) {
         self.vc = vc
-        setUpIfLogged(vc: vc)
     }
     
     func viewWillAppear() {
-        if let vc = vc {
-            setUpIfLogged(vc: vc)
+        //TODO: make different check for view did load and then became active again
+        checkStatusAndFetch()
+    }
+    
+    private func checkStatusAndFetch() {
+        guard let vc = vc else { return }
+        if setUIIfLogged(vc: vc) {
+            for availableStatus in availableStatuses { //if user logged, check which status is selected and fetch it
+                if availableStatus.isSelected {
+                    statusSelected(availableStatus.status)
+                }
+            }
         }
     }
     
-    private func setUpIfLogged(vc: AnimelistViewController) {
+    private func setUIIfLogged(vc: AnimelistViewController) -> Bool {
+        print("if logged called")
         if TokenHandler.isUserLoggedIn {
+            print("user logged in")
             vc.notLoggedView.isHidden = true
             loadingIndicator.startAnimating(view: vc.view, background: nil)
-            fetchAnimelist(url: URLs.myAnimelistURL.rawValue)
+            return true
         } else {
+            print("user not logged in")
             vc.notLoggedView.isHidden = false
+            return false
         }
     }
     
     func statusSelected(_ status: UserAnimeStatus?) {
-        if let status = status {
-            let url = urlManager.getAnimelistURLForStatus(status)
-            fetchAnimelist(url: url)
-        } else {
-            //to fetch everything
-            fetchAnimelist(url: URLs.myAnimelistURL.rawValue)
-        }
+        let url = urlManager.getAnimelistURLForStatus(status)
+        print("my url is \(url)")
+        fetchAnimelist(url: url)
     }
     
     func getAvailableStatuses() -> [SelectableView] {
@@ -77,7 +86,24 @@ class AnimelistViewModel {
     
     func loginButtonClicked() {
         guard let vc = vc else { return }
-        handler.authenticate(vc)
+        handler.authenticate(vc) {
+            print("ALL DONE")
+            self.setUIIfLogged(vc: vc)
+        }
+        
+    }
+    
+    func tableViewItemSelectedAt(_ index: Int) {
+        if let picker = vc?.storyboard?.instantiateViewController(withIdentifier: "AnimelistDetailViewController") as? AnimelistDetailViewController {
+            if let sheet = picker.sheetPresentationController {
+                sheet.detents = [.large()]
+            }
+            var anime = userAnimelist?.data[index].node
+            anime?.myListStatus = userAnimelist?.data[index].list_status
+            print("anime with list status \(anime?.myListStatus)")
+            picker.anime = anime
+            vc?.present(picker, animated: true)
+        }
     }
     
     private func startLoadingAnimation() {

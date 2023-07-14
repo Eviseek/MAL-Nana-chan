@@ -27,6 +27,12 @@ class AnimelistViewController: UIViewController {
         viewModel.viewDidLoad(vc: self)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        viewModel.viewWillAppear()
+    }
+    
+    
     private func setUpTableview() {
         let nib = UINib(nibName: "AnimelistItemTableViewCell", bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: "AnimelistItemTableViewCell")
@@ -123,6 +129,10 @@ extension AnimelistViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.tableViewItemSelectedAt(indexPath.row)
     }
     
     

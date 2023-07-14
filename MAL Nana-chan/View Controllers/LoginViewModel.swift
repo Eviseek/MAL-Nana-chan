@@ -23,7 +23,9 @@ class LoginViewModel {
     
     func loginButtonClicked() {
         if let loginVC = loginVC {
-            handler.authenticate(loginVC)
+            handler.authenticate(loginVC) {
+                //TODO: update screen
+            }
         }
     }
     

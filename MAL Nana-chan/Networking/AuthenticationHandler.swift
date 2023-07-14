@@ -24,7 +24,7 @@ struct AuthenticationHandler {
         responseType: "code"
     )
     
-    private func makeOAuthRequest() {
+    private func makeOAuthRequest(completion: @escaping () -> Void) {
         
         oauthswift.accessTokenBasicAuthentification = true
 
@@ -44,15 +44,20 @@ struct AuthenticationHandler {
                 print("token")
                 print(credential.oauthToken)
                 TokenHandler.handler.saveToken(credential.oauthToken)
+                completion()
             case .failure(let error):
                 debugPrint(error)
                 print(error.localizedDescription)
+                completion()
             }
         }
     }
     
-    func authenticate(_ viewController: UIViewController) {
-        makeOAuthRequest()
+    func authenticate(_ viewController: UIViewController, completion: @escaping () -> Void) {
+        makeOAuthRequest() {
+            print("completion called")
+            completion()
+        }
         oauthswift.authorizeURLHandler = SafariURLHandler(viewController: viewController, oauthSwift: oauthswift)
     }
     

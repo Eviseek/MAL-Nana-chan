@@ -18,6 +18,9 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+       //TODO: testing code ----- TokenHandler.handler.deleteToken() --------
+        
         viewModel = HomeViewModel(viewController: self)
         tableViewSetUp()
       
