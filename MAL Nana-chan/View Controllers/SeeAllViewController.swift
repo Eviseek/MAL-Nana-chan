@@ -15,7 +15,7 @@ class SeeAllViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var sectionContent: Section? = nil
-    private var seeAllVM: seeAllViewModel? = nil
+    private var viewModel: seeAllViewModel? = nil
     private var items: [Anime]? = nil
     
     override func viewDidLoad() {
@@ -26,7 +26,7 @@ class SeeAllViewController: UIViewController {
             return
         }
         
-        seeAllVM = seeAllViewModel(viewController: self, content: sectionContent)
+        viewModel = seeAllViewModel(viewController: self, content: sectionContent)
         
         tableViewSetUp()
         
@@ -42,12 +42,13 @@ class SeeAllViewController: UIViewController {
         let nib = UINib(nibName: "ItemListTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "ItemListTableViewCell")
         tableView.dataSource = self
+        tableView.delegate = self
     }
     
 }
 
 
-extension SeeAllViewController: UITableViewDataSource {
+extension SeeAllViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("number of items is \(sectionContent?.items.count)")
         return items?.count ?? 0
@@ -56,11 +57,15 @@ extension SeeAllViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ItemListTableViewCell") as? ItemListTableViewCell {
             var item = items?[indexPath.row]
+            cell.item = item
+            cell.vc = self
+            cell.selectionStyle = .none
             cell.titleLabel.text = item?.title
-            cell.typeLabel.text = item?.mediaType?.rawValue
+            cell.typeLabel.text = item?.mediaType?.getType()
             cell.episodesTitleLabel.text = item?.episodesCount?.description ?? "?"
             cell.seasonLabel.text = "Season unavailable"
-            if let seasonText = item?.startSeason?.season, let yearText = item?.startSeason?.year { //unwrapping before passing to label
+            cell.scoreLabel.text = item?.score?.description ?? "N/A"
+            if let seasonText = item?.startSeason?.season.stringValue(), let yearText = item?.startSeason?.year { //unwrapping before passing to label
                 cell.seasonLabel.text = "\(seasonText) \(yearText)"
             }
             if let url = URL(string: item?.mainPicture?.medium ?? "") { //downloading the image from net
@@ -71,6 +76,11 @@ extension SeeAllViewController: UITableViewDataSource {
         return UITableViewCell()
     }
     
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("selected!!!")
+        viewModel?.itemSelectedAt(indexPath.row)
+    }
     
     
     

@@ -16,7 +16,7 @@ class seeAllViewModel {
     private var sectionContent: Section
     
     private var dataDownloader: DataDownloader
-    private var fields = ["mean", "media_type", "status", "num_episodes", "source", "start_season"]
+    private var fields = ["mean", "media_type", "status", "num_episodes", "source", "start_season", "my_list_status"]
     
     private var animeArr = [Anime]()
     
@@ -27,6 +27,13 @@ class seeAllViewModel {
         indicator.startAnimating(view: viewController.view, background: nil)
         dataDownloader = DataDownloader()
         fetchData()
+    }
+    
+    func itemSelectedAt(_ index: Int) {
+        if let controller = viewController.storyboard?.instantiateViewController(withIdentifier: "ItemDetailViewController") as? ItemDetailViewController {
+            controller.id = animeArr[index].id
+            viewController.navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     private func fetchData() {

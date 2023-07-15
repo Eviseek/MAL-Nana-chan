@@ -12,7 +12,7 @@ class ItemListTableViewCell: UITableViewCell {
     @IBOutlet weak var itemImageView: UIImageView!
     
     
-    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var seasonLabel: UILabel!
     @IBOutlet weak var episodesNumberLabel: UILabel!
@@ -21,12 +21,26 @@ class ItemListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var typeContainerView: UIView!
     
+    @IBOutlet weak var myListView: UIView!
+    @IBOutlet weak var myListButton: UIButton!
+    
+    var item: Anime? = nil
+    var vc: UIViewController? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
         typeContainerView.layer.cornerRadius = 5
+        
+        myListView.layer.cornerRadius = 5
+        myListView.layer.borderWidth = 1
+        myListView.layer.borderColor = UIColor(named: "mal_color")?.cgColor
+        
+        if !TokenHandler.isUserLoggedIn {
+            myListView.isHidden = true
+        }
+        
     }
     
     func updateEpisodesLabel(type: ItemTypes, number: Int) {
@@ -43,4 +57,14 @@ class ItemListTableViewCell: UITableViewCell {
         }
     }
     
+    @IBAction func myListClicked(_ sender: UIButton) {
+        if let picker = vc?.storyboard?.instantiateViewController(withIdentifier: "AnimelistDetailViewController") as? AnimelistDetailViewController {
+            if let sheet = picker.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+            }
+            picker.anime = item
+            picker.fromAnimelist = false
+            vc?.present(picker, animated: true)
+        }
+    }
 }

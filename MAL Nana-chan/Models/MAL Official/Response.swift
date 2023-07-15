@@ -15,6 +15,7 @@ struct Response<T: Codable>: Codable {
 struct Node<T: Codable>: Codable {
     var node: T
     var relation_type_formatted: String?
+    var num_recommendations: Int?
 }
 
 struct Paging: Codable {

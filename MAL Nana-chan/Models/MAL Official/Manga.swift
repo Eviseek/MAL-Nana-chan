@@ -11,29 +11,57 @@ struct Manga: Codable {
     
     var id: Int
     var title: String
-    var main_picture: Picture?
-    var alternative_titles: AlternativeTitles?
-    var start_date: String?
-    var end_date: String?
+    var mainPicture: Picture?
+    var alternativeTitles: AlternativeTitles?
+    var startDate: String?
+    var endDate: String?
     var synopsis: String?
-    var mean: Float? //score
+    var score: Float? //score
     var rank: Int?
     var popularity: Int?
-    var num_list_users: Int?
-    var num_scoring_users: Int?
+    var listUsersCount: Int?
+    var scoringUsersCount: Int?
     var nsfw: NSFWValue?
     var genres: [Genre]?
-    var created_at: String?
-    var updated_at: String?
-    var media_type: MangaMediaType? 
+    var createdAt: String?
+    var updatedAt: String?
+    var mediaType: MangaMediaType?
     var status: MangaStatus?
-    var my_list_status: MyListStatus? //CHANGE
-    var num_volumes: Int?
-    var num_chapters: Int?
+    var myListStatus: MyListStatus? //CHANGE
+    var volumesCount: Int?
+    var chaptersCount: Int?
     var authors: [PersonRoleEdge]?
-    var related_anime: [RelatedAnimeEdge]? //can get only from detail call
-    var related_manga: [RelatedMangaEdge]? //can get only from detail call
+    var relatedAnime: [RelatedAnimeEdge]? //can get only from detail call
+    var relatedManga: [RelatedMangaEdge]? //can get only from detail call
    // var recommendations: [Node<T>]? //can get only from detail call
+    
+    private enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case title = "title"
+        case mainPicture = "main_picture"
+        case alternativeTitles = "alternative_titles"
+        case startDate = "start_date"
+        case endDate = "end_date"
+        case synopsis = "synopsis"
+        case score = "mean"
+        case rank = "rank"
+        case popularity = "popularity"
+        case scoringUsersCount = "num_scoring_users"
+        case listUsersCount = "num_list_users"
+        case nsfw = "nsfw"
+        case genres = "genres"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+        case mediaType = "media_type"
+        case status = "status"
+        case myListStatus = "my_list_status"
+        case volumesCount = "num_volumes"
+        case chaptersCount = "num_chapters"
+        case authors = "authors"
+        case relatedAnime = "related_anime"
+        case relatedManga = "related_manga"
+       // case recommendations = "recommendations"
+    }
     
 }
 

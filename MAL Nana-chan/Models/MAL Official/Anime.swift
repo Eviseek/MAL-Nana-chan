@@ -35,9 +35,9 @@ struct Anime: Codable {
     let episodeDurationSec: Int?
     let rating: Rating?
     let studios: [AnimeStudio]?
-   // let related_anime: [Node]? //can get only from anime detail call
-  //  let related_manga: [Node]? //can get only from anime detail call
-  //  let recommendations: [Node]? //can get only from anime detail call
+    let relatedAnime: [Node<Anime>]? //can get only from anime detail call
+    let relatedManga: [Node<Manga>]? //can get only from anime detail call
+    let recommendations: [Node<Anime>]? //can get only from anime detail call
     
     private enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -66,6 +66,9 @@ struct Anime: Codable {
         case episodeDurationSec = "average_episode_duration"
         case rating = "rating"
         case studios = "studios"
+        case relatedAnime = "related_anime"
+        case relatedManga = "related_manga"
+        case recommendations = "recommendations"
     }
   
 }

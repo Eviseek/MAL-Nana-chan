@@ -33,13 +33,19 @@ class ItemDetailViewController: UIViewController {
     @IBOutlet weak var relatedAnimeCollectionView: UICollectionView!
     @IBOutlet weak var relatedMangaCollectionView: UICollectionView!
     @IBOutlet weak var recommendationsCollectionView: UICollectionView!
+    @IBOutlet weak var infoView: UIView!
     
-
+    @IBOutlet weak var recommendationsContainerView: UIView!
+    @IBOutlet weak var relatedMangaContainerView: UIView!
+    @IBOutlet weak var relatedAnimeContainerView: UIView!
+    
     var id: Int? = nil
     var viewModel: ItemDetailViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        infoView.layer.cornerRadius = 5
         
         viewModel = ItemDetailViewModel(viewController: self)
         
@@ -63,31 +69,59 @@ class ItemDetailViewController: UIViewController {
     }
     
     func updateView() {
-        itemNameLabel.text = viewModel?.anime?.title
-        if let score = viewModel?.anime?.score {
+        let anime = viewModel?.anime
+        itemNameLabel.text = anime?.title
+        if let score = anime?.score {
             scoreLabel.text = score.description
         }
-        if let url = URL(string: viewModel?.anime?.mainPicture?.medium ?? "") {
+        if let url = URL(string: anime?.mainPicture?.medium ?? "") {
             mainImageImageView.af.setImage(withURL: url)
         }
-        typeLabel.text = viewModel?.anime?.mediaType?.getType()
-        statusLabel.text = viewModel?.anime?.status?.getStatus()
-        episodesLabel.text = viewModel?.anime?.episodesCount?.description
+        typeLabel.text = anime?.mediaType?.getType()
+        statusLabel.text = anime?.status?.getStatus()
+        episodesLabel.text = anime?.episodesCount?.description
         //TODO: lepe osetrit duration
-        durationLabel.text = (viewModel?.anime?.episodeDurationSec ?? 0 / 60).description
-        if viewModel?.anime?.synopsis != "" {
-            synopsisTextView.text = viewModel?.anime?.synopsis
+        if let secs = anime?.episodeDurationSec {
+            durationLabel.text = (secs/60).description
+        }
+        if anime?.synopsis != "" {
+            synopsisTextView.text = anime?.synopsis
         } else {
             synopsisTextView.text = "No synopsis"
         }
         synopsisTextView.sizeToFit()
-        if let season = viewModel?.anime?.startSeason?.season.stringValue(), let year = viewModel?.anime?.startSeason?.year {
+        if let season = anime?.startSeason?.season.stringValue(), let year = anime?.startSeason?.year {
             seasonLabel.text = "\(season) \(year)"
         }
+        var synonymsText = ""
+        for synonyms in anime?.alternativeTitle?.synonyms ?? [] {
+            synonymsText.append(synonyms + ", ")
+        }
+        synonymsListLabel.text = synonymsText
+        englishListLabel.text = anime?.alternativeTitle?.en ?? "None"
+        japaneseListLabel.text = anime?.alternativeTitle?.ja ?? "None"
         genreCollectionView.reloadData()
-        relatedAnimeCollectionView.reloadData()
-        relatedMangaCollectionView.reloadData()
-        recommendationsCollectionView.reloadData()
+        
+        if anime?.relatedAnime?.isEmpty ?? true {
+            print(anime?.relatedAnime)
+            relatedAnimeContainerView.removeFromSuperview()
+        } else {
+            print("many related anime")
+            relatedAnimeCollectionView.reloadData()
+        }
+        
+        if anime?.relatedManga?.isEmpty ?? true {
+            relatedMangaContainerView.removeFromSuperview()
+        } else {
+            relatedMangaCollectionView.reloadData()
+        }
+        
+        if anime?.recommendations?.isEmpty ?? true {
+            recommendationsContainerView.removeFromSuperview()
+        } else {
+            recommendationsCollectionView.reloadData()
+        }
+        
     }
     
     func noData() {
@@ -113,15 +147,16 @@ extension ItemDetailViewController: UICollectionViewDataSource, UICollectionView
         if collectionView == genreCollectionView {
             return viewModel?.anime?.genres?.count ?? 0
         }
-//        if collectionView == relatedAnimeCollectionView {
-//            return viewModel?.anime?.related_anime?.count ?? 0
-//        }
-//        if collectionView == relatedMangaCollectionView {
-//            return viewModel?.anime?.related_manga?.count ?? 0
-//        }
-//        if collectionView == recommendationsCollectionView {
-//            return viewModel?.anime?.recommendations?.count ?? 0
-  //      }
+        if collectionView == relatedAnimeCollectionView {
+            return viewModel?.anime?.relatedAnime?.count ?? 0
+        }
+        if collectionView == relatedMangaCollectionView {
+            print("erlated MANGA is \(viewModel?.anime?.relatedManga)")
+            return viewModel?.anime?.relatedManga?.count ?? 0
+        }
+        if collectionView == recommendationsCollectionView {
+            return viewModel?.anime?.recommendations?.count ?? 0
+        }
         return 0
     }
     
@@ -136,39 +171,39 @@ extension ItemDetailViewController: UICollectionViewDataSource, UICollectionView
         
         if collectionView == relatedAnimeCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.ItemCollectionViewCell.rawValue, for: indexPath) as? ItemCollectionViewCell {
-//                var item = viewModel?.anime?.related_anime?[indexPath.item]
-//                cell.itemTypeView.isHidden = false
-//                cell.itemTitleLabel.text = item?.node.title
-//                if let url = URL(string: item?.node.main_picture?.medium ?? "") {
-//                    cell.itemImageView.af.setImage(withURL: url)
-//                }
-//                cell.itemTypeLabel.text = item?.relation_type_formatted
+                var item = viewModel?.anime?.relatedAnime?[indexPath.item]
+                cell.itemTypeView.isHidden = false
+                cell.itemTitleLabel.text = item?.node.title
+                if let url = URL(string: item?.node.mainPicture?.medium ?? "") {
+                    cell.itemImageView.af.setImage(withURL: url)
+                }
+                cell.itemTypeLabel.text = item?.relation_type_formatted
                 return cell
             }
         }
         
         if collectionView == relatedMangaCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.ItemCollectionViewCell.rawValue, for: indexPath) as? ItemCollectionViewCell {
-//                if let item = viewModel?.anime?.related_manga?[indexPath.item] {
-//                    cell.itemTypeView.isHidden = false
-//                    cell.itemTitleLabel.text = item.node.title
-//                    if let url = URL(string: item.node.main_picture?.medium ?? "") {
-//                        cell.itemImageView.af.setImage(withURL: url)
-//                    }
-//                    cell.itemTypeLabel.text = item.relation_type_formatted
-            //    }
+                if let item = viewModel?.anime?.relatedManga?[indexPath.item] {
+                    cell.itemTypeView.isHidden = false
+                    cell.itemTitleLabel.text = item.node.title
+                    if let url = URL(string: item.node.mainPicture?.medium ?? "") {
+                        cell.itemImageView.af.setImage(withURL: url)
+                    }
+                    cell.itemTypeLabel.text = item.relation_type_formatted
+                }
                 return cell
             }
         }
         
         if collectionView == recommendationsCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.ItemCollectionViewCell.rawValue, for: indexPath) as? ItemCollectionViewCell {
-//                var item = viewModel?.anime?.recommendations?[indexPath.item]
-//                cell.itemTypeView.isHidden = true
-//                cell.itemTitleLabel.text = item?.node.title
-//                if let url = URL(string: item?.node.main_picture?.medium ?? "") {
-//                    cell.itemImageView.af.setImage(withURL: url)
-//                }
+                var item = viewModel?.anime?.recommendations?[indexPath.item]
+                cell.itemTypeView.isHidden = true
+                cell.itemTitleLabel.text = item?.node.title
+                if let url = URL(string: item?.node.mainPicture?.medium ?? "") {
+                    cell.itemImageView.af.setImage(withURL: url)
+                }
                 return cell
             }
         }

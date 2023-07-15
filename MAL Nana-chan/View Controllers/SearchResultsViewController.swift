@@ -65,7 +65,7 @@ extension SearchResultsViewController: UITableViewDataSource {
                 }
                 cell.seasonLabel.text = seasonText
                 if let score = anime?.score {
-                    cell.ratingLabel.text = score.description
+                    cell.scoreLabel.text = score.description
                 }
                 cell.typeLabel.text = anime?.mediaType?.getType()
                 cell.updateEpisodesLabel(type: .anime, number: anime?.episodesCount ?? 0)
@@ -82,17 +82,17 @@ extension SearchResultsViewController: UITableViewDataSource {
             } else {
                 let manga = resultsVM?.mangaResults?.data[indexPath.row].node
                 cell.titleLabel.text = manga?.title
-                cell.seasonLabel.text = manga?.start_date?.extractSeason()
-                if let score = manga?.mean {
-                    cell.ratingLabel.text = score.description
+                cell.seasonLabel.text = manga?.startDate?.extractSeason()
+                if let score = manga?.score {
+                    cell.scoreLabel.text = score.description
                 }
-                cell.typeLabel.text = manga?.media_type?.getType()
-                cell.updateEpisodesLabel(type: .manga, number: manga?.num_chapters ?? 0)
-                if (manga?.num_chapters ?? 0) > 0 {
-                    cell.episodesNumberLabel.text = manga?.num_chapters?.description
+                cell.typeLabel.text = manga?.mediaType?.getType()
+                cell.updateEpisodesLabel(type: .manga, number: manga?.chaptersCount ?? 0)
+                if (manga?.chaptersCount ?? 0) > 0 {
+                    cell.episodesNumberLabel.text = manga?.chaptersCount?.description
                 }
                 
-                if let url = URL(string: manga?.main_picture?.medium ?? "") {
+                if let url = URL(string: manga?.mainPicture?.medium ?? "") {
                     cell.itemImageView?.af.setImage(withURL: url)
                 }
                 
