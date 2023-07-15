@@ -64,6 +64,14 @@ class AnimelistDetailViewModel {
         vc?.dismiss(animated: true)
     }
     
+    func removeButtonClicked() {
+        //TODO: show dialog, if clicked yes then set listStatus to nil and send it to MAL
+    }
+    
+    func moreDetailsButtonClicked() {
+        //TODO: push a new vc with details, if user changed something pass it into the vc
+    }
+    
     
     
 }

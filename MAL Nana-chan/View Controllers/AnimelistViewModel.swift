@@ -14,6 +14,8 @@ class AnimelistViewModel {
     private var userAnimelist: UserAnimelist? = nil
     private var loadingIndicator = ActivityIndicator()
     private var handler = AuthenticationHandler()
+    private var nextPage: String? = nil
+    var isFetching: Bool = false
     
     private var availableStatuses: [SelectableView] = [
         SelectableView(name: "All", status: .none, isSelected: true),
@@ -63,7 +65,7 @@ class AnimelistViewModel {
     func statusSelected(_ status: UserAnimeStatus?) {
         let url = urlManager.getAnimelistURLForStatus(status)
         print("my url is \(url)")
-        fetchAnimelist(url: url)
+        getAnimelistData(url: url)
     }
     
     func getAvailableStatuses() -> [SelectableView] {
@@ -100,9 +102,55 @@ class AnimelistViewModel {
             }
             var anime = userAnimelist?.data[index].node
             anime?.myListStatus = userAnimelist?.data[index].list_status
-            print("anime with list status \(anime?.myListStatus)")
+         //   print("anime with list status \(anime?.myListStatus)")
             picker.anime = anime
+            picker.fromAnimelist = true
             vc?.present(picker, animated: true)
+        }
+    }
+    
+    func scrolledToBottom() {
+        if let nextPage = nextPage {
+            getPagingData(url: nextPage)
+        }
+    }
+    
+    private func getPagingData(url: String) {
+        fetchAnimelist(url: url) { list in
+            if let list = list {
+                self.userAnimelist?.data.append(contentsOf: list.data)
+                print("my list is \(list.data.count)")
+                self.userAnimelist?.paging = list.paging
+                if let nextPage = list.paging?.next {
+                    self.nextPage = nextPage
+                    print("next page is \(nextPage)")
+                } else {
+                    self.nextPage = nil
+                }
+                self.vc?.updateTableViewWith(self.userAnimelist?.data, scrollToTop: false)
+                self.stopLoadingAnimation()
+            }
+            self.isFetching = false
+        }
+    }
+    
+    private func getAnimelistData(url: String) {
+        fetchAnimelist(url: url) { list in
+            if let list = list {
+                self.userAnimelist = list
+                self.vc?.updateTableViewWith(self.userAnimelist?.data, scrollToTop: true)
+                self.stopLoadingAnimation()
+                if let nextPage = list.paging?.next {
+                    self.nextPage = nextPage
+                    print("next page is \(nextPage)")
+                } else {
+                    self.nextPage = nil
+                }
+            } else {
+                print("no items in this list")
+                //TODO: stop loading and show info about not having an animelist
+            }
+            self.isFetching = false
         }
     }
     
@@ -118,14 +166,16 @@ class AnimelistViewModel {
         vc.loadingOverlay.isHidden = true
     }
     
-    private func fetchAnimelist(url: String) {
-        DataDownloader.dataDownloader.fetchData(url) { (userList: UserAnimelist?) in
-            if let list = userList {
-                self.userAnimelist = userList
-                self.vc?.updateTableViewWith(userList?.data)
-                self.stopLoadingAnimation()
-            } else {
-                //TODO: stop loading and show info about not having an animelist
+    private func fetchAnimelist(url: String, completion: @escaping (UserAnimelist?) -> Void) {
+        if !isFetching {
+            print("fetching")
+            isFetching = true
+            DataDownloader.dataDownloader.fetchData(url) { (userList: UserAnimelist?) in
+                if let list = userList {
+                    completion(list)
+                } else {
+                    completion(nil)
+                }
             }
         }
     }

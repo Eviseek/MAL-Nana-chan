@@ -34,9 +34,11 @@ struct DataDownloader {
         
         if (url.contains("myanimelist")) {
             
-            AF.request(url, headers: getHeader()).responseDecodable(of: T.self, completionHandler: { response in
+            let enc = URLEncoding(arrayEncoding: .noBrackets)
+            
+            AF.request(url, encoding: enc, headers: getHeader()).responseDecodable(of: T.self, completionHandler: { response in
                
-                debugPrint(response)
+               // debugPrint(response)
                 completion(response.value)
             })
             

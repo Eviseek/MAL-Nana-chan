@@ -8,8 +8,8 @@
 import Foundation
 
 struct UserAnimelist: Codable {
-    let data: [AnimelistData]
-    let paging: Paging?
+    var data: [AnimelistData]
+    var paging: Paging?
 }
 
 struct AnimelistData: Codable {

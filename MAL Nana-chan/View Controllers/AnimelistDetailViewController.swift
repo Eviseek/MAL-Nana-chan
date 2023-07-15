@@ -17,12 +17,17 @@ class AnimelistDetailViewController: UIViewController {
     @IBOutlet weak var droppedButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var moreDetailsButton: UIButton!
+    @IBOutlet weak var removeFromListButton: UIButton!
     
+    //UIViews and stackViews
     @IBOutlet weak var statusContentView: UIView!
+    @IBOutlet weak var moreAndRemoveView: UIStackView!
     
     //UI labels
     @IBOutlet weak var itemTitleLabel: UILabel!
     @IBOutlet weak var itemStatusLabel: UILabel!
+    @IBOutlet weak var myStatusLabel: UILabel!
     @IBOutlet weak var itemEpisodesNumLabel: UILabel!
     
     @IBOutlet weak var itemScoreTextField: UITextField!
@@ -31,16 +36,31 @@ class AnimelistDetailViewController: UIViewController {
     private let viewModel = AnimelistDetailViewModel()
     
     var anime: Anime?
+    var fromAnimelist: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         guard let anime = anime else { return }
         
-        setUpButtonTags()
-        setLabels(anime)
+        setUpUIView()
   
         viewModel.viewDidLoad(vc: self, anime: anime)
+    }
+    
+    private func setUpUIView() {
+        planToWatchButton.layer.cornerRadius = 5
+        completedButton.layer.cornerRadius = 5
+        onHoldButton.layer.cornerRadius = 5
+        watchingButton.layer.cornerRadius = 5
+        droppedButton.layer.cornerRadius = 5
+        removeFromListButton.layer.cornerRadius = 5
+        moreDetailsButton.layer.cornerRadius = 5
+        setUpButtonTags()
+        setLabels(anime!)
+        if !(fromAnimelist ?? false) {
+            moreAndRemoveView.removeFromSuperview()
+        }
     }
     
     private func setUpButtonTags() {
@@ -58,6 +78,11 @@ class AnimelistDetailViewController: UIViewController {
         itemStatusLabel.text = anime.status?.getStatus()
         itemEpisodesNumLabel.text = anime.episodesCount?.description
         itemScoreTextField.text = anime.myListStatus?.score.description ?? "0"
+        myStatusLabel.text = anime.myListStatus?.status.getStringValue() ?? "?"
+        if anime.myListStatus == nil {
+            print("my status is nil")
+            //TODO: change save button to add
+        }
     }
     
     //TODO: move to model?
@@ -109,5 +134,13 @@ class AnimelistDetailViewController: UIViewController {
         viewModel.cancelButtonClicked()
     }
     
+    @IBAction func removeClicked(_ sender: UIButton) {
+        viewModel.removeButtonClicked()
+    }
+    
+    
+    @IBAction func moreDetailsClicked(_ sender: UIButton) {
+        viewModel.moreDetailsButtonClicked()
+    }
     
 }
