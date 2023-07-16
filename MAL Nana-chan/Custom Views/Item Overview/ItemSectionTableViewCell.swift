@@ -44,10 +44,12 @@ class ItemSectionTableViewCell: UITableViewCell {
     
     func itemSelected(id: Int) {
         print("item selected")
-        if let controller = parentVC?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailViewController") as? ItemDetailViewController {
-            print("success, will be pushing")
-            controller.id = id
-            parentVC?.navigationController?.pushViewController(controller, animated: true)
+        if itemSection?.type == .anime {
+            if let controller = parentVC?.storyboard?.instantiateViewController(withIdentifier: "AnimeDetailViewController") as? AnimeDetailViewController {
+                print("success, will be pushing")
+                controller.id = id
+                parentVC?.navigationController?.pushViewController(controller, animated: true)
+            }
         }
     }
     

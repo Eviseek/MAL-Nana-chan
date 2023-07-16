@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AnimelistDetailViewController: UIViewController {
+class MyListViewController: UIViewController {
     
     //UI buttons
     @IBOutlet weak var planToWatchButton: UIButton!
@@ -33,7 +33,7 @@ class AnimelistDetailViewController: UIViewController {
     @IBOutlet weak var itemScoreTextField: UITextField!
     
     private let manager = UserAnimeStatusManager()
-    private let viewModel = AnimelistDetailViewModel()
+    private let viewModel = MyListViewModel()
     
     var anime: Anime?
     var fromAnimelist: Bool?

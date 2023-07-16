@@ -10,5 +10,6 @@ import Foundation
 struct Section {
     var name: String = "Unnamed Section"
     var items: [Item] = [Item]()
+    var type: ItemType = .anime
     var url: String? = nil
 }

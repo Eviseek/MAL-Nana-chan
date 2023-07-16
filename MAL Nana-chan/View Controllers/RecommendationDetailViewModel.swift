@@ -16,7 +16,7 @@ class RecommendationDetailViewModel {
     }
     
     func recommendationSelected(id: Int?) {
-        if let id = id, let controller = detailVC?.storyboard?.instantiateViewController(withIdentifier: "ItemDetailViewController") as? ItemDetailViewController {
+        if let id = id, let controller = detailVC?.storyboard?.instantiateViewController(withIdentifier: "AnimeDetailViewController") as? AnimeDetailViewController {
             controller.id = id
             detailVC?.navigationController?.pushViewController(controller, animated: true)
         }

@@ -16,6 +16,7 @@ struct Node<T: Codable>: Codable {
     var node: T
     var relation_type_formatted: String?
     var num_recommendations: Int?
+    var role: String?
 }
 
 struct Paging: Codable {

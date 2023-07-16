@@ -43,7 +43,7 @@ class ItemListTableViewCell: UITableViewCell {
         
     }
     
-    func updateEpisodesLabel(type: ItemTypes, number: Int) {
+    func updateEpisodesLabel(type: ItemType, number: Int) {
         if type == .anime {
             if number == 1 {
                 episodesTitleLabel.text = "episode"
@@ -58,7 +58,7 @@ class ItemListTableViewCell: UITableViewCell {
     }
     
     @IBAction func myListClicked(_ sender: UIButton) {
-        if let picker = vc?.storyboard?.instantiateViewController(withIdentifier: "AnimelistDetailViewController") as? AnimelistDetailViewController {
+        if let picker = vc?.storyboard?.instantiateViewController(withIdentifier: "MyListViewController") as? MyListViewController {
             if let sheet = picker.sheetPresentationController {
                 sheet.detents = [.medium(), .large()]
             }

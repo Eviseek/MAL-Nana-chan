@@ -30,10 +30,10 @@ struct Manga: Codable {
     var myListStatus: MyListStatus? //CHANGE
     var volumesCount: Int?
     var chaptersCount: Int?
-    var authors: [PersonRoleEdge]?
-    var relatedAnime: [RelatedAnimeEdge]? //can get only from detail call
-    var relatedManga: [RelatedMangaEdge]? //can get only from detail call
-   // var recommendations: [Node<T>]? //can get only from detail call
+ //   var authors: [Node<Person>]?
+    var relatedAnime: [Node<Anime>]? //can get only from detail call
+    var relatedManga: [Node<Manga>]? //can get only from detail call
+    var recommendations: [Node<Manga>]? //can get only from detail call
     
     private enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -57,10 +57,10 @@ struct Manga: Codable {
         case myListStatus = "my_list_status"
         case volumesCount = "num_volumes"
         case chaptersCount = "num_chapters"
-        case authors = "authors"
+     //   case authors = "authors"
         case relatedAnime = "related_anime"
         case relatedManga = "related_manga"
-       // case recommendations = "recommendations"
+        case recommendations = "recommendations"
     }
     
 }

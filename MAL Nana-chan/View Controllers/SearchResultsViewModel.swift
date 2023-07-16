@@ -12,19 +12,22 @@ import UIKit
 
 class SearchResultsViewModel {
     
-    var searchResultsVC: SearchResultsViewController
+    var viewController: SearchResultsViewController?
     var animeResults: Response<Anime>? = nil
     var mangaResults: Response<Manga>? = nil
     
     
     var pagingDone = false
     var loadingInProgress = false
-    private var type: ItemTypes = .anime
+    private var selectedType: ItemType = .anime
     private let defaults = UserDefaults.standard
     private var recentSearchesArr = [String]()
     
-    init(_ vc: SearchResultsViewController) {
-        self.searchResultsVC = vc
+    init() {}
+    
+    func viewDidLoad(viewController: SearchResultsViewController) {
+        self.viewController = viewController
+        searchButtonClicked()
     }
     
     func searchButtonClicked() {
@@ -33,17 +36,17 @@ class SearchResultsViewModel {
         loadingInProgress = false
         
         //checking if we're searching for anime or manga
-        if searchResultsVC.segmentedControl.selectedSegmentIndex == 0 {
-            type = .anime
-        } else if searchResultsVC.segmentedControl.selectedSegmentIndex == 1 {
-            type = .manga
+        if viewController?.segmentedControl.selectedSegmentIndex == 0 {
+            selectedType = .anime
+        } else if viewController?.segmentedControl.selectedSegmentIndex == 1 {
+            selectedType = .manga
         }
         
-        let query = searchResultsVC.query
+        let query = viewController?.query
         
         if (query?.count ?? 0) > 2 {
             saveToDefaults(query: query!)
-            searchForQuery(query!, type: type)
+            searchForQuery(query!, type: selectedType)
         } else {
             showAlert()
         }
@@ -55,7 +58,7 @@ class SearchResultsViewModel {
             
             loadingInProgress = true
             
-            if searchResultsVC.segmentedControl.selectedSegmentIndex == 0 {
+            if viewController?.segmentedControl.selectedSegmentIndex == 0 {
                 if let nextUrl = animeResults?.paging?.next {
                     DataDownloader.dataDownloader.fetchData(nextUrl, completion: { (results: Response<Anime>?) in
                         self.animeResults?.paging = results?.paging
@@ -63,12 +66,12 @@ class SearchResultsViewModel {
                             self.animeResults?.data.append(contentsOf: data)
                         }
                         self.loadingInProgress = false
-                        self.searchResultsVC.tableView.reloadData()
+                        self.viewController?.tableView.reloadData()
                     })
                 } else {
                     self.pagingDone = true
                 }
-            } else if searchResultsVC.segmentedControl.selectedSegmentIndex == 1 {
+            } else if viewController?.segmentedControl.selectedSegmentIndex == 1 {
                 print("my next url is", mangaResults?.paging?.next)
                 if let nextUrl = mangaResults?.paging?.next {
                     
@@ -79,7 +82,7 @@ class SearchResultsViewModel {
                             self.mangaResults?.data.append(contentsOf: data)
                         }
                         self.loadingInProgress = false
-                        self.searchResultsVC.tableView.reloadData()
+                        self.viewController?.tableView.reloadData()
                     })
                 } else {
                     self.pagingDone = true
@@ -88,7 +91,23 @@ class SearchResultsViewModel {
         }
     }
     
-    private func searchForQuery(_ query: String, type: ItemTypes) {
+    func rowSelectedAt(_ index: Int) {
+        switch selectedType {
+        case .anime:
+            if let controller = viewController?.storyboard?.instantiateViewController(withIdentifier: "AnimeDetailViewController") as? AnimeDetailViewController {
+                controller.id = animeResults?.data[index].node.id
+                viewController?.navigationController?.pushViewController(controller, animated: true)
+            }
+        case .manga:
+            if let controller = viewController?.storyboard?.instantiateViewController(withIdentifier: "MangaDetailViewController") as? MangaDetailViewController {
+                controller.id = mangaResults?.data[index].node.id
+                print("id of selected manga is \(mangaResults?.data[index].node.id)")
+                viewController?.navigationController?.pushViewController(controller, animated: true)
+            }
+        }
+    }
+    
+    private func searchForQuery(_ query: String, type: ItemType) {
         
         //TODO: anime or manga
         
@@ -103,7 +122,7 @@ class SearchResultsViewModel {
                     if let data = results {
                         self.animeResults = data
                     }
-                    self.searchResultsVC.tableView.reloadData()
+                    self.viewController?.tableView.reloadData()
                 })
                 
             } else {
@@ -115,7 +134,7 @@ class SearchResultsViewModel {
                     if let data = results {
                         self.mangaResults = data
                     }
-                    self.searchResultsVC.tableView.reloadData()
+                    self.viewController?.tableView.reloadData()
                 })
                 
             }
@@ -123,8 +142,9 @@ class SearchResultsViewModel {
         
     }
     
+    //TODO: not needed, delete it
     private func encodeURL(query: String) -> String? {
-        if type == .anime {
+        if selectedType == .anime {
             let url = URLs.animeSearchURL.rawValue.replacingOccurrences(of: "{query}", with: query)
             return url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)
         } else {
@@ -150,6 +170,6 @@ class SearchResultsViewModel {
     private func showAlert() {
         let alert = UIAlertController(title: "Error", message: "Query must have at least 3 characters.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-        searchResultsVC.present(alert, animated: true, completion: nil)
+        viewController?.present(alert, animated: true, completion: nil)
     }
 }

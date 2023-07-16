@@ -1,5 +1,5 @@
 //
-//  ItemDetailViewController.swift
+//  AnimeDetailViewController.swift
 //  MAL Nana-chan
 //
 //  Created by iOS dev on 06.02.2023.
@@ -9,14 +9,16 @@ import Foundation
 import UIKit
 import AlamofireImage
 
-class ItemDetailViewController: UIViewController {
+class AnimeDetailViewController: UIViewController {
     
+    @IBOutlet weak var seeMoreSynopsisLabel: UILabel!
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var relatedAnimeCollectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var relatedMangaCollectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var recommendationsCollectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var collectionViewWidth: NSLayoutConstraint!
     @IBOutlet weak var titlesViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var synopsisTextViewHeight: NSLayoutConstraint!
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
@@ -40,14 +42,18 @@ class ItemDetailViewController: UIViewController {
     @IBOutlet weak var relatedAnimeContainerView: UIView!
     
     var id: Int? = nil
-    var viewModel: ItemDetailViewModel?
+    private var viewModel = AnimeDetailViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
+        viewModel.viewDidLoad(viewController: self)
+        setUpViews()
+        print("synopsis content size \(synopsisTextView.contentSize.height)")
+    }
+    
+    private func setUpViews() {
         infoView.layer.cornerRadius = 5
-        
-        viewModel = ItemDetailViewModel(viewController: self)
         
         let nib = UINib(nibName: Identifiers.GenreCollectionViewCell.rawValue, bundle: nil)
         genreCollectionView.register(nib, forCellWithReuseIdentifier: Identifiers.GenreCollectionViewCell.rawValue)
@@ -69,7 +75,7 @@ class ItemDetailViewController: UIViewController {
     }
     
     func updateView() {
-        let anime = viewModel?.anime
+        let anime = viewModel.anime
         itemNameLabel.text = anime?.title
         if let score = anime?.score {
             scoreLabel.text = score.description
@@ -122,6 +128,11 @@ class ItemDetailViewController: UIViewController {
             recommendationsCollectionView.reloadData()
         }
         
+        if synopsisTextView.contentSize.height < 150 {
+            synopsisTextViewHeight.constant = synopsisTextView.contentSize.height
+            seeMoreSynopsisLabel.removeFromSuperview()
+        }
+        
     }
     
     func noData() {
@@ -136,26 +147,29 @@ class ItemDetailViewController: UIViewController {
     }
     
     @IBAction func addToList(_ sender: UIButton) {
-        viewModel?.addToListClicked()
+        viewModel.addToListClicked()
     }
     
+    @IBAction func seeMoreSynopsisButton(_ sender: UIButton) {
+        synopsisTextViewHeight.constant = synopsisTextView.contentSize.height
+    }
     
 }
 
-extension ItemDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension AnimeDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == genreCollectionView {
-            return viewModel?.anime?.genres?.count ?? 0
+            return viewModel.anime?.genres?.count ?? 0
         }
         if collectionView == relatedAnimeCollectionView {
-            return viewModel?.anime?.relatedAnime?.count ?? 0
+            return viewModel.anime?.relatedAnime?.count ?? 0
         }
         if collectionView == relatedMangaCollectionView {
-            print("erlated MANGA is \(viewModel?.anime?.relatedManga)")
-            return viewModel?.anime?.relatedManga?.count ?? 0
+            print("erlated MANGA is \(viewModel.anime?.relatedManga)")
+            return viewModel.anime?.relatedManga?.count ?? 0
         }
         if collectionView == recommendationsCollectionView {
-            return viewModel?.anime?.recommendations?.count ?? 0
+            return viewModel.anime?.recommendations?.count ?? 0
         }
         return 0
     }
@@ -163,7 +177,7 @@ extension ItemDetailViewController: UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == genreCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.GenreCollectionViewCell.rawValue, for: indexPath) as? GenreCollectionViewCell {
-                cell.genreLabel.text = viewModel?.anime?.genres?[indexPath.item].name
+                cell.genreLabel.text = viewModel.anime?.genres?[indexPath.item].name
                 collectionViewHeight.constant = collectionView.contentSize.height //TODO: lepsi umisteni?
                 return cell
             }
@@ -171,7 +185,7 @@ extension ItemDetailViewController: UICollectionViewDataSource, UICollectionView
         
         if collectionView == relatedAnimeCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.ItemCollectionViewCell.rawValue, for: indexPath) as? ItemCollectionViewCell {
-                var item = viewModel?.anime?.relatedAnime?[indexPath.item]
+                var item = viewModel.anime?.relatedAnime?[indexPath.item]
                 cell.itemTypeView.isHidden = false
                 cell.itemTitleLabel.text = item?.node.title
                 if let url = URL(string: item?.node.mainPicture?.medium ?? "") {
@@ -184,7 +198,7 @@ extension ItemDetailViewController: UICollectionViewDataSource, UICollectionView
         
         if collectionView == relatedMangaCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.ItemCollectionViewCell.rawValue, for: indexPath) as? ItemCollectionViewCell {
-                if let item = viewModel?.anime?.relatedManga?[indexPath.item] {
+                if let item = viewModel.anime?.relatedManga?[indexPath.item] {
                     cell.itemTypeView.isHidden = false
                     cell.itemTitleLabel.text = item.node.title
                     if let url = URL(string: item.node.mainPicture?.medium ?? "") {
@@ -198,7 +212,7 @@ extension ItemDetailViewController: UICollectionViewDataSource, UICollectionView
         
         if collectionView == recommendationsCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.ItemCollectionViewCell.rawValue, for: indexPath) as? ItemCollectionViewCell {
-                var item = viewModel?.anime?.recommendations?[indexPath.item]
+                var item = viewModel.anime?.recommendations?[indexPath.item]
                 cell.itemTypeView.isHidden = true
                 cell.itemTitleLabel.text = item?.node.title
                 if let url = URL(string: item?.node.mainPicture?.medium ?? "") {

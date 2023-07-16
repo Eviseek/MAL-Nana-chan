@@ -17,13 +17,12 @@ class SearchResultsViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     
     var query: String?
-    var resultsVM: SearchResultsViewModel? = nil
+    private var viewModel = SearchResultsViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        resultsVM = SearchResultsViewModel(self)
-        resultsVM?.searchButtonClicked()
+        viewModel.viewDidLoad(viewController: self)
         
         searchBar.text = query
         searchBar.delegate = self
@@ -36,25 +35,25 @@ class SearchResultsViewController: UIViewController {
     
     @IBAction func itemTypeChanged(_ sender: UISegmentedControl) {
         //TODO: manga
-        resultsVM?.searchButtonClicked()
+        viewModel.searchButtonClicked()
     }
 }
 
 extension SearchResultsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if segmentedControl.selectedSegmentIndex == 0 {
-            return resultsVM?.animeResults?.data.count ?? 0
+            return viewModel.animeResults?.data.count ?? 0
         } else {
-            return resultsVM?.mangaResults?.data.count ?? 0
+            return viewModel.mangaResults?.data.count ?? 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.ItemListTableViewCell.rawValue, for: indexPath) as? ItemListTableViewCell {
             if segmentedControl.selectedSegmentIndex == 0 {
-                let anime = resultsVM?.animeResults?.data[indexPath.row].node
+                let anime = viewModel.animeResults?.data[indexPath.row].node
                 var seasonText = ""
-                
+                cell.selectionStyle = .none
                 cell.titleLabel.text = anime?.title
                 if let season = anime?.startSeason?.season {
                     seasonText = season.stringValue()
@@ -80,7 +79,8 @@ extension SearchResultsViewController: UITableViewDataSource {
                 return cell
                 
             } else {
-                let manga = resultsVM?.mangaResults?.data[indexPath.row].node
+                let manga = viewModel.mangaResults?.data[indexPath.row].node
+                cell.selectionStyle = .none
                 cell.titleLabel.text = manga?.title
                 cell.seasonLabel.text = manga?.startDate?.extractSeason()
                 if let score = manga?.score {
@@ -102,23 +102,29 @@ extension SearchResultsViewController: UITableViewDataSource {
         }
         return UITableViewCell()
     }
+    
 }
 
 extension SearchResultsViewController: UITableViewDelegate, UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
         if position > (tableView.contentSize.height - 100 - scrollView.frame.height) {
-            if !(resultsVM?.pagingDone ?? true) && !(resultsVM?.loadingInProgress ?? true) {
-                resultsVM?.loadMore()
+            if !(viewModel.pagingDone) && !(viewModel.loadingInProgress) {
+                viewModel.loadMore()
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //TODO: row selected at
+        viewModel.rowSelectedAt(indexPath.row)
     }
 }
     
 extension SearchResultsViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         query = searchBar.text
-        resultsVM?.searchButtonClicked()
+        viewModel.searchButtonClicked()
         UIView.animate(withDuration: 0.5, delay: 0, animations: {
             self.tableView.contentOffset.y = 0
         })

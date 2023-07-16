@@ -30,7 +30,7 @@ class seeAllViewModel {
     }
     
     func itemSelectedAt(_ index: Int) {
-        if let controller = viewController.storyboard?.instantiateViewController(withIdentifier: "ItemDetailViewController") as? ItemDetailViewController {
+        if let controller = viewController.storyboard?.instantiateViewController(withIdentifier: "AnimeDetailViewController") as? AnimeDetailViewController {
             controller.id = animeArr[index].id
             viewController.navigationController?.pushViewController(controller, animated: true)
         }

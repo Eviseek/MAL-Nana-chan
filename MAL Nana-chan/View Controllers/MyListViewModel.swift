@@ -8,16 +8,16 @@
 import Foundation
 import UIKit
 
-class AnimelistDetailViewModel {
+class MyListViewModel {
     
-    private var vc: AnimelistDetailViewController? = nil
+    private var vc: MyListViewController? = nil
     private var anime: Anime?
     private var manager = UserAnimeStatusManager()
     var selectedState: UserAnimeStatus? = nil
     
     init() {}
     
-    func viewDidLoad(vc: AnimelistDetailViewController, anime: Anime) {
+    func viewDidLoad(vc: MyListViewController, anime: Anime) {
         self.vc = vc
         self.anime = anime
         setSelectedState()
