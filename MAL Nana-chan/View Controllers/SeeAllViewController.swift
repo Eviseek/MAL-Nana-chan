@@ -62,7 +62,11 @@ extension SeeAllViewController: UITableViewDataSource, UITableViewDelegate {
             cell.selectionStyle = .none
             cell.titleLabel.text = item?.title
             cell.typeLabel.text = item?.mediaType?.getType()
-            cell.episodesTitleLabel.text = item?.episodesCount?.description ?? "?"
+            if let episodes = item?.episodesCount, episodes > 0 {
+                cell.episodesTitleLabel.text = episodes.description
+            } else {
+                cell.episodesTitleLabel.text = "N/A"
+            }
             cell.seasonLabel.text = "Season unavailable"
             cell.scoreLabel.text = item?.score?.description ?? "N/A"
             if let seasonText = item?.startSeason?.season.stringValue(), let yearText = item?.startSeason?.year { //unwrapping before passing to label

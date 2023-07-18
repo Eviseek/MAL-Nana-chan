@@ -15,9 +15,14 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
     
     @IBAction func profileButtonClicked(_ sender: UIBarButtonItem) {
         print("selected")
-        //TODO: check if user is already logged in or not
-        if let controller = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-            navigationController?.pushViewController(controller, animated: true)
+        if !TokenHandler.isUserLoggedIn {
+            if let controller = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+                navigationController?.pushViewController(controller, animated: true)
+            }
+        } else {
+            if let controller = storyboard?.instantiateViewController(withIdentifier: "ProfileDetailViewController") as? ProfileDetailViewController {
+                navigationController?.pushViewController(controller, animated: true)
+            }
         }
     }
 }

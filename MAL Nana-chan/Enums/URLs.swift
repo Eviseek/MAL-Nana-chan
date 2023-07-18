@@ -33,6 +33,8 @@ enum URLs: String {
     case jikanPromoURL = "https://api.jikan.moe/v4/watch/promos"
     case jikanRecommendationsAnimeURL = "https://api.jikan.moe/v4/recommendations/anime"
     
+    case myUserProfileURL = "https://api.myanimelist.net/v2/users/@me"
+    
 //    func get(_ id: String?, _ season: Season?, _ year: String?) -> String {
 //        switch self {
 //        case .animeURL: return "\(URLs.animeURL.rawValue)/\(id)"
