@@ -16,16 +16,19 @@ class HomeViewModel {
     private let dataDownloader = DataDownloader()
     private let seasonManager = SeasonManager()
     
-    var sections = [Section]()
+    var sections: [Section<Anime>]
     
     var promoId: String? = nil
     var hasPromo: Bool = false
     
     var contentSize: Int = 0
     
+    private var urlManager = URLManager()
+    
     
     init(viewController: HomeViewController) {
         self.viewController = viewController
+        self.sections = [Section<Anime>]()
         indicator.startAnimating(view: viewController.view, background: nil)
         viewDidLoad()
     }
@@ -38,42 +41,38 @@ class HomeViewModel {
         }
     }
     
-    //TODO: optimize the url strings getting
     private func getData(completion: @escaping () -> ()) {
         
         let group = DispatchGroup()
+        let selectedSeason: Season = .winter
+        let selectedYear = 2020
+        
         group.enter()
-        dataDownloader.fetchData("https://api.myanimelist.net/v2/anime/season/2020/spring?fields=mean") { (response: Response<Anime>?) in
-            if let data = response?.data {
-                self.createSection(sectionName: "Spring 2020 anime", data: data, url: "https://api.myanimelist.net/v2/anime/season/2020/spring?fields=mean")
-              //  print(data)
+        dataDownloader.fetchData(urlManager.getURLForCustomSeason(season: selectedSeason, year: selectedYear)) { (response: Response<Anime>?) in
+            if let response = response {
+                self.sections.append(Section(name: "\(selectedSeason.stringValue()) \(selectedYear.description) anime", response: response))
+            } else {
+                self.viewController.showErrorDialog(message: "Something went wrong")
             }
             group.leave()
         }
         
         group.enter()
-        let season = SeasonManager().getThisSeason().stringValue()
-        var year = Calendar.current.component(.year, from: Date()) //Today's year
-        dataDownloader.fetchData("https://api.myanimelist.net/v2/anime/season/\(year)/\(season.lowercased())?fields=mean") { (response: Response<Anime>?) in
-            if let data = response?.data {
-                self.createSection(sectionName: "This season (\(season) \(year)) anime", data: data, url: "https://api.myanimelist.net/v2/anime/season/\(year)/\(season.lowercased())?fields=mean")
-               // print(data)
+        dataDownloader.fetchData(urlManager.getURLForThisSeason()) { (response: Response<Anime>?) in
+            if let response = response {
+                self.sections.append(Section(name: "This season anime", response: response))
+            } else {
+                self.viewController.showErrorDialog(message: "Something went wrong")
             }
             group.leave()
         }
         
         group.enter()
-        let nextSeasonTupple = seasonManager.getUpcomingSeason()
-        let nextSeason = nextSeasonTupple.0.stringValue()
-        print("I AM NEXT SEASON" ,nextSeason)
-        var nextSeasonYear = year
-        if nextSeasonTupple.1 == true {
-            nextSeasonYear += 1
-        }
-        dataDownloader.fetchData("https://api.myanimelist.net/v2/anime/season/\(nextSeasonYear)/\(nextSeason.lowercased())?fields=mean") { (response: Response<Anime>?) in
-            if let data = response?.data {
-                self.createSection(sectionName: "Upcoming (\(nextSeason) \(nextSeasonYear)) anime", data: data, url: "https://api.myanimelist.net/v2/anime/season/\(nextSeasonYear)/\(nextSeason.lowercased())?fields=mean")
-               // print(data)
+        dataDownloader.fetchData(urlManager.getURLForNextSeason()) { (response: Response<Anime>?) in
+            if let response = response {
+                self.sections.append(Section(name: "Upcoming season anime", response: response))
+            } else {
+                self.viewController.showErrorDialog(message: "Something went wrong")
             }
             group.leave()
         }
@@ -93,24 +92,5 @@ class HomeViewModel {
             completion()
         }
     }
-    
-    private func createSection(sectionName: String?, data: [Node<Anime>], url: String?) {
-        
-        var items = [Item]()
-        
-        for data in data {
-            items.append(Item(id: data.node.id, title: data.node.title, image: data.node.mainPicture?.medium ?? nil, score: data.node.score ?? nil))
-        }
-        
-        var section = Section(items: items, url: url)
-        
-        if let sectionName = sectionName {
-            section.name = sectionName
-        }
-        
-        sections.append(section)
-    }
-    
-    
     
 }

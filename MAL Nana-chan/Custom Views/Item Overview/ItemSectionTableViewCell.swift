@@ -17,7 +17,7 @@ class ItemSectionTableViewCell: UITableViewCell {
     @IBOutlet weak var seeAllButton: UIButton!
     
     var height = 0
-    var itemSection: Section? = nil
+    var itemSection: Section<Anime>? = nil
     
     var parentVC: UIViewController? = nil
     
@@ -53,7 +53,7 @@ class ItemSectionTableViewCell: UITableViewCell {
         }
     }
     
-    func fillCollectionView(section: Section) {
+    func fillCollectionView(section: Section<Anime>) {
         self.itemSection = section
         print("collection view \(section)")
         itemCollectionView.reloadData()
@@ -63,17 +63,17 @@ class ItemSectionTableViewCell: UITableViewCell {
 
 extension ItemSectionTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return itemSection?.items.count ?? 0
+        return itemSection?.response.data.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCollectionViewCell", for: indexPath) as? ItemCollectionViewCell {
-            var item = itemSection?.items[indexPath.item]
+            var item = itemSection?.response.data[indexPath.item].node
             cell.itemTitleLabel.text = item?.title
             if let score = item?.score {
                 cell.itemRankLabel.text = score.description
             }
-            if let downloadedImg = URL(string: item?.image ?? "") {
+            if let downloadedImg = URL(string: item?.mainPicture?.medium ?? "") {
                 cell.itemImageView.af.setImage(withURL: downloadedImg)
             }
             return cell
@@ -89,8 +89,8 @@ extension ItemSectionTableViewCell: UICollectionViewDelegateFlowLayout, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("selected \(itemSection?.items[indexPath.item].id)")
-        itemSelected(id: itemSection?.items[indexPath.item].id ?? 0)
+        print("selected \(itemSection?.response.data[indexPath.item].node.id)")
+        itemSelected(id: itemSection?.response.data[indexPath.item].node.id ?? 0)
     }
     
 }

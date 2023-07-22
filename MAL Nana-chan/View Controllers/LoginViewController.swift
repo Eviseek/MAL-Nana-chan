@@ -10,10 +10,12 @@ import UIKit
 class LoginViewController: UIViewController {
     
     private var viewModel = LoginViewModel()
+    @IBOutlet weak var loginButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.viewDidLoad(self)
+        loginButton.layer.cornerRadius = 10
     }
     
     @IBAction func loginButtonClicked(_ sender: UIButton) {

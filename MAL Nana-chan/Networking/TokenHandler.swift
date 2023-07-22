@@ -11,11 +11,15 @@ import KeychainAccess
 class TokenHandler {
     
     public static var isUserLoggedIn: Bool = false
+   // private var isTokenValid: Bool
     static let handler = TokenHandler()
     var keychain: Keychain
     
     init() {
         keychain = Keychain(service: "com.eviseek.MAL-Nana-chan")
+        
+        
+        
         if let token = getToken() {
             TokenHandler.isUserLoggedIn = true
         } else {

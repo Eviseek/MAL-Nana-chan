@@ -28,7 +28,7 @@ class AnimelistViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+        super.viewWillAppear(true)
         viewModel.viewWillAppear()
     }
     
@@ -49,7 +49,7 @@ class AnimelistViewController: UIViewController {
     
     func updateTableViewWith(_ list: [AnimelistData]?, scrollToTop: Bool) {
         if list == nil {
-            //TODO: show info about empty list
+            self.showErrorDialog(message: "Something went wrong.")
         } else {
             print("RELOAD")
             print("data are \(data)")

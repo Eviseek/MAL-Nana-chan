@@ -43,6 +43,10 @@ struct AuthenticationHandler {
                 debugPrint(response)
                 print("token")
                 print(credential.oauthToken)
+                print("expires at")
+                print(credential.oauthTokenExpiresAt)
+                print("refresh token")
+                print(credential.oauthRefreshToken)
                 TokenHandler.handler.saveToken(credential.oauthToken)
                 completion()
             case .failure(let error):

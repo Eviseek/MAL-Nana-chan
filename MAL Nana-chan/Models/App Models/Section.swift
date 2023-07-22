@@ -7,9 +7,11 @@
 
 import Foundation
 
-struct Section {
+struct Section<T: Codable> {
     var name: String = "Unnamed Section"
-    var items: [Item] = [Item]()
     var type: ItemType = .anime
-    var url: String? = nil
+    var response: Response<T>
+//    var items: [Item] = [Item]()
+//    var type: ItemType = .anime
+//    var paging: Paging? 
 }

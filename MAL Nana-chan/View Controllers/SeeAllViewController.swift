@@ -14,7 +14,7 @@ class SeeAllViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var sectionContent: Section? = nil
+    var sectionContent: Section<Anime>? = nil
     private var viewModel: seeAllViewModel? = nil
     private var items: [Anime]? = nil
     

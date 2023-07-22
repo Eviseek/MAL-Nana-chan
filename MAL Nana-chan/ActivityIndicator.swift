@@ -11,8 +11,10 @@ import NVActivityIndicatorView
 
 class ActivityIndicator {
     
-    var activityIndicator: NVActivityIndicatorView
-    var parentFrame = UIView()
+    public static let indicator = ActivityIndicator()
+    
+    private var activityIndicator: NVActivityIndicatorView
+    private var parentFrame = UIView()
     
     init() {
         let frame = CGRect()

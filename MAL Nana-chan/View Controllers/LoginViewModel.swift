@@ -9,22 +9,22 @@ import Foundation
 
 class LoginViewModel {
     
-    private var loginVC: LoginViewController?
+    private var vc: LoginViewController?
     private var handler = AuthenticationHandler()
     
     
     init(loginVC: LoginViewController? = nil) {
-        self.loginVC = loginVC
+        self.vc = loginVC
     }
     
     func viewDidLoad(_ vc: LoginViewController) {
-        self.loginVC = vc
+        self.vc = vc
     }
     
     func loginButtonClicked() {
-        if let loginVC = loginVC {
+        if let loginVC = vc {
             handler.authenticate(loginVC) {
-                //TODO: update screen
+                self.vc?.navigationController?.popViewController(animated: true)
             }
         }
     }

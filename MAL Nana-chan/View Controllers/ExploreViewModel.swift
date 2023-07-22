@@ -10,14 +10,15 @@ import UIKit
 
 class ExploreViewModel {
     
-    private var exploreVC: ExploreViewController
+    private var vc: ExploreViewController
     private let defaults = UserDefaults.standard
     
     var recentSearchesArr = [String]()
     
-    init(_ exploreVC: ExploreViewController) {
+    init(_ vc: ExploreViewController) {
         print("CREATED")
-        self.exploreVC = exploreVC
+        self.vc = vc
+        ActivityIndicator.indicator.startAnimating(view: vc.view, background: nil)
         getRecentSearchesFromDefaults()
         fetchData()
     }
@@ -27,10 +28,11 @@ class ExploreViewModel {
             print("result is?")
             if let result = result {
                 print(result)
-                self.exploreVC.fillUpRecommendations(recommendation: result)
+                self.vc.fillUpRecommendations(recommendation: result)
             } else {
                 print("result is not")
             }
+            ActivityIndicator.indicator.stopAnimating()
         }
         
         
@@ -45,7 +47,7 @@ class ExploreViewModel {
                 }
                 print("passing items")
                 print("items in section are \(section.items)")
-                self.exploreVC.fillPopularAnime(anime: section.items)
+                self.vc.fillPopularAnime(anime: section.items)
             } else {
                 print("NOT FETCHED popular anime")
                 //TODO: result not fetched
@@ -55,9 +57,9 @@ class ExploreViewModel {
     }
     
     func recommendationSelected(with recommendation: RecommendationData) {
-        if let controller = exploreVC.storyboard?.instantiateViewController(withIdentifier: "RecommendationDetailViewController") as? RecommendationDetailViewController {
+        if let controller = vc.storyboard?.instantiateViewController(withIdentifier: "RecommendationDetailViewController") as? RecommendationDetailViewController {
             controller.recommendation = recommendation
-            exploreVC.navigationController?.pushViewController(controller, animated: true)
+            vc.navigationController?.pushViewController(controller, animated: true)
         }
     }
     
@@ -66,9 +68,9 @@ class ExploreViewModel {
         //TODO: add to local storage
         
         if (query?.count ?? 0) > 2 {
-            if let vc = exploreVC.storyboard?.instantiateViewController(withIdentifier: "SearchResultsViewController") as? SearchResultsViewController {
+            if let vc = vc.storyboard?.instantiateViewController(withIdentifier: "SearchResultsViewController") as? SearchResultsViewController {
                 vc.query = query
-                exploreVC.navigationController?.pushViewController(vc, animated: true)
+                vc.navigationController?.pushViewController(vc, animated: true)
             }
         } else {
             showAlert()
@@ -77,7 +79,7 @@ class ExploreViewModel {
     
     func viewWillAppear() {
         getRecentSearchesFromDefaults()
-        exploreVC.recentSearchesTableView.reloadData()
+        vc.recentSearchesTableView.reloadData()
     }
     
     private func getRecentSearchesFromDefaults() {
@@ -88,7 +90,7 @@ class ExploreViewModel {
     private func showAlert() {
         let alert = UIAlertController(title: "Error", message: "Query must have at least 3 characters.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-        exploreVC.present(alert, animated: true, completion: nil)
+        vc.present(alert, animated: true, completion: nil)
     }
     
 }

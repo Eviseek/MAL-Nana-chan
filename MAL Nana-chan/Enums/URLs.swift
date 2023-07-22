@@ -35,6 +35,10 @@ enum URLs: String {
     
     case myUserProfileURL = "https://api.myanimelist.net/v2/users/@me"
     
+    //Home View Controller URLs
+    
+    case seasonalAnimeURL = "https://api.myanimelist.net/v2/anime/season/{year}/{season}?fields=list_status,mean,status,num_episodes,media_type,start_season"
+    
 //    func get(_ id: String?, _ season: Season?, _ year: String?) -> String {
 //        switch self {
 //        case .animeURL: return "\(URLs.animeURL.rawValue)/\(id)"
@@ -59,6 +63,37 @@ struct URLManager {
             return URLs.myAnimelistURL.rawValue
         }
     }
+    
+    func getURLForThisSeason() -> String {
+        var original = URLs.seasonalAnimeURL.rawValue
+        let season = SeasonManager().getThisSeason().rawValue
+        var year = Calendar.current.component(.year, from: Date())
+        let withYear = original.replacingOccurrences(of: "{year}", with: year.description)
+        let completedURL = withYear.replacingOccurrences(of: "{season}", with: season)
+        return completedURL.lowercased()
+    }
+    
+    func getURLForNextSeason() -> String {
+        var original = URLs.seasonalAnimeURL.rawValue
+        let nextSeasonTupple = SeasonManager().getUpcomingSeason()
+        let nextSeason = nextSeasonTupple.0.stringValue()
+        print("I AM NEXT SEASON" ,nextSeason)
+        var nextSeasonYear = Calendar.current.component(.year, from: Date())
+        if nextSeasonTupple.1 == true {
+            nextSeasonYear += 1
+        }
+        let withYear = original.replacingOccurrences(of: "{year}", with: nextSeasonYear.description)
+        let completedURL = withYear.replacingOccurrences(of: "{season}", with: nextSeason)
+        return completedURL.lowercased()
+    }
+    
+    func getURLForCustomSeason(season: Season, year: Int) -> String {
+        var original = URLs.seasonalAnimeURL.rawValue
+        let withYear = original.replacingOccurrences(of: "{year}", with: year.description)
+        let completedURL = withYear.replacingOccurrences(of: "{season}", with: season.rawValue)
+        return completedURL.lowercased()
+    }
+    
 }
 
 extension String {

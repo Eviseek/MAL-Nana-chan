@@ -19,6 +19,8 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         
+        Authentication().authenticate()
+        
        //TODO: testing code ----- TokenHandler.handler.deleteToken() --------
         
         viewModel = HomeViewModel(viewController: self)
@@ -59,7 +61,7 @@ extension HomeViewController: UITableViewDataSource {
                     var alternativePath = indexPath.row - 1
                     cell.parentVC = self
                     cell.itemSectionNameLabel.text = viewModel?.sections[alternativePath].name
-                    cell.fillCollectionView(section: viewModel?.sections[alternativePath] ?? Section())
+                    cell.fillCollectionView(section: viewModel?.sections[alternativePath])
                     return cell
                 }
             }
@@ -67,7 +69,7 @@ extension HomeViewController: UITableViewDataSource {
             if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.ItemSectionTableViewCell.rawValue) as? ItemSectionTableViewCell {
                 cell.parentVC = self
                 cell.itemSectionNameLabel.text = viewModel?.sections[indexPath.row].name
-                cell.fillCollectionView(section: viewModel?.sections[indexPath.row] ?? Section())
+                cell.fillCollectionView(section: viewModel?.sections[indexPath.row])
                 return cell
             }
         }

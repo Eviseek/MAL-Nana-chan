@@ -38,7 +38,7 @@ struct DataDownloader {
             
             AF.request(url, encoding: enc, headers: getHeader()).responseDecodable(of: T.self, completionHandler: { response in
                
-               debugPrint(response)
+             //  debugPrint(response)
                 completion(response.value)
             })
             

@@ -7,26 +7,30 @@
 
 import Foundation
 
+
+//TODO: paging!
+
 class seeAllViewModel {
     
     //for loading animation
     private let indicator = ActivityIndicator()
     
     private var viewController: SeeAllViewController
-    private var sectionContent: Section
+    private var sectionContent: Section<Anime>
     
     private var dataDownloader: DataDownloader
     private var fields = ["mean", "media_type", "status", "num_episodes", "source", "start_season", "my_list_status"]
     
     private var animeArr = [Anime]()
     
+    private var nextPage: String? = nil
     
-    init(viewController: SeeAllViewController, content: Section) {
+    
+    init(viewController: SeeAllViewController, content: Section<Anime>) {
         self.viewController = viewController
         self.sectionContent = content
         indicator.startAnimating(view: viewController.view, background: nil)
         dataDownloader = DataDownloader()
-        fetchData()
     }
     
     func itemSelectedAt(_ index: Int) {
@@ -36,8 +40,33 @@ class seeAllViewModel {
         }
     }
     
-    private func fetchData() {
-        DataDownloader.dataDownloader.fetchData(appendFields(fields: fields, url: sectionContent.url ?? ""), completion: { (result: Response<Anime>?) in
+    func scrolledToBottom() {
+        if let nextPage = nextPage {
+            getPagingData(url: nextPage)
+        }
+    }
+    
+    private func getPagingData(url: String) {
+//        fetchData(url: url) { list in
+//            if let list = list {
+//                self.animeArr?.data.append(contentsOf: list.data)
+//                print("my list is \(list.data.count)")
+//                self.userAnimelist?.paging = list.paging
+//                if let nextPage = list.paging?.next {
+//                    self.nextPage = nextPage
+//                    print("next page is \(nextPage)")
+//                } else {
+//                    self.nextPage = nil
+//                }
+//                self.vc?.updateTableViewWith(self.userAnimelist?.data, scrollToTop: false)
+//                self.stopLoadingAnimation()
+//            }
+//            self.isFetching = false
+//        }
+    }
+    
+    private func fetchData(url: String, completion: @escaping (Response<Anime>) -> ()) {
+        DataDownloader.dataDownloader.fetchData(url, completion: { (result: Response<Anime>?) in
             if let data = result?.data {
                 //creating a new array so I can pass all anime to view controller
                 for single in data {
@@ -47,7 +76,7 @@ class seeAllViewModel {
                     self.indicator.stopAnimating()
                 }
             } else {
-                //TODO: show error dialog and close screen on ok click
+                self.viewController.showErrorDialog(message: "Something went wrong.")
                 return
             }
         })

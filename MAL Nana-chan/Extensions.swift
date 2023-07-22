@@ -31,3 +31,30 @@ extension String {
     }
 }
 
+extension UIViewController {
+    
+    func showToast(message: String, seconds: Double) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.view.backgroundColor = .black
+        alert.view.alpha = 0.5
+        alert.view.layer.cornerRadius = 10
+        self.present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds) {
+            alert.dismiss(animated: true)
+        }
+    }
+    
+    func showErrorDialog(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { action in
+            switch action.style {
+                case .default: self.dismiss(animated: true)
+                case .destructive: self.dismiss(animated: true)
+                case .cancel: self.dismiss(animated: true)
+            }
+        }))
+        self.present(alert, animated: true)
+    }
+    
+}
+
