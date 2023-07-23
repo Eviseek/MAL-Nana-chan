@@ -8,7 +8,7 @@
 import Foundation
 
 struct Response<T: Codable>: Codable {
-    var data: [Node<T>]
+    var data: [Node<T>] 
     var paging: Paging?
 }
 

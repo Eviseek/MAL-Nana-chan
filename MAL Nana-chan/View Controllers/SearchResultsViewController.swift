@@ -11,13 +11,15 @@ import AlamofireImage
 
 class SearchResultsViewController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var animeResultsTableView: UITableView!
+    @IBOutlet weak var mangaResultsTableView: UITableView!
     @IBOutlet weak var noResultsLabel: UILabel!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var searchBar: UISearchBar!
     
     var query: String?
     private var viewModel = SearchResultsViewModel()
+    private var selectedType: ItemType = .anime
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,29 +29,40 @@ class SearchResultsViewController: UIViewController {
         searchBar.text = query
         searchBar.delegate = self
         
-        let nib = UINib(nibName: Identifiers.ItemListTableViewCell.rawValue, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: Identifiers.ItemListTableViewCell.rawValue)
-        tableView.dataSource = self
-        tableView.delegate = self
+        let nib = UINib(nibName: Identifiers.animePreviewTVCell.rawValue, bundle: nil)
+        animeResultsTableView.register(nib, forCellReuseIdentifier: Identifiers.animePreviewTVCell.rawValue)
+        animeResultsTableView.dataSource = self
+        animeResultsTableView.delegate = self
+        
+        let mangaNib = UINib(nibName: Identifiers.mangaPreviewTVCell.rawValue, bundle: nil)
+        mangaResultsTableView.register(mangaNib, forCellReuseIdentifier: Identifiers.mangaPreviewTVCell.rawValue)
+        mangaResultsTableView.dataSource = self
+        mangaResultsTableView.delegate = self
+        
     }
     
     @IBAction func itemTypeChanged(_ sender: UISegmentedControl) {
-        //TODO: manga
+        if sender.selectedSegmentIndex == 0 {
+            selectedType = .anime
+        } else {
+            selectedType = .manga
+        }
         viewModel.searchButtonClicked()
     }
 }
 
 extension SearchResultsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if segmentedControl.selectedSegmentIndex == 0 {
+        if selectedType == .anime {
             return viewModel.animeResults?.data.count ?? 0
-        } else {
+        } else if selectedType == .manga {
             return viewModel.mangaResults?.data.count ?? 0
         }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.ItemListTableViewCell.rawValue, for: indexPath) as? ItemListTableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "AnimePreviewTableViewCell", for: indexPath) as? AnimePreviewTableViewCell {
             if segmentedControl.selectedSegmentIndex == 0 {
                 let anime = viewModel.animeResults?.data[indexPath.row].node
                 var seasonText = ""
@@ -67,7 +80,7 @@ extension SearchResultsViewController: UITableViewDataSource {
                     cell.scoreLabel.text = score.description
                 }
                 cell.typeLabel.text = anime?.mediaType?.getType()
-                cell.updateEpisodesLabel(type: .anime, number: anime?.episodesCount ?? 0)
+                cell.updateEpisodesLabel(number: anime?.episodesCount ?? 0)
                 if (anime?.episodesCount ?? 0) > 0 {
                     cell.episodesNumberLabel.text = anime?.episodesCount?.description
                 }
@@ -87,7 +100,7 @@ extension SearchResultsViewController: UITableViewDataSource {
                     cell.scoreLabel.text = score.description
                 }
                 cell.typeLabel.text = manga?.mediaType?.getType()
-                cell.updateEpisodesLabel(type: .manga, number: manga?.chaptersCount ?? 0)
+                cell.updateEpisodesLabel(number: manga?.chaptersCount ?? 0)
                 if (manga?.chaptersCount ?? 0) > 0 {
                     cell.episodesNumberLabel.text = manga?.chaptersCount?.description
                 }
@@ -108,7 +121,7 @@ extension SearchResultsViewController: UITableViewDataSource {
 extension SearchResultsViewController: UITableViewDelegate, UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
-        if position > (tableView.contentSize.height - 100 - scrollView.frame.height) {
+        if position > (animeResultsTableView.contentSize.height - 100 - scrollView.frame.height) {
             if !(viewModel.pagingDone) && !(viewModel.loadingInProgress) {
                 viewModel.loadMore()
             }
@@ -126,7 +139,7 @@ extension SearchResultsViewController: UISearchBarDelegate {
         query = searchBar.text
         viewModel.searchButtonClicked()
         UIView.animate(withDuration: 0.5, delay: 0, animations: {
-            self.tableView.contentOffset.y = 0
+            self.animeResultsTableView.contentOffset.y = 0
         })
     }
     

@@ -11,19 +11,27 @@ enum Identifiers: String {
     
     // Collection Views
     
-    case ItemCollectionViewCell = "ItemCollectionViewCell"
-    case ItemCollectionView = "ItemCollectionView"
+    case animeCVCell = "AnimeCollectionViewCell"
+    case animeCV = "AnimeCollectionView"
+    
+    case mangaCVCell = "MangaSectionCollectionViewCell"
+    case mangaCV = "MangaCollectionView"
     
     // Table Views
     
-    case ItemSectionTableViewCell = "ItemSectionTableViewCell"
-    case ItemSectionTableView = "ItemSectionTableView"
+    case animeSectionTVCell = "AnimeSectionTableViewCell"
+    case animeSectionTV = "AnimeSectionTableView"
+    
+    case mangaSectionTVCell = "MangaSectionTableViewCell"
+    case mangaSectionTV = "MangaSectionTableView"
     
     case YTEmbedTableViewCell = "YoutubeEmbedTableViewCell"
     
     case RSTableViewCell = "RecentSearchesTableViewCell"
     
-    case ItemListTableViewCell = "ItemListTableViewCell"
+    case animePreviewTVCell = "AnimePreviewTableViewCell"
+    
+    case mangaPreviewTVCell = "MangaPreviewTableViewCell"
     
     // User Defaults
     

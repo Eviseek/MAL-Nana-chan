@@ -13,6 +13,8 @@ class ExploreViewModel {
     private var vc: ExploreViewController
     private let defaults = UserDefaults.standard
     
+    var popularSection: Section<Anime>? = nil
+    
     var recentSearchesArr = [String]()
     
     init(_ vc: ExploreViewController) {
@@ -37,17 +39,9 @@ class ExploreViewModel {
         
         
         DataDownloader.dataDownloader.fetchData(URLs.animePopularURL.rawValue) { (result: Response<Anime>?) in
-            if let data = result?.data {
-                var section = Section()
-                for anime in data {
-                    let item = Item(id: anime.node.id, title: anime.node.title, image: anime.node.mainPicture?.medium, score: anime.node.score)
-                    section.items.append(item)
-                    print("appended item \(item)")
-                    print("appending items")
-                }
-                print("passing items")
-                print("items in section are \(section.items)")
-                self.vc.fillPopularAnime(anime: section.items)
+            if let result = result {
+                self.popularSection = Section(name: "Popular anime", response: result)
+                self.vc.fillPopularAnime(section: self.popularSection!)
             } else {
                 print("NOT FETCHED popular anime")
                 //TODO: result not fetched

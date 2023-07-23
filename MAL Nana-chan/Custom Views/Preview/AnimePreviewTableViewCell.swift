@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ItemListTableViewCell: UITableViewCell {
+class AnimePreviewTableViewCell: UITableViewCell {
 
     @IBOutlet weak var itemImageView: UIImageView!
     
@@ -29,6 +29,7 @@ class ItemListTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         // Initialization code
         
         typeContainerView.layer.cornerRadius = 5
@@ -43,22 +44,16 @@ class ItemListTableViewCell: UITableViewCell {
         
     }
     
-    func updateEpisodesLabel(type: ItemType, number: Int) {
-        if type == .anime {
-            if number == 1 {
-                episodesTitleLabel.text = "episode"
-            } else {
-                episodesTitleLabel.text = "episodes"
-            }
-        }
-        
-        if type == .manga {
-            //TODO
+    func updateEpisodesLabel(number: Int) {
+        if number == 1 {
+            episodesTitleLabel.text = "episode"
+        } else {
+            episodesTitleLabel.text = "episodes"
         }
     }
     
     @IBAction func myListClicked(_ sender: UIButton) {
-        if let picker = vc?.storyboard?.instantiateViewController(withIdentifier: "MyListViewController") as? MyListViewController {
+        if let picker = vc?.storyboard?.instantiateViewController(withIdentifier: "MyAnimeStatusViewController") as? MyAnimeStatusViewController {
             if let sheet = picker.sheetPresentationController {
                 sheet.detents = [.medium(), .large()]
             }

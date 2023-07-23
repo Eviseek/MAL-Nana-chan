@@ -8,13 +8,12 @@
 import UIKit
 import AlamofireImage
 
-class ItemSectionTableViewCell: UITableViewCell {
+class AnimeSectionTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var itemSectionNameLabel: UILabel!
-    @IBOutlet weak var itemSeeAllButton: UIButton!
-    @IBOutlet weak var itemCollectionView: UICollectionView!
-    @IBOutlet weak var itemCollectionViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var seeAllButton: UIButton!
+    @IBOutlet weak var sectionNameLabel: UILabel!
+    @IBOutlet weak var sectionSeeAllButton: UIButton!
+    @IBOutlet weak var sectionCollectionView: UICollectionView!
+    @IBOutlet weak var sectionCollectionViewHeight: NSLayoutConstraint!
     
     var height = 0
     var itemSection: Section<Anime>? = nil
@@ -24,57 +23,54 @@ class ItemSectionTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        itemSeeAllButton.layer.cornerRadius = 5
+        sectionSeeAllButton.layer.cornerRadius = 5
         
-        let nib = UINib(nibName: Identifiers.ItemCollectionViewCell.rawValue, bundle: nil)
-        itemCollectionView.register(nib, forCellWithReuseIdentifier: "ItemCollectionViewCell")
-        itemCollectionView.dataSource = self
-        itemCollectionView.delegate = self
+        let nib = UINib(nibName: Identifiers.animeCVCell.rawValue, bundle: nil)
+        sectionCollectionView.register(nib, forCellWithReuseIdentifier: "AnimeCollectionViewCell")
+        sectionCollectionView.dataSource = self
+        sectionCollectionView.delegate = self
         
-        itemCollectionViewHeight.constant = Sizes.itemCollectionViewCellHeight.rawValue
+        sectionCollectionViewHeight.constant = Sizes.itemCollectionViewCellHeight.rawValue
         
     }
     
     @IBAction func seeAllButtonClicked(_ sender: UIButton) {
-        if let seeAllVC = parentVC?.storyboard?.instantiateViewController(withIdentifier: "SeeAllViewController") as? SeeAllViewController {
-            seeAllVC.sectionContent = itemSection
+        if let seeAllVC = parentVC?.storyboard?.instantiateViewController(withIdentifier: "SeeAllViewController") as? SeeAllAnimeViewController {
+            seeAllVC.animeSectionContent = itemSection
             parentVC?.navigationController?.pushViewController(seeAllVC, animated: true)
         }
     }
     
     func itemSelected(id: Int) {
-        print("item selected")
-        if itemSection?.type == .anime {
-            if let controller = parentVC?.storyboard?.instantiateViewController(withIdentifier: "AnimeDetailViewController") as? AnimeDetailViewController {
-                print("success, will be pushing")
-                controller.id = id
-                parentVC?.navigationController?.pushViewController(controller, animated: true)
-            }
+        if let controller = parentVC?.storyboard?.instantiateViewController(withIdentifier: "AnimeDetailViewController") as? AnimeDetailViewController {
+            print("success, will be pushing")
+            controller.id = id
+            parentVC?.navigationController?.pushViewController(controller, animated: true)
         }
     }
     
     func fillCollectionView(section: Section<Anime>) {
         self.itemSection = section
         print("collection view \(section)")
-        itemCollectionView.reloadData()
+        sectionCollectionView.reloadData()
     }
     
 }
 
-extension ItemSectionTableViewCell: UICollectionViewDataSource {
+extension AnimeSectionTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemSection?.response.data.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCollectionViewCell", for: indexPath) as? ItemCollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AnimeCollectionViewCell", for: indexPath) as? AnimeCollectionViewCell {
             var item = itemSection?.response.data[indexPath.item].node
-            cell.itemTitleLabel.text = item?.title
+            cell.animeTitleLabel.text = item?.title
             if let score = item?.score {
-                cell.itemRankLabel.text = score.description
+                cell.animeScoreLabel.text = score.description
             }
             if let downloadedImg = URL(string: item?.mainPicture?.medium ?? "") {
-                cell.itemImageView.af.setImage(withURL: downloadedImg)
+                cell.animeImageView.af.setImage(withURL: downloadedImg)
             }
             return cell
         }
@@ -83,7 +79,7 @@ extension ItemSectionTableViewCell: UICollectionViewDataSource {
 }
 
 
-extension ItemSectionTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
+extension AnimeSectionTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: Sizes.itemCollectionViewCellWidth.rawValue, height: Sizes.itemCollectionViewCellHeight.rawValue)
     }

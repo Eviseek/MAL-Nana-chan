@@ -8,17 +8,17 @@
 import UIKit
 import SkeletonView
 
-class ItemCollectionViewCell: UICollectionViewCell {
+class AnimeCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var itemImageView: UIImageView!
-    @IBOutlet weak var itemTitleLabel: UILabel!
+    @IBOutlet weak var animeImageView: UIImageView!
+    @IBOutlet weak var animeTitleLabel: UILabel!
     
-    @IBOutlet weak var itemRankLabel: UILabel!
+    @IBOutlet weak var animeScoreLabel: UILabel!
     @IBOutlet weak var cellHeight: NSLayoutConstraint!
     @IBOutlet weak var cellWidth: NSLayoutConstraint!
     
-    @IBOutlet weak var itemTypeView: UIView!
-    @IBOutlet weak var itemTypeLabel: UILabel!
+    @IBOutlet weak var animeTypeView: UIView!
+    @IBOutlet weak var animeTypeLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

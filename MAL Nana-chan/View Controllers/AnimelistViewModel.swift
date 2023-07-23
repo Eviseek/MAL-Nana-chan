@@ -96,7 +96,7 @@ class AnimelistViewModel {
     }
     
     func tableViewItemSelectedAt(_ index: Int) {
-        if let picker = vc?.storyboard?.instantiateViewController(withIdentifier: "MyListViewController") as? MyListViewController {
+        if let picker = vc?.storyboard?.instantiateViewController(withIdentifier: "MyListViewController") as? MyAnimeStatusViewController {
             if let sheet = picker.sheetPresentationController {
                 sheet.detents = [.large()]
             }

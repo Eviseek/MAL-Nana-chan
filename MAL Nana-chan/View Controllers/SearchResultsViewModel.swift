@@ -66,7 +66,7 @@ class SearchResultsViewModel {
                             self.animeResults?.data.append(contentsOf: data)
                         }
                         self.loadingInProgress = false
-                        self.viewController?.tableView.reloadData()
+                        self.viewController?.animeResultsTableView.reloadData()
                     })
                 } else {
                     self.pagingDone = true
@@ -82,7 +82,7 @@ class SearchResultsViewModel {
                             self.mangaResults?.data.append(contentsOf: data)
                         }
                         self.loadingInProgress = false
-                        self.viewController?.tableView.reloadData()
+                        self.viewController?.animeResultsTableView.reloadData()
                     })
                 } else {
                     self.pagingDone = true
@@ -122,7 +122,7 @@ class SearchResultsViewModel {
                     if let data = results {
                         self.animeResults = data
                     }
-                    self.viewController?.tableView.reloadData()
+                    self.viewController?.animeResultsTableView.reloadData()
                 })
                 
             } else {
@@ -134,7 +134,7 @@ class SearchResultsViewModel {
                     if let data = results {
                         self.mangaResults = data
                     }
-                    self.viewController?.tableView.reloadData()
+                    self.viewController?.animeResultsTableView.reloadData()
                 })
                 
             }

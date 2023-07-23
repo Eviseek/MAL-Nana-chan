@@ -8,16 +8,16 @@
 import Foundation
 import UIKit
 
-class MyListViewModel {
+class MyAnimeStatusModel {
     
-    private var vc: MyListViewController? = nil
+    private var vc: MyAnimeStatusViewController? = nil
     private var anime: Anime?
     private var manager = UserAnimeStatusManager()
     var selectedState: UserAnimeStatus? = nil
     
     init() {}
     
-    func viewDidLoad(vc: MyListViewController, anime: Anime) {
+    func viewDidLoad(vc: MyAnimeStatusViewController, anime: Anime) {
         self.vc = vc
         self.anime = anime
         setSelectedState()
@@ -52,7 +52,7 @@ class MyListViewModel {
         let urlWithId = stringUrl.replacingOccurrences(of: "{id}", with: anime?.id.description ?? "0")
         print("my url is \(urlWithId)")
         
-        let updatedStatus = MyListStatus(status: selectedState ?? .planToWatch, score: 0, episodesWatchedCount: 0, finishDate: nil)
+        let updatedStatus = MyAnimeListStatus(status: selectedState ?? .planToWatch, score: 0, episodesWatchedCount: 0, finishDate: nil)
 
         DataDownloader.dataDownloader.changeList(urlWithId, params: updatedStatus) {
             print("all done")

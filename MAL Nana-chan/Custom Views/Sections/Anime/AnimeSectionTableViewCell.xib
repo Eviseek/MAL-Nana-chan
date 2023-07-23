@@ -11,21 +11,21 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ItemSectionTableViewCell" rowHeight="364" id="KGk-i7-Jjw" customClass="ItemSectionTableViewCell" customModule="MAL_Nana_chan" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="420" height="259"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AnimeSectionTableViewCell" rowHeight="359" id="KGk-i7-Jjw" customClass="AnimeSectionTableViewCell" customModule="MAL_Nana_chan" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="434" height="254"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="420" height="259"/>
+                <rect key="frame" x="0.0" y="0.0" width="434" height="254"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Item Section Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="hNi-Ln-gVx">
-                        <rect key="frame" x="10" y="5" width="321.33333333333331" height="39"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Anime Section Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="hNi-Ln-gVx">
+                        <rect key="frame" x="10" y="5" width="335.33333333333331" height="34"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="edr-bK-FQZ">
-                        <rect key="frame" x="0.0" y="49" width="420" height="200"/>
+                        <rect key="frame" x="0.0" y="44" width="434" height="200"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="200" id="R5E-xe-24x"/>
@@ -38,7 +38,7 @@
                         </collectionViewFlowLayout>
                     </collectionView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yHf-OF-G1n">
-                        <rect key="frame" x="341.33333333333331" y="5" width="73.666666666666686" height="39"/>
+                        <rect key="frame" x="355.33333333333331" y="5" width="73.666666666666686" height="34"/>
                         <color key="backgroundColor" name="MAL Blue color"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button"/>
@@ -68,13 +68,12 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="itemCollectionView" destination="edr-bK-FQZ" id="P7l-oX-Ijb"/>
-                <outlet property="itemCollectionViewHeight" destination="R5E-xe-24x" id="F8m-Kv-17H"/>
-                <outlet property="itemSectionNameLabel" destination="hNi-Ln-gVx" id="w0W-TU-htv"/>
-                <outlet property="itemSeeAllButton" destination="yHf-OF-G1n" id="VEW-9F-yL9"/>
-                <outlet property="seeAllButton" destination="yHf-OF-G1n" id="esV-M1-kc7"/>
+                <outlet property="sectionCollectionView" destination="edr-bK-FQZ" id="P7l-oX-Ijb"/>
+                <outlet property="sectionCollectionViewHeight" destination="R5E-xe-24x" id="F8m-Kv-17H"/>
+                <outlet property="sectionNameLabel" destination="hNi-Ln-gVx" id="w0W-TU-htv"/>
+                <outlet property="sectionSeeAllButton" destination="yHf-OF-G1n" id="VEW-9F-yL9"/>
             </connections>
-            <point key="canvasLocation" x="161.53846153846152" y="65.047393364928908"/>
+            <point key="canvasLocation" x="170.76923076923077" y="63.270142180094787"/>
         </tableViewCell>
     </objects>
     <resources>

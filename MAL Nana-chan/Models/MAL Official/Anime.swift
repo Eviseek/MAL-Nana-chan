@@ -27,7 +27,7 @@ struct Anime: Codable {
     let updatedAt: String?
     let mediaType: AnimeMediaType? //add manga media type
     let status: AnimeStatus? //add manga status
-    var myListStatus: MyListStatus?
+    var myListStatus: MyAnimeListStatus?
     let episodesCount: Int? //num_volumes
     let startSeason: StartSeason? //nil
     let broadcast: Broadcast? //nil
@@ -89,7 +89,7 @@ struct Genre: Codable {
     let name: String
 }
 
-struct MyListStatus: Codable {
+struct MyAnimeListStatus: Codable {
     var status: UserAnimeStatus
     var score: Int
     var episodesWatchedCount: Int?

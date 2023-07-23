@@ -52,7 +52,7 @@ struct DataDownloader {
         }
     }
     
-    func changeList(_ url: String, params: MyListStatus, completion: @escaping () -> Void) {
+    func changeList(_ url: String, params: MyAnimeListStatus, completion: @escaping () -> Void) {
         
 //        var listHeaders: HTTPHeaders = []
 //        listHeaders.add(name: "status", value: params.status.rawValue)

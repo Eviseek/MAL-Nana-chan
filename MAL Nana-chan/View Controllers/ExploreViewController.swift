@@ -16,17 +16,17 @@ class ExploreViewController: UIViewController {
     @IBOutlet weak var recentSearchesTableView: UITableView!
     @IBOutlet weak var recentSearchesView: UIView!
     
-    private var exploreVM: ExploreViewModel?
+    private var viewModel: ExploreViewModel?
     
     private var recommendations = [RecommendationData]()
-    private var popularAnime = Section(name: "10 popular anime")
+    private var section: Section<Anime>? = nil
     
     private var numberOfRec = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        exploreVM = ExploreViewModel(self)
+        viewModel = ExploreViewModel(self)
         searchBar.delegate = self
         
         tableViewSetUp()
@@ -34,7 +34,7 @@ class ExploreViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        exploreVM?.viewWillAppear()
+        viewModel?.viewWillAppear()
     }
     
     private func tableViewSetUp() {
@@ -45,9 +45,9 @@ class ExploreViewController: UIViewController {
         recentSearchesTableView.dataSource = self
         recentSearchesTableView.delegate = self
         
-        let exploreItemNib = UINib(nibName: "ItemSectionTableViewCell", bundle: nil)
+        let exploreItemNib = UINib(nibName: "AnimeSectionTableViewCell", bundle: nil)
         let exploreRecNib = UINib(nibName: "RecommendationTableViewCell", bundle: nil)
-        exploreTableView.register(exploreItemNib, forCellReuseIdentifier: "ItemSectionTableViewCell")
+        exploreTableView.register(exploreItemNib, forCellReuseIdentifier: "AnimeSectionTableViewCell")
         exploreTableView.register(exploreRecNib, forCellReuseIdentifier: "RecommendationTableViewCell")
         exploreTableView.dataSource = self
         exploreTableView.delegate = self
@@ -58,9 +58,8 @@ class ExploreViewController: UIViewController {
         exploreTableView.reloadData()
     }
     
-    func fillPopularAnime(anime: [Item]) {
-        self.popularAnime.items = anime
-        print("items are \(anime)")
+    func fillPopularAnime(section: Section<Anime>) {
+        self.section = Section(name: section.name, response: section.response)
         exploreTableView.reloadData()
     }
 }
@@ -70,13 +69,13 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if tableView == recentSearchesTableView {
-            return exploreVM?.recentSearchesArr.count ?? 0
+            return viewModel?.recentSearchesArr.count ?? 0
         }
         
         if tableView == exploreTableView {
             print("this is explore")
             if recommendations.count >= numberOfRec {
-                return (1 + numberOfRec) //1 is for the popular anime collection view and the resst for to show only a limited number of recommendations
+                return (1 + numberOfRec) //1 is for the popular anime collection view and the rest for to show only a limited number of recommendations
             }
             return (1 + recommendations.count)
         }
@@ -87,11 +86,15 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
         
         if tableView == exploreTableView {
             if indexPath.row == 0 {
-                if let exploreCVCell = tableView.dequeueReusableCell(withIdentifier: "ItemSectionTableViewCell", for: indexPath) as? ItemSectionTableViewCell {
-                    exploreCVCell.itemSectionNameLabel.text = popularAnime.name
-                    exploreCVCell.fillCollectionView(section: popularAnime)
-                    exploreCVCell.seeAllButton.isHidden = true
-                    exploreCVCell.parentVC = self
+                if let exploreCVCell = tableView.dequeueReusableCell(withIdentifier: "AnimeSectionTableViewCell", for: indexPath) as? AnimeSectionTableViewCell {
+                    if let popularAnime = section {
+                        exploreCVCell.sectionNameLabel.text = popularAnime.name
+                        exploreCVCell.fillCollectionView(section: popularAnime)
+                        exploreCVCell.sectionSeeAllButton.isHidden = true
+                        exploreCVCell.parentVC = self
+                    } else {
+                        print("no popular anime here")
+                    }
                     return exploreCVCell
                 }
             }
@@ -116,7 +119,7 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
         
         if tableView == recentSearchesView {
             if let recentSearchesCell = tableView.dequeueReusableCell(withIdentifier: Identifiers.RSTableViewCell.rawValue, for: indexPath) as? RecentSearchesTableViewCell {
-                recentSearchesCell.rsTitleLabel.text = exploreVM?.recentSearchesArr[indexPath.row]
+                recentSearchesCell.rsTitleLabel.text = viewModel?.recentSearchesArr[indexPath.row]
                 return recentSearchesCell
             }
         }
@@ -125,11 +128,11 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == recentSearchesTableView {
-            exploreVM?.searchButtonClicked(query: exploreVM?.recentSearchesArr[indexPath.row])
+            viewModel?.searchButtonClicked(query: viewModel?.recentSearchesArr[indexPath.row])
         }
         if tableView == exploreTableView && indexPath.row > 0 { //recommendations start at 1st position
             print("clicked")
-            exploreVM?.recommendationSelected(with: recommendations[indexPath.row])
+            viewModel?.recommendationSelected(with: recommendations[indexPath.row])
         }
     }
     
@@ -138,7 +141,7 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
 extension ExploreViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        exploreVM?.searchButtonClicked(query: searchBar.text)
+        viewModel?.searchButtonClicked(query: searchBar.text)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {

@@ -10,15 +10,15 @@ import Foundation
 
 //TODO: paging!
 
-class seeAllViewModel {
+class SeeAllAnimeModel {
     
     //for loading animation
     private let indicator = ActivityIndicator()
     
-    private var viewController: SeeAllViewController
-    private var sectionContent: Section<Anime>
+    private var vc: SeeAllAnimeViewController? = nil
+    private var sectionContent: Section<Anime>? = nil
     
-    private var dataDownloader: DataDownloader
+    private var dataDownloader = DataDownloader()
     private var fields = ["mean", "media_type", "status", "num_episodes", "source", "start_season", "my_list_status"]
     
     private var animeArr = [Anime]()
@@ -26,17 +26,19 @@ class seeAllViewModel {
     private var nextPage: String? = nil
     
     
-    init(viewController: SeeAllViewController, content: Section<Anime>) {
-        self.viewController = viewController
+    init() {}
+    
+    func viewDidLoad(viewController: SeeAllAnimeViewController, content: Section<Anime>) {
+        self.vc = viewController
         self.sectionContent = content
         indicator.startAnimating(view: viewController.view, background: nil)
         dataDownloader = DataDownloader()
     }
     
     func itemSelectedAt(_ index: Int) {
-        if let controller = viewController.storyboard?.instantiateViewController(withIdentifier: "AnimeDetailViewController") as? AnimeDetailViewController {
+        if let controller = vc?.storyboard?.instantiateViewController(withIdentifier: "AnimeDetailViewController") as? AnimeDetailViewController {
             controller.id = animeArr[index].id
-            viewController.navigationController?.pushViewController(controller, animated: true)
+            vc?.navigationController?.pushViewController(controller, animated: true)
         }
     }
     
@@ -72,11 +74,11 @@ class seeAllViewModel {
                 for single in data {
                     self.animeArr.append(single.node)
                 }
-                self.viewController.fillTableView(items: self.animeArr) { //stop the loading animation once data passed
+                self.vc?.fillTableView(items: self.animeArr) { //stop the loading animation once data passed
                     self.indicator.stopAnimating()
                 }
             } else {
-                self.viewController.showErrorDialog(message: "Something went wrong.")
+                self.vc?.showErrorDialog(message: "Something went wrong.")
                 return
             }
         })

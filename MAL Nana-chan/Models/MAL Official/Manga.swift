@@ -27,7 +27,7 @@ struct Manga: Codable {
     var updatedAt: String?
     var mediaType: MangaMediaType?
     var status: MangaStatus?
-    var myListStatus: MyListStatus? //CHANGE
+    var myListStatus: MyMangaListStatus? //CHANGE
     var volumesCount: Int?
     var chaptersCount: Int?
  //   var authors: [Node<Person>]?
@@ -65,6 +65,38 @@ struct Manga: Codable {
     
 }
 
+struct MyMangaListStatus: Codable {
+    var status: UserMangaStatus
+    var score: Int
+    var volumesReadCount: Int?
+    var chaptersReadCount: Int?
+    var isRereading: Bool?
+    var startDate: String?
+    let finishDate: String?
+    var priority: Int?
+    var rereadCount: Int?
+    var rereadValue: Int?
+    var tags: [String]?
+    var comments: String?
+    var updatedAt: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case status = "status"
+        case score = "score"
+        case volumesReadCount = "num_volumes_read"
+        case chaptersReadCount = "num_chapters_read"
+        case isRereading = "rereading"
+        case startDate = "start_date"
+        case finishDate = "finish_date"
+        case priority = "priority"
+        case rereadCount = "num_times_reread"
+        case rereadValue = "reread_value"
+        case tags = "tags"
+        case comments = "comments"
+        case updatedAt = "updated_at"
+    }
+    
+}
 
 
 struct PersonRoleEdge: Codable {

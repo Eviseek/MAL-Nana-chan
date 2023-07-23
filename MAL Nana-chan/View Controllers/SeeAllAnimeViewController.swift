@@ -10,26 +10,24 @@ import AlamofireImage
 
 //TODO: loading!
 
-class SeeAllViewController: UIViewController {
+class SeeAllAnimeViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var sectionContent: Section<Anime>? = nil
-    private var viewModel: seeAllViewModel? = nil
-    private var items: [Anime]? = nil
+    var animeSectionContent: Section<Anime>? = nil
+
+    private var viewModel = SeeAllAnimeModel()
+    private var items = [Anime]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let sectionContent else {
-            //do something?
+        guard let animeSectionContent else {
+            self.showErrorDialog(message: "Something went wrong")
             return
         }
-        
-        viewModel = seeAllViewModel(viewController: self, content: sectionContent)
-        
+        viewModel.viewDidLoad(viewController: self, content: animeSectionContent)
         tableViewSetUp()
-        
     }
     
     func fillTableView(items: [Anime], completion: @escaping () -> Void) {
@@ -48,31 +46,31 @@ class SeeAllViewController: UIViewController {
 }
 
 
-extension SeeAllViewController: UITableViewDataSource, UITableViewDelegate {
+extension SeeAllAnimeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("number of items is \(sectionContent?.items.count)")
-        return items?.count ?? 0
+       // print("number of items is \(sectionContent?.items.count)")
+        return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "ItemListTableViewCell") as? ItemListTableViewCell {
-            var item = items?[indexPath.row]
-            cell.item = item
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "AnimePreviewTableViewCell") as? AnimePreviewTableViewCell {
+            var anime = items[indexPath.row]
+            cell.item = anime
             cell.vc = self
             cell.selectionStyle = .none
-            cell.titleLabel.text = item?.title
-            cell.typeLabel.text = item?.mediaType?.getType()
-            if let episodes = item?.episodesCount, episodes > 0 {
+            cell.titleLabel.text = anime.title
+            cell.typeLabel.text = anime.mediaType?.getType()
+            if let episodes = anime.episodesCount, episodes > 0 {
                 cell.episodesTitleLabel.text = episodes.description
             } else {
                 cell.episodesTitleLabel.text = "N/A"
             }
             cell.seasonLabel.text = "Season unavailable"
-            cell.scoreLabel.text = item?.score?.description ?? "N/A"
-            if let seasonText = item?.startSeason?.season.stringValue(), let yearText = item?.startSeason?.year { //unwrapping before passing to label
+            cell.scoreLabel.text = anime.score?.description ?? "N/A"
+            if let seasonText = anime.startSeason?.season.stringValue(), let yearText = anime.startSeason?.year { //unwrapping before passing to label
                 cell.seasonLabel.text = "\(seasonText) \(yearText)"
             }
-            if let url = URL(string: item?.mainPicture?.medium ?? "") { //downloading the image from net
+            if let url = URL(string: anime.mainPicture?.medium ?? "") { //downloading the image from net
                 cell.itemImageView.af.setImage(withURL: url)
             }
             return cell
@@ -83,7 +81,7 @@ extension SeeAllViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("selected!!!")
-        viewModel?.itemSelectedAt(indexPath.row)
+        viewModel.itemSelectedAt(indexPath.row)
     }
     
     

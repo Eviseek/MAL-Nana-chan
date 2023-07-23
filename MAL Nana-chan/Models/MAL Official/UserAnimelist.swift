@@ -14,5 +14,5 @@ struct UserAnimelist: Codable {
 
 struct AnimelistData: Codable {
     let node: Anime
-    let list_status: MyListStatus
+    let list_status: MyAnimeListStatus
 }

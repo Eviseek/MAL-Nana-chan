@@ -29,8 +29,8 @@ class HomeViewController: UIViewController {
     }
     
     private func tableViewSetUp() {
-        let nib = UINib(nibName: Identifiers.ItemSectionTableViewCell.rawValue, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: Identifiers.ItemSectionTableViewCell.rawValue)
+        let nib = UINib(nibName: Identifiers.animeSectionTVCell.rawValue, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: Identifiers.animeSectionTVCell.rawValue)
         
         let ytNib = UINib(nibName: Identifiers.YTEmbedTableViewCell.rawValue, bundle: nil)
         tableView.register(ytNib, forCellReuseIdentifier: Identifiers.YTEmbedTableViewCell.rawValue)
@@ -57,19 +57,23 @@ extension HomeViewController: UITableViewDataSource {
                     return ytCell
                 }
             } else {
-                if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.ItemSectionTableViewCell.rawValue) as? ItemSectionTableViewCell {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.animeSectionTVCell.rawValue) as? AnimeSectionTableViewCell {
                     var alternativePath = indexPath.row - 1
-                    cell.parentVC = self
-                    cell.itemSectionNameLabel.text = viewModel?.sections[alternativePath].name
-                    cell.fillCollectionView(section: viewModel?.sections[alternativePath])
+                    if let section = viewModel?.sections[alternativePath] {
+                        cell.parentVC = self
+                        cell.sectionNameLabel.text = section.name
+                        cell.fillCollectionView(section: section)
+                    }
                     return cell
                 }
             }
         } else {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.ItemSectionTableViewCell.rawValue) as? ItemSectionTableViewCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.animeSectionTVCell.rawValue) as? AnimeSectionTableViewCell {
                 cell.parentVC = self
-                cell.itemSectionNameLabel.text = viewModel?.sections[indexPath.row].name
-                cell.fillCollectionView(section: viewModel?.sections[indexPath.row])
+                if let section = viewModel?.sections[indexPath.row] {
+                    cell.sectionNameLabel.text = section.name
+                    cell.fillCollectionView(section: section)
+                }
                 return cell
             }
         }
