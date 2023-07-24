@@ -9,5 +9,6 @@ import Foundation
 
 struct Section<T: Codable> {
     var name: String = "Unnamed Section"
+    var type: ItemType = .anime
     var response: Response<T>
 }

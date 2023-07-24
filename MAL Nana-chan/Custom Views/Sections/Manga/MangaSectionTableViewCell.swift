@@ -34,8 +34,8 @@ class MangaSectionTableViewCell: UITableViewCell {
     }
     
     @IBAction func seeAllButtonClicked(_ sender: UIButton) {
-        if let seeAllVC = parentVC?.storyboard?.instantiateViewController(withIdentifier: "SeeAllViewController") as? SeeAllAnimeViewController {
-            //TODO: seeAllVC.sectionContent = itemSection
+        if let seeAllVC = parentVC?.storyboard?.instantiateViewController(withIdentifier: "SeeAllViewController") as? SeeAllViewController<Manga> {
+            seeAllVC.section = itemSection
             parentVC?.navigationController?.pushViewController(seeAllVC, animated: true)
         }
     }
