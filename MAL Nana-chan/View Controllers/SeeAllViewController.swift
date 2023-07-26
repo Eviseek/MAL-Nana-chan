@@ -12,7 +12,7 @@ import AlamofireImage
 
 class SeeAllViewController<T: Codable>: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var tableView: UITableView!
+    private var tableView: UITableView!
     
     var section: Section<T>? = nil
 
@@ -24,12 +24,24 @@ class SeeAllViewController<T: Codable>: UIViewController, UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUpUI()
+        
         guard let section else {
-            self.showErrorDialog(message: "Something went wrong")
+            self.showErrorDialog(message: "Something went wrong.")
             return
         }
         
         viewModel.viewDidLoad(viewController: self, section: section)
+    }
+    
+    private func setUpUI() {
+        tableView = UITableView()
+        self.view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
     }
     
     func fillTableView(anime: [Node<Anime>]) {

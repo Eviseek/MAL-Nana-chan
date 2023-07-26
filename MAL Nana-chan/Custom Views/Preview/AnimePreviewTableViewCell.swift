@@ -7,6 +7,8 @@
 
 import UIKit
 
+//TODO: remove vc?
+
 class AnimePreviewTableViewCell: UITableViewCell {
 
     @IBOutlet weak var itemImageView: UIImageView!
@@ -27,10 +29,12 @@ class AnimePreviewTableViewCell: UITableViewCell {
     var item: Anime? = nil
     var vc: UIViewController? = nil
     
+    private var storyboard = UIStoryboard()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // Initialization code
+        storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         typeContainerView.layer.cornerRadius = 5
         
@@ -53,13 +57,16 @@ class AnimePreviewTableViewCell: UITableViewCell {
     }
     
     @IBAction func myListClicked(_ sender: UIButton) {
-        if let picker = vc?.storyboard?.instantiateViewController(withIdentifier: "MyAnimeStatusViewController") as? MyAnimeStatusViewController {
-            if let sheet = picker.sheetPresentationController {
-                sheet.detents = [.medium(), .large()]
-            }
-            picker.anime = item
-            picker.fromAnimelist = false
-            vc?.present(picker, animated: true)
+        print("my list clicked")
+        print("my vc is \(vc)")
+        if let picker = storyboard.instantiateViewController(withIdentifier: "MyAnimeStatusViewController") as? MyAnimeStatusViewController {
+            print("i am here")
+        if let sheet = picker.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+        }
+        picker.anime = item
+        picker.fromAnimelist = false
+        vc?.present(picker, animated: true)
         }
     }
 }

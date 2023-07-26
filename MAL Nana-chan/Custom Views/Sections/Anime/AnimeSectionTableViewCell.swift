@@ -35,10 +35,9 @@ class AnimeSectionTableViewCell: UITableViewCell {
     }
     
     @IBAction func seeAllButtonClicked(_ sender: UIButton) {
-        if let seeAllVC = parentVC?.storyboard?.instantiateViewController(withIdentifier: "SeeAllViewController") as? SeeAllViewController<Anime> {
-            seeAllVC.section = itemSection
-            parentVC?.navigationController?.pushViewController(seeAllVC, animated: true)
-        }
+        let seeAllVC = SeeAllViewController<Anime>()
+        seeAllVC.section = itemSection
+        parentVC?.navigationController?.pushViewController(seeAllVC, animated: true)
     }
     
     func itemSelected(id: Int) {

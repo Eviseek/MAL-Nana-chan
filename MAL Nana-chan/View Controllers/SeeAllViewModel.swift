@@ -33,7 +33,7 @@ class SeeAllViewModel<T: Codable> {
         self.vc = viewController
         self.section = section
         setUpSectionAccordingToType()
-        indicator.startAnimating(view: viewController.view, background: nil)
+      //  indicator.startAnimating(view: viewController.view, background: nil)
     }
     
     private func setUpSectionAccordingToType() {
