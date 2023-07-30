@@ -44,7 +44,7 @@ class AnimeDetailViewModel {
     }
     
     func addToListClicked() {
-        if let picker = viewController?.storyboard?.instantiateViewController(withIdentifier: "MyListViewController") as? MyAnimeStatusViewController {
+        if let picker = viewController?.storyboard?.instantiateViewController(withIdentifier: "MyAnimeStatusViewController") as? MyAnimeStatusViewController {
             if let sheet = picker.sheetPresentationController {
                 sheet.detents = [.medium(), .large()]
             }

@@ -16,6 +16,7 @@ class AnimelistItemTableViewCell: UITableViewCell {
     @IBOutlet weak var itemTypeLabel: UILabel!
     @IBOutlet weak var itemScoreLabel: UILabel!
     @IBOutlet weak var itemSeasonLabel: UILabel!
+    @IBOutlet weak var progressLabel: UILabel!
     
     @IBOutlet weak var itemImageView: UIImageView!
     
@@ -28,12 +29,13 @@ class AnimelistItemTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func setUpProgress(progress: Float, total: Float?) {
-        if let total = total {
+    func setProgress(_ progress: Int, total: Int) {
+        if total != 0 {
             let value = progress/total
-            progressBar.setProgress(value, animated: false)
+            progressBar.setProgress(Float(value), animated: false)
+            progressLabel.text = value.description
         } else {
-            progressBar.setProgress(0.5, animated: false)
+            progressBar.setProgress(Float(progress), animated: false)
         }
         
     }

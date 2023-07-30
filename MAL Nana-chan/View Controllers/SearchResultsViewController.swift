@@ -24,11 +24,16 @@ class SearchResultsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUpUI()
+        
         viewModel.viewDidLoad(viewController: self)
         
         searchBar.text = query
         searchBar.delegate = self
         
+    }
+    
+    private func setUpUI() {
         let nib = UINib(nibName: Identifiers.animePreviewTVCell.rawValue, bundle: nil)
         animeResultsTableView.register(nib, forCellReuseIdentifier: Identifiers.animePreviewTVCell.rawValue)
         animeResultsTableView.dataSource = self
@@ -38,7 +43,6 @@ class SearchResultsViewController: UIViewController {
         mangaResultsTableView.register(mangaNib, forCellReuseIdentifier: Identifiers.mangaPreviewTVCell.rawValue)
         mangaResultsTableView.dataSource = self
         mangaResultsTableView.delegate = self
-        
     }
     
     @IBAction func itemTypeChanged(_ sender: UISegmentedControl) {
@@ -66,6 +70,7 @@ extension SearchResultsViewController: UITableViewDataSource {
             if segmentedControl.selectedSegmentIndex == 0 {
                 let anime = viewModel.animeResults?.data[indexPath.row].node
                 var seasonText = ""
+                cell.vc = self
                 cell.selectionStyle = .none
                 cell.titleLabel.text = anime?.title
                 if let season = anime?.startSeason?.season {
@@ -93,6 +98,7 @@ extension SearchResultsViewController: UITableViewDataSource {
                 
             } else {
                 let manga = viewModel.mangaResults?.data[indexPath.row].node
+                cell.vc = self
                 cell.selectionStyle = .none
                 cell.titleLabel.text = manga?.title
                 cell.seasonLabel.text = manga?.startDate?.extractSeason()

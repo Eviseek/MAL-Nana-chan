@@ -8,7 +8,6 @@
 import UIKit
 import AlamofireImage
 
-//TODO: loading!
 
 class SeeAllViewController<T: Codable>: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -29,6 +28,12 @@ class SeeAllViewController<T: Codable>: UIViewController, UITableViewDataSource,
         guard let section else {
             self.showErrorDialog(message: "Something went wrong.")
             return
+        }
+        
+        if T.self == Manga.self {
+            mangaTableViewSetUp()
+        } else {
+            animeTableViewSetUp()
         }
         
         viewModel.viewDidLoad(viewController: self, section: section)
@@ -54,14 +59,14 @@ class SeeAllViewController<T: Codable>: UIViewController, UITableViewDataSource,
         tableView.reloadData()
     }
     
-    func mangaTableViewSetUp() {
+    private func mangaTableViewSetUp() {
         let nib = UINib(nibName: "MangaPreviewTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "MangaPreviewTableViewCell")
         tableView.dataSource = self
         tableView.delegate = self
     }
     
-    func animeTableViewSetUp() {
+    private func animeTableViewSetUp() {
         let nib = UINib(nibName: "AnimePreviewTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "AnimePreviewTableViewCell")
         tableView.dataSource = self
@@ -146,12 +151,12 @@ class SeeAllViewController<T: Codable>: UIViewController, UITableViewDataSource,
         viewModel.itemSelectedAt(indexPath.row)
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let position = scrollView.contentOffset.y
+        if position > (tableView.contentSize.height-100 - scrollView.frame.size.height) && !viewModel.isFetching {
+            print("fetch more")
+            viewModel.scrolledToBottom()
+        }
+    }
+    
 }
-
-
-//extension SeeAllAnimeViewController: UITableViewDataSource, UITableViewDelegate {
-//
-//    
-//    
-//    
-//}

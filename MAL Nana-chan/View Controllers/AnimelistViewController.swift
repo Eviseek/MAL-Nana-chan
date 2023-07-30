@@ -120,6 +120,7 @@ extension AnimelistViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "AnimelistItemTableViewCell") as? AnimelistItemTableViewCell {
             let item = data?[indexPath.row].node
+            cell.setProgress(item?.myListStatus?.episodesWatchedCount ?? 0, total: item?.episodesCount ?? 0)
             cell.selectionStyle = .none
             cell.itemTitleLabel.text = item?.title
             cell.itemScoreLabel.text = item?.score?.description

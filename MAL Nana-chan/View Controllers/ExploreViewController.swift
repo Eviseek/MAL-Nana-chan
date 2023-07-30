@@ -16,7 +16,7 @@ class ExploreViewController: UIViewController {
     @IBOutlet weak var recentSearchesTableView: UITableView!
     @IBOutlet weak var recentSearchesView: UIView!
     
-    private var viewModel: ExploreViewModel?
+    private var viewModel =  ExploreViewModel()
     
     private var recommendations = [RecommendationData]()
     private var section: Section<Anime>? = nil
@@ -26,7 +26,7 @@ class ExploreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel = ExploreViewModel(self)
+        viewModel.viewDidLoad(vc: self)
         searchBar.delegate = self
         
         tableViewSetUp()
@@ -34,7 +34,12 @@ class ExploreViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        viewModel?.viewWillAppear()
+      //  viewModel.viewWillAppear()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        viewModel.viewWillAppear()
     }
     
     private func tableViewSetUp() {
@@ -62,6 +67,10 @@ class ExploreViewController: UIViewController {
         self.section = Section(name: section.name, response: section.response)
         exploreTableView.reloadData()
     }
+    
+    func refreshRecentSearches() {
+        recentSearchesTableView.reloadData()
+    }
 }
 
 extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
@@ -69,7 +78,7 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if tableView == recentSearchesTableView {
-            return viewModel?.recentSearchesArr.count ?? 0
+            return viewModel.recentSearchesArr.count
         }
         
         if tableView == exploreTableView {
@@ -117,9 +126,9 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
             }
         }
         
-        if tableView == recentSearchesView {
+        if tableView == recentSearchesTableView {
             if let recentSearchesCell = tableView.dequeueReusableCell(withIdentifier: Identifiers.RSTableViewCell.rawValue, for: indexPath) as? RecentSearchesTableViewCell {
-                recentSearchesCell.rsTitleLabel.text = viewModel?.recentSearchesArr[indexPath.row]
+                recentSearchesCell.rsTitleLabel.text = viewModel.recentSearchesArr[indexPath.row]
                 return recentSearchesCell
             }
         }
@@ -128,11 +137,11 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == recentSearchesTableView {
-            viewModel?.searchButtonClicked(query: viewModel?.recentSearchesArr[indexPath.row])
+            viewModel.searchButtonClicked(query: viewModel.recentSearchesArr[indexPath.row])
         }
         if tableView == exploreTableView && indexPath.row > 0 { //recommendations start at 1st position
             print("clicked")
-            viewModel?.recommendationSelected(with: recommendations[indexPath.row])
+            viewModel.recommendationSelected(with: recommendations[indexPath.row])
         }
     }
     
@@ -141,15 +150,19 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
 extension ExploreViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        viewModel?.searchButtonClicked(query: searchBar.text)
+        print("clicked")
+        viewModel.searchButtonClicked(query: searchBar.text)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         recentSearchesView.isHidden = false
+        recentSearchesTableView.isHidden = false
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         recentSearchesView.isHidden = true
+        recentSearchesTableView.isHidden = true
     }
+    
 }

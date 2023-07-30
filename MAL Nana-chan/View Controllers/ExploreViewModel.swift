@@ -10,18 +10,20 @@ import UIKit
 
 class ExploreViewModel {
     
-    private var vc: ExploreViewController
+    private var vc: ExploreViewController? = nil
     private let defaults = UserDefaults.standard
     
     var popularSection: Section<Anime>? = nil
     
-    var recentSearchesArr = [String]()
+    var recentSearchesArr: [String] = [String]()
     
-    init(_ vc: ExploreViewController) {
-        print("CREATED")
+    init() {}
+    
+    func viewDidLoad(vc: ExploreViewController) {
         self.vc = vc
         ActivityIndicator.indicator.startAnimating(view: vc.view, background: nil)
-        getRecentSearchesFromDefaults()
+        self.checkRecentSearchesTime()
+        self.recentSearchesArr = getRecentSearches()
         fetchData()
     }
     
@@ -30,7 +32,7 @@ class ExploreViewModel {
             print("result is?")
             if let result = result {
                 print(result)
-                self.vc.fillUpRecommendations(recommendation: result)
+                self.vc?.fillUpRecommendations(recommendation: result)
             } else {
                 print("result is not")
             }
@@ -41,7 +43,7 @@ class ExploreViewModel {
         DataDownloader.dataDownloader.fetchData(URLs.animePopularURL.rawValue) { (result: Response<Anime>?) in
             if let result = result {
                 self.popularSection = Section(name: "Popular anime", response: result)
-                self.vc.fillPopularAnime(section: self.popularSection!)
+                self.vc?.fillPopularAnime(section: self.popularSection!)
             } else {
                 print("NOT FETCHED popular anime")
                 //TODO: result not fetched
@@ -51,20 +53,18 @@ class ExploreViewModel {
     }
     
     func recommendationSelected(with recommendation: RecommendationData) {
-        if let controller = vc.storyboard?.instantiateViewController(withIdentifier: "RecommendationDetailViewController") as? RecommendationDetailViewController {
+        if let controller = vc?.storyboard?.instantiateViewController(withIdentifier: "RecommendationDetailViewController") as? RecommendationDetailViewController {
             controller.recommendation = recommendation
-            vc.navigationController?.pushViewController(controller, animated: true)
+            vc?.navigationController?.pushViewController(controller, animated: true)
         }
     }
     
     func searchButtonClicked(query: String?) {
-        
-        //TODO: add to local storage
-        
         if (query?.count ?? 0) > 2 {
-            if let vc = vc.storyboard?.instantiateViewController(withIdentifier: "SearchResultsViewController") as? SearchResultsViewController {
-                vc.query = query
-                vc.navigationController?.pushViewController(vc, animated: true)
+            saveToRecentSearches(query: query!)
+            if let controller = vc?.storyboard?.instantiateViewController(withIdentifier: "SearchResultsViewController") as? SearchResultsViewController {
+                controller.query = query
+                vc?.navigationController?.pushViewController(controller, animated: true)
             }
         } else {
             showAlert()
@@ -72,19 +72,53 @@ class ExploreViewModel {
     }
     
     func viewWillAppear() {
-        getRecentSearchesFromDefaults()
-        vc.recentSearchesTableView.reloadData()
+        vc?.recentSearchesView.isHidden = true
+        recentSearchesArr = getRecentSearches()
+        print("recentSearchesArr is \(recentSearchesArr)")
+        vc?.refreshRecentSearches()
     }
     
-    private func getRecentSearchesFromDefaults() {
-        recentSearchesArr = defaults.object(forKey: Identifiers.RecentSearches.rawValue) as? [String] ?? [String]()
-        print("got recent searches", recentSearchesArr)
+    private func saveToRecentSearches(query: String) {
+        
+        var alreadyThere = false
+        
+        for search in recentSearchesArr {
+            if search == query {
+                alreadyThere = true
+            }
+        }
+        
+        if !alreadyThere {
+            recentSearchesArr.append(query)
+            defaults.set(recentSearchesArr, forKey: Identifiers.RecentSearches.rawValue)
+            //saving date to delete it if longer than week
+            defaults.set(Date(), forKey: "RecentSearchesLastSave")
+            vc?.refreshRecentSearches()
+        }
+    }
+    
+    private func getRecentSearches() -> [String] {
+        return defaults.object(forKey: Identifiers.RecentSearches.rawValue) as? [String] ?? [String]()
+    }
+    
+    private func checkRecentSearchesTime() {
+        let previous = defaults.object(forKey: "RecentSearchesLastSave") as? Date
+        if let previous = previous {
+            print("previous is \(previous)")
+            if let timeBetween = Calendar.current.dateComponents([.day], from: previous, to: Date()).day {
+                print("time between is \(timeBetween)")
+                if timeBetween >= 1 {
+                    print("bigger than one")
+                    //TODO: delete array
+                }
+            }
+        }
     }
     
     private func showAlert() {
         let alert = UIAlertController(title: "Error", message: "Query must have at least 3 characters.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-        vc.present(alert, animated: true, completion: nil)
+        vc?.present(alert, animated: true, completion: nil)
     }
     
 }

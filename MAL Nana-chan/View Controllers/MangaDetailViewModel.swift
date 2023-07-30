@@ -37,11 +37,11 @@ class MangaDetailViewModel {
     }
     
     func addToListClicked() {
-        if let picker = vc?.storyboard?.instantiateViewController(withIdentifier: "MyListViewController") as? MyAnimeStatusViewController {
+        if let picker = vc?.storyboard?.instantiateViewController(withIdentifier: "MyMangaStatusViewController") as? MyMangaStatusViewController {
             if let sheet = picker.sheetPresentationController {
                 sheet.detents = [.medium(), .large()]
             }
-            //picker.anime = anime
+            picker.manga = manga
             vc?.present(picker, animated: true)
         }
     }

@@ -96,9 +96,20 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hAH-ur-DhV" customClass="GradientProgressBar" customModule="GradientProgressBar">
                         <rect key="frame" x="125" y="160" width="308" height="20"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lLq-eH-952">
+                                <rect key="frame" x="134.66666666666669" y="0.0" width="39" height="20"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemCyanColor"/>
                         <constraints>
+                            <constraint firstItem="lLq-eH-952" firstAttribute="centerX" secondItem="hAH-ur-DhV" secondAttribute="centerX" id="EUq-Au-sWx"/>
                             <constraint firstAttribute="height" constant="20" id="IqF-yX-2Ex"/>
+                            <constraint firstAttribute="bottom" secondItem="lLq-eH-952" secondAttribute="bottom" id="NzJ-Y5-d8q"/>
+                            <constraint firstItem="lLq-eH-952" firstAttribute="top" secondItem="hAH-ur-DhV" secondAttribute="top" id="UvX-WD-qv8"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fgZ-qF-qtd">
@@ -133,6 +144,7 @@
                 <outlet property="itemTitleLabel" destination="3DR-qL-rlp" id="TgV-0b-zxK"/>
                 <outlet property="itemTypeLabel" destination="rO5-Td-BlZ" id="XPE-eZ-8df"/>
                 <outlet property="progressBar" destination="hAH-ur-DhV" id="PTI-kX-BeY"/>
+                <outlet property="progressLabel" destination="lLq-eH-952" id="VnA-io-fiC"/>
             </connections>
             <point key="canvasLocation" x="-340.45801526717554" y="42.95774647887324"/>
         </tableViewCell>

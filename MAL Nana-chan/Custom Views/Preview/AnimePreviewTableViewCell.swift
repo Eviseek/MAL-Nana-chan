@@ -58,14 +58,13 @@ class AnimePreviewTableViewCell: UITableViewCell {
     
     @IBAction func myListClicked(_ sender: UIButton) {
         print("my list clicked")
-        print("my vc is \(vc)")
         if let picker = storyboard.instantiateViewController(withIdentifier: "MyAnimeStatusViewController") as? MyAnimeStatusViewController {
             print("i am here")
         if let sheet = picker.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
         }
         picker.anime = item
-        picker.fromAnimelist = false
+      //  picker.fromAnimelist = false
         vc?.present(picker, animated: true)
         }
     }

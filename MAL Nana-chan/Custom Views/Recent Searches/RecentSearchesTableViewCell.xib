@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,27 +19,42 @@
                 <rect key="frame" x="0.0" y="0.0" width="258" height="69"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gobackward" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="SZg-hc-w3L">
-                        <rect key="frame" x="5" y="18.666666666666664" width="30" height="30.666666666666664"/>
-                        <color key="tintColor" name="MAL Blue color"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xm0-Ej-8QP">
+                        <rect key="frame" x="0.0" y="0.0" width="258" height="69"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gobackward" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="SZg-hc-w3L">
+                                <rect key="frame" x="20" y="18.666666666666664" width="30" height="30.666666666666664"/>
+                                <color key="tintColor" name="MAL Blue color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Epr-X8-hjN"/>
+                                    <constraint firstAttribute="width" constant="30" id="QeR-Yu-cdP"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Recent search title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ZJ-eW-Jsg">
+                                <rect key="frame" x="55" y="25.666666666666671" width="183" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="Epr-X8-hjN"/>
-                            <constraint firstAttribute="width" constant="30" id="QeR-Yu-cdP"/>
+                            <constraint firstAttribute="trailing" secondItem="4ZJ-eW-Jsg" secondAttribute="trailing" constant="20" id="U6B-wl-KnD"/>
+                            <constraint firstItem="SZg-hc-w3L" firstAttribute="centerY" secondItem="Xm0-Ej-8QP" secondAttribute="centerY" id="Z61-J3-TPa"/>
+                            <constraint firstAttribute="bottom" secondItem="SZg-hc-w3L" secondAttribute="bottom" constant="5" id="bWE-D5-ESW"/>
+                            <constraint firstItem="4ZJ-eW-Jsg" firstAttribute="leading" secondItem="SZg-hc-w3L" secondAttribute="trailing" constant="5" id="nnO-Mk-vA7"/>
+                            <constraint firstItem="SZg-hc-w3L" firstAttribute="leading" secondItem="Xm0-Ej-8QP" secondAttribute="leading" constant="20" id="pqM-Ws-4Fj"/>
+                            <constraint firstItem="SZg-hc-w3L" firstAttribute="top" secondItem="Xm0-Ej-8QP" secondAttribute="top" constant="5" id="rB4-cK-398"/>
+                            <constraint firstItem="4ZJ-eW-Jsg" firstAttribute="centerY" secondItem="SZg-hc-w3L" secondAttribute="centerY" id="tHM-fC-sjS"/>
                         </constraints>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Recent search title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ZJ-eW-Jsg">
-                        <rect key="frame" x="40" y="25.666666666666671" width="213" height="18"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    </view>
                 </subviews>
+                <color key="backgroundColor" systemColor="systemOrangeColor"/>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="4ZJ-eW-Jsg" secondAttribute="trailing" constant="5" id="HF5-70-Sxu"/>
-                    <constraint firstItem="4ZJ-eW-Jsg" firstAttribute="leading" secondItem="SZg-hc-w3L" secondAttribute="trailing" constant="5" id="KV0-F8-Aog"/>
-                    <constraint firstItem="SZg-hc-w3L" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="QiA-Jo-jAG"/>
-                    <constraint firstItem="SZg-hc-w3L" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="VsN-tb-2J0"/>
-                    <constraint firstItem="4ZJ-eW-Jsg" firstAttribute="centerY" secondItem="SZg-hc-w3L" secondAttribute="centerY" id="erF-e0-0kf"/>
+                    <constraint firstItem="Xm0-Ej-8QP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4HA-kz-mvT"/>
+                    <constraint firstAttribute="trailing" secondItem="Xm0-Ej-8QP" secondAttribute="trailing" id="B46-lc-9Qf"/>
+                    <constraint firstAttribute="bottom" secondItem="Xm0-Ej-8QP" secondAttribute="bottom" priority="999" id="hHo-Yh-Ca6"/>
+                    <constraint firstItem="Xm0-Ej-8QP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="kPD-hc-kKi"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -50,7 +67,13 @@
     <resources>
         <image name="gobackward" catalog="system" width="119" height="128"/>
         <namedColor name="MAL Blue color">
-            <color red="0.1803921568627451" green="0.31764705882352939" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.1803921568627451" green="0.31764705882352939" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
