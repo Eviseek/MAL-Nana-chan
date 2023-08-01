@@ -17,10 +17,7 @@ class TokenHandler {
     
     init() {
         keychain = Keychain(service: "com.eviseek.MAL-Nana-chan")
-        
-        
-        
-        if let token = getToken() {
+        if let _ = getToken() {
             TokenHandler.isUserLoggedIn = true
         } else {
             TokenHandler.isUserLoggedIn = false
@@ -35,7 +32,8 @@ class TokenHandler {
         
     }
     
-    func saveToken(_ token: String) {
+    func saveToken(_ token: String, expiresAt: Date?) {
+      //  keychain[Identifiers.tokenExpirationDate.rawValue] = expiresAt
         keychain[Identifiers.keychainToken.rawValue] = token
         TokenHandler.isUserLoggedIn = true
     }

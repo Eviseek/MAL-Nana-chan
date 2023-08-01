@@ -94,9 +94,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gd8-Fy-waF" userLabel="Error View">
+                                <rect key="frame" x="70.666666666666671" y="382.33333333333331" width="248.66666666666663" height="79.666666666666686"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ehm-9E-HdZ">
+                                        <rect key="frame" x="10" y="40.333333333333371" width="228.66666666666666" height="34.333333333333343"/>
+                                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                        <color key="tintColor" name="MAL Blue color"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Try again"/>
+                                        <connections>
+                                            <action selector="fetchDataAgainClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nAQ-el-MF5"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sorry, something went wrong." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bnD-2o-UtN">
+                                        <rect key="frame" x="5" y="5" width="238.66666666666666" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="bnD-2o-UtN" secondAttribute="trailing" constant="5" id="6XA-cD-xte"/>
+                                    <constraint firstItem="Ehm-9E-HdZ" firstAttribute="top" secondItem="bnD-2o-UtN" secondAttribute="bottom" constant="15" id="CEx-3Q-Yof"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ehm-9E-HdZ" secondAttribute="bottom" constant="5" id="CWw-Rx-7gg"/>
+                                    <constraint firstItem="bnD-2o-UtN" firstAttribute="leading" secondItem="Gd8-Fy-waF" secondAttribute="leading" constant="5" id="NI9-9W-wdn"/>
+                                    <constraint firstItem="bnD-2o-UtN" firstAttribute="top" secondItem="Gd8-Fy-waF" secondAttribute="top" constant="5" id="YOw-JU-ybM"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ehm-9E-HdZ" secondAttribute="trailing" constant="10" id="wRT-Qn-KnP"/>
+                                    <constraint firstItem="Ehm-9E-HdZ" firstAttribute="leading" secondItem="Gd8-Fy-waF" secondAttribute="leading" constant="10" id="wkC-Zc-Gj9"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="WtE-Ed-xkM">
                                 <rect key="frame" x="0.0" y="91" width="390" height="670"/>
-                                <color key="backgroundColor" systemColor="systemMintColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="NO"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="skeletonCornerRadius">
@@ -112,6 +143,8 @@
                             <constraint firstItem="WtE-Ed-xkM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="UH3-Cj-mCU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="WtE-Ed-xkM" secondAttribute="bottom" id="V5R-Xv-qKQ"/>
                             <constraint firstItem="WtE-Ed-xkM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="cUL-Fl-OQG"/>
+                            <constraint firstItem="Gd8-Fy-waF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="nAg-O7-K8b"/>
+                            <constraint firstItem="Gd8-Fy-waF" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="xhu-rX-uDP"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="house.fill" catalog="system" selectedImage="house.fill" id="GtO-fw-htM">
@@ -2937,9 +2970,6 @@
         </systemColor>
         <systemColor name="systemIndigoColor">
             <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemMintColor">
-            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

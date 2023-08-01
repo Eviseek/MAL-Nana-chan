@@ -11,12 +11,12 @@ class HomeViewModel {
     
     let indicator = ActivityIndicator()
     
-    private var viewController: HomeViewController
-    
+    private var viewController: HomeViewController? = nil
     private let dataDownloader = DataDownloader()
     private let seasonManager = SeasonManager()
+    private let networkManager = NetworkManager.shared
     
-    var sections: [Section<Anime>]
+    var sections = [Section<Anime>]()
     
     var promoId: String? = nil
     var hasPromo: Bool = false
@@ -26,22 +26,29 @@ class HomeViewModel {
     private var urlManager = URLManager()
     
     
-    init(viewController: HomeViewController) {
-        self.viewController = viewController
-        self.sections = [Section<Anime>]()
-        indicator.startAnimating(view: viewController.view, background: nil)
-        viewDidLoad()
+    init() {}
+    
+    func viewDidLoad(vc: HomeViewController) {
+        self.viewController = vc
+        networkManager.reachabilityDelegate = self
+        refreshData()
     }
     
-    private func viewDidLoad() {
-        getData {
-            self.contentSize += self.sections.count
-            self.viewController.tableView.reloadData()
+    func fetchDataAgainClicked() {
+        refreshData()
+    }
+    
+    private func refreshData() {
+        guard let viewController = viewController else { return }
+        indicator.startAnimating(view: viewController.view, background: viewController.view.backgroundColor)
+        fetchData {
             self.indicator.stopAnimating()
         }
     }
     
-    private func getData(completion: @escaping () -> ()) {
+    private func fetchData(completion: @escaping () -> ()) {
+        
+        var errorOccured = false
         
         let group = DispatchGroup()
         let selectedSeason: Season = .winter
@@ -52,7 +59,7 @@ class HomeViewModel {
             if let response = response {
                 self.sections.append(Section(name: "\(selectedSeason.stringValue()) \(selectedYear.description) anime", response: response))
             } else {
-                self.viewController.showErrorDialog(message: "Something went wrong")
+                errorOccured = true
             }
             group.leave()
         }
@@ -62,7 +69,7 @@ class HomeViewModel {
             if let response = response {
                 self.sections.append(Section(name: "This season anime", response: response))
             } else {
-                self.viewController.showErrorDialog(message: "Something went wrong")
+                errorOccured = true
             }
             group.leave()
         }
@@ -72,7 +79,7 @@ class HomeViewModel {
             if let response = response {
                 self.sections.append(Section(name: "Upcoming season anime", response: response))
             } else {
-                self.viewController.showErrorDialog(message: "Something went wrong")
+                errorOccured = true
             }
             group.leave()
         }
@@ -84,13 +91,34 @@ class HomeViewModel {
                 self.promoId = data[0].trailer?.youtube_id
                 self.contentSize += 1
                 self.hasPromo = true
+            } else {
+                errorOccured = true
             }
             group.leave()
         })
         
         group.notify(queue: DispatchQueue.main) {
+            if errorOccured {
+                self.viewController?.showErrorDialog(message: "Something went wrong.")
+                self.viewController?.setUpErrorView()
+            } else {
+                print("all is cool, refresh")
+                self.contentSize += self.sections.count
+                self.viewController?.reloadData()
+            }
             completion()
         }
     }
     
+}
+
+extension HomeViewModel: NetworkManagerDelegate {
+    func connectionRestored() {
+        if sections.isEmpty {
+            refreshData()
+        } else {
+            viewController?.showErrorDialog(message: "No need for refresh")
+        }
+        
+    }
 }

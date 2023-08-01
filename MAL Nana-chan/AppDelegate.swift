@@ -12,6 +12,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        NetworkManager.shared.startNetworkReachabilityObserver()
+        
         if #available(iOS 15, *) {
             let navigationBarAppearance = UINavigationBarAppearance()
             navigationBarAppearance.backgroundColor = UIColor(named: "mal_color")

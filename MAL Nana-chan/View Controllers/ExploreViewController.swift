@@ -59,11 +59,13 @@ class ExploreViewController: UIViewController {
     }
     
     func fillUpRecommendations(recommendation: Recommendation) {
+        exploreTableView.isHidden = false
         self.recommendations = recommendation.data
         exploreTableView.reloadData()
     }
     
     func fillPopularAnime(section: Section<Anime>) {
+        exploreTableView.isHidden = false
         self.section = Section(name: section.name, response: section.response)
         exploreTableView.reloadData()
     }
@@ -71,6 +73,11 @@ class ExploreViewController: UIViewController {
     func refreshRecentSearches() {
         recentSearchesTableView.reloadData()
     }
+    
+    func setUpErrorView() {
+        exploreTableView.isHidden = true
+    }
+    
 }
 
 extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {

@@ -12,6 +12,7 @@ class ExploreViewModel {
     
     private var vc: ExploreViewController? = nil
     private let defaults = UserDefaults.standard
+    private let networkManager = NetworkManager.shared
     
     var popularSection: Section<Anime>? = nil
     
@@ -21,35 +22,58 @@ class ExploreViewModel {
     
     func viewDidLoad(vc: ExploreViewController) {
         self.vc = vc
-        ActivityIndicator.indicator.startAnimating(view: vc.view, background: nil)
         self.checkRecentSearchesTime()
         self.recentSearchesArr = getRecentSearches()
-        fetchData()
+        networkManager.reachabilityDelegate = self
+        downloadData()
     }
     
-    private func fetchData() {
+    private func downloadData() {
+        guard let vc = vc else { return }
+        ActivityIndicator.indicator.startAnimating(view: vc.view, background: nil)
+        fetchData {
+            ActivityIndicator.indicator.stopAnimating()
+        }
+    }
+    
+    private func fetchData(completion: @escaping () -> Void) {
+        
+        var errorOccured = false
+        
+        let group = DispatchGroup()
+        
+        group.enter()
         DataDownloader.dataDownloader.fetchData(URLs.jikanRecommendationsAnimeURL.rawValue) { (result: Recommendation?) in
             print("result is?")
             if let result = result {
                 print(result)
                 self.vc?.fillUpRecommendations(recommendation: result)
             } else {
-                print("result is not")
+                errorOccured = true
             }
-            ActivityIndicator.indicator.stopAnimating()
+            group.leave()
         }
         
-        
+        group.enter()
         DataDownloader.dataDownloader.fetchData(URLs.animePopularURL.rawValue) { (result: Response<Anime>?) in
             if let result = result {
                 self.popularSection = Section(name: "Popular anime", response: result)
                 self.vc?.fillPopularAnime(section: self.popularSection!)
             } else {
                 print("NOT FETCHED popular anime")
-                //TODO: result not fetched
+                errorOccured = true
             }
+            group.leave()
         }
         
+        
+        group.notify(queue: DispatchQueue.main) {
+            if errorOccured {
+                self.vc?.showErrorDialog(message: "Something went wrong.")
+                self.vc?.setUpErrorView()
+            }
+            completion()
+        }
     }
     
     func recommendationSelected(with recommendation: RecommendationData) {
@@ -121,4 +145,12 @@ class ExploreViewModel {
         vc?.present(alert, animated: true, completion: nil)
     }
     
+}
+
+extension ExploreViewModel: NetworkManagerDelegate {
+    func connectionRestored() {
+        if popularSection == nil {
+            downloadData()
+        }
+    }
 }

@@ -79,11 +79,6 @@ struct DataDownloader {
         }
             
     }
-
-    
-    private func decode() {
-        
-    }
     
     
     

@@ -42,6 +42,7 @@ enum Identifiers: String {
     
     //Keychain
     case keychainToken = "userToken"
+    case tokenExpirationDate = "tokenExpiration"
     
     //Alamofire header
     case headerAuthID = "X-MAL-CLIENT-ID"

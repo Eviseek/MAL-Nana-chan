@@ -11,19 +11,18 @@ import NVActivityIndicatorView
 
 class HomeViewController: UIViewController {
     
-    private var viewModel: HomeViewModel? = nil
+    private var viewModel = HomeViewModel()
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         Authentication().authenticate()
         
        //TODO: testing code ----- TokenHandler.handler.deleteToken() --------
         
-        viewModel = HomeViewModel(viewController: self)
+        viewModel.viewDidLoad(vc: self)
         tableViewSetUp()
       
     }
@@ -38,42 +37,52 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
     }
     
+    func setUpErrorView() {
+        tableView.isHidden = true
+    }
+    
+    func reloadData() {
+        tableView.isHidden = false
+        tableView.reloadData()
+    }
+    
+    @IBAction func fetchDataAgainClicked(_ sender: UIButton) {
+        viewModel.fetchDataAgainClicked()
+    }
 }
 
 
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.contentSize ?? 0
+        return viewModel.contentSize
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if (viewModel!.hasPromo) {
+        if (viewModel.hasPromo) {
             if (indexPath.row == 0) {
                 if let ytCell = tableView.dequeueReusableCell(withIdentifier: Identifiers.YTEmbedTableViewCell.rawValue) as? YoutubeEmbedTableViewCell {
-                    print("Youtube ID", viewModel!.promoId)
-                    ytCell.setUpPlayer(with: viewModel!.promoId ?? "")
+                    print("Youtube ID", viewModel.promoId)
+                    ytCell.setUpPlayer(with: viewModel.promoId ?? "")
                     return ytCell
                 }
             } else {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.animeSectionTVCell.rawValue) as? AnimeSectionTableViewCell {
                     var alternativePath = indexPath.row - 1
-                    if let section = viewModel?.sections[alternativePath] {
-                        cell.parentVC = self
-                        cell.sectionNameLabel.text = section.name
-                        cell.fillCollectionView(section: section)
-                    }
+                    let section = viewModel.sections[alternativePath]
+                    cell.parentVC = self
+                    cell.sectionNameLabel.text = section.name
+                    cell.fillCollectionView(section: section)
                     return cell
                 }
             }
         } else {
             if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.animeSectionTVCell.rawValue) as? AnimeSectionTableViewCell {
                 cell.parentVC = self
-                if let section = viewModel?.sections[indexPath.row] {
-                    cell.sectionNameLabel.text = section.name
-                    cell.fillCollectionView(section: section)
-                }
+                let section = viewModel.sections[indexPath.row]
+                cell.sectionNameLabel.text = section.name
+                cell.fillCollectionView(section: section)
                 return cell
             }
         }

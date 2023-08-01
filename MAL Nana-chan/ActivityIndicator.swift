@@ -43,7 +43,9 @@ class ActivityIndicator {
     }
     
     func stopAnimating() {
-        parentFrame.removeFromSuperview()
+        let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { (timer) in //delaying for one second
+            self.parentFrame.removeFromSuperview()
+          }
     }
     
 }
