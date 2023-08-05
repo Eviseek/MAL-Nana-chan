@@ -15,11 +15,13 @@ class ExploreViewController: UIViewController {
     @IBOutlet weak var exploreTableView: UITableView!
     @IBOutlet weak var recentSearchesTableView: UITableView!
     @IBOutlet weak var recentSearchesView: UIView!
+    @IBOutlet weak var errorMsglabel: UILabel!
+    @IBOutlet weak var errorView: UIView!
     
     private var viewModel =  ExploreViewModel()
     
     private var recommendations = [RecommendationData]()
-    private var section: Section<Anime>? = nil
+    private var section: Section<Manga>? = nil
     
     private var numberOfRec = 10
     
@@ -50,21 +52,29 @@ class ExploreViewController: UIViewController {
         recentSearchesTableView.dataSource = self
         recentSearchesTableView.delegate = self
         
-        let exploreItemNib = UINib(nibName: "AnimeSectionTableViewCell", bundle: nil)
+        let exploreItemNib = UINib(nibName: "MangaSectionTableViewCell", bundle: nil)
         let exploreRecNib = UINib(nibName: "RecommendationTableViewCell", bundle: nil)
-        exploreTableView.register(exploreItemNib, forCellReuseIdentifier: "AnimeSectionTableViewCell")
+        exploreTableView.register(exploreItemNib, forCellReuseIdentifier: "MangaSectionTableViewCell")
         exploreTableView.register(exploreRecNib, forCellReuseIdentifier: "RecommendationTableViewCell")
         exploreTableView.dataSource = self
         exploreTableView.delegate = self
     }
     
+    func setUpErrorView(message: String) {
+        errorMsglabel.text = message
+        exploreTableView.isHidden = true
+        errorView.isHidden = false
+    }
+    
     func fillUpRecommendations(recommendation: Recommendation) {
+        errorView.isHidden = true
         exploreTableView.isHidden = false
         self.recommendations = recommendation.data
         exploreTableView.reloadData()
     }
     
-    func fillPopularAnime(section: Section<Anime>) {
+    func fillPopularManga(section: Section<Manga>) {
+        errorView.isHidden = true
         exploreTableView.isHidden = false
         self.section = Section(name: section.name, response: section.response)
         exploreTableView.reloadData()
@@ -74,10 +84,9 @@ class ExploreViewController: UIViewController {
         recentSearchesTableView.reloadData()
     }
     
-    func setUpErrorView() {
-        exploreTableView.isHidden = true
+    @IBAction func tryAgainButtonClicked(_ sender: UIButton) {
+        viewModel.tryAgainButtonClicked()
     }
-    
 }
 
 extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
@@ -102,14 +111,14 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
         
         if tableView == exploreTableView {
             if indexPath.row == 0 {
-                if let exploreCVCell = tableView.dequeueReusableCell(withIdentifier: "AnimeSectionTableViewCell", for: indexPath) as? AnimeSectionTableViewCell {
-                    if let popularAnime = section {
-                        exploreCVCell.sectionNameLabel.text = popularAnime.name
-                        exploreCVCell.fillCollectionView(section: popularAnime)
+                if let exploreCVCell = tableView.dequeueReusableCell(withIdentifier: "MangaSectionTableViewCell", for: indexPath) as? MangaSectionTableViewCell {
+                    if let manga = section {
+                        exploreCVCell.sectionNameLabel.text = manga.name
+                        exploreCVCell.fillCollectionView(section: manga)
                         exploreCVCell.sectionSeeAllButton.isHidden = true
                         exploreCVCell.parentVC = self
                     } else {
-                        print("no popular anime here")
+                        print("no popular manga here")
                     }
                     return exploreCVCell
                 }

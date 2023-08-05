@@ -24,7 +24,7 @@ class MangaSectionTableViewCell: UITableViewCell {
         
         sectionSeeAllButton.layer.cornerRadius = 5
         
-        let nib = UINib(nibName: Identifiers.animeCVCell.rawValue, bundle: nil)
+        let nib = UINib(nibName: "MangaCollectionViewCell", bundle: nil)
         sectionCollectionView.register(nib, forCellWithReuseIdentifier: "MangaCollectionViewCell")
         sectionCollectionView.dataSource = self
         sectionCollectionView.delegate = self

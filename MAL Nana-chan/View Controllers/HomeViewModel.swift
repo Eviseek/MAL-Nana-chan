@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class HomeViewModel {
     
@@ -40,7 +41,7 @@ class HomeViewModel {
     
     private func refreshData() {
         guard let viewController = viewController else { return }
-        indicator.startAnimating(view: viewController.view, background: viewController.view.backgroundColor)
+        indicator.startAnimating(view: viewController.view)
         fetchData {
             self.indicator.stopAnimating()
         }
@@ -49,36 +50,44 @@ class HomeViewModel {
     private func fetchData(completion: @escaping () -> ()) {
         
         var errorOccured = false
+        var errorMsg: String? = nil
         
         let group = DispatchGroup()
         let selectedSeason: Season = .winter
         let selectedYear = 2020
         
+        var customYearAnime: Response<Anime>? = nil
+        var upcomingAnime: Response<Anime>? = nil
+        var currentAnime: Response<Anime>? = nil
+        
         group.enter()
-        dataDownloader.fetchData(urlManager.getURLForCustomSeason(season: selectedSeason, year: selectedYear)) { (response: Response<Anime>?) in
+        dataDownloader.fetchData(urlManager.getURLForCustomSeason(season: selectedSeason, year: selectedYear)) { (response: Response<Anime>?, error: AFError?) in
             if let response = response {
-                self.sections.append(Section(name: "\(selectedSeason.stringValue()) \(selectedYear.description) anime", response: response))
+                customYearAnime = response
             } else {
+                errorMsg = error?.localizedDescription
                 errorOccured = true
             }
             group.leave()
         }
         
         group.enter()
-        dataDownloader.fetchData(urlManager.getURLForThisSeason()) { (response: Response<Anime>?) in
+        dataDownloader.fetchData(urlManager.getURLForThisSeason()) { (response: Response<Anime>?, error: AFError?) in
             if let response = response {
-                self.sections.append(Section(name: "This season anime", response: response))
+                currentAnime = response
             } else {
+                errorMsg = error?.localizedDescription
                 errorOccured = true
             }
             group.leave()
         }
         
         group.enter()
-        dataDownloader.fetchData(urlManager.getURLForNextSeason()) { (response: Response<Anime>?) in
+        dataDownloader.fetchData(urlManager.getURLForNextSeason()) { (response: Response<Anime>?, error: AFError?) in
             if let response = response {
-                self.sections.append(Section(name: "Upcoming season anime", response: response))
+                upcomingAnime = response
             } else {
+                errorMsg = error?.localizedDescription
                 errorOccured = true
             }
             group.leave()
@@ -86,12 +95,13 @@ class HomeViewModel {
         
         
         group.enter()
-        dataDownloader.fetchData(URLs.jikanPromoURL.rawValue, completion: { (response: Promo?) in
+        dataDownloader.fetchData(URLs.jikanPromoURL.rawValue, completion: { (response: Promo?, error: AFError?) in
             if let data = response?.data {
                 self.promoId = data[0].trailer?.youtube_id
                 self.contentSize += 1
                 self.hasPromo = true
             } else {
+                errorMsg = error?.localizedDescription
                 errorOccured = true
             }
             group.leave()
@@ -99,10 +109,13 @@ class HomeViewModel {
         
         group.notify(queue: DispatchQueue.main) {
             if errorOccured {
-                self.viewController?.showErrorDialog(message: "Something went wrong.")
-                self.viewController?.setUpErrorView()
+                self.viewController?.setUpErrorView(message: errorMsg ?? "")
             } else {
-                print("all is cool, refresh")
+                if let customYearAnime = customYearAnime, let currentAnime = currentAnime, let upcomingAnime = upcomingAnime {
+                    self.sections.append(Section(name: "\(selectedSeason.stringValue()) \(selectedYear.description) anime", response: customYearAnime))
+                    self.sections.append(Section(name: "This season anime", response: currentAnime))
+                    self.sections.append(Section(name: "Upcoming season anime", response: upcomingAnime))
+                }
                 self.contentSize += self.sections.count
                 self.viewController?.reloadData()
             }

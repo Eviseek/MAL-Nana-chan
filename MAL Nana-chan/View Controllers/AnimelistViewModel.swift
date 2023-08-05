@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class AnimelistViewModel {
     
@@ -16,6 +17,8 @@ class AnimelistViewModel {
     private var handler = AuthenticationHandler()
     private var nextPage: String? = nil
     var isFetching: Bool = false
+    
+    private var networkManager = NetworkManager.shared
     
     private var availableStatuses: [SelectableView] = [
         SelectableView(name: "All", status: .none, isSelected: true),
@@ -30,10 +33,17 @@ class AnimelistViewModel {
     
     func viewDidLoad(vc: AnimelistViewController) {
         self.vc = vc
+        self.networkManager.reachabilityDelegate = self
     }
     
     func viewWillAppear() {
-        //TODO: make different check for view did load and then became active again
+        if userAnimelist == nil {
+            //TODO: make different check for view did load and then became active again
+            checkStatusAndFetch()
+        }
+    }
+    
+    func tryAgainButtonClicked() {
         checkStatusAndFetch()
     }
     
@@ -42,7 +52,7 @@ class AnimelistViewModel {
         if setUIIfLogged(vc: vc) {
             for availableStatus in availableStatuses { //if user logged, check which status is selected and fetch it
                 if availableStatus.isSelected {
-                    statusSelected(availableStatus.status)
+                    getAnimelistData(status: availableStatus.status)
                 }
             }
         }
@@ -53,7 +63,7 @@ class AnimelistViewModel {
         if TokenHandler.isUserLoggedIn {
             print("user logged in")
             vc.notLoggedView.isHidden = true
-            loadingIndicator.startAnimating(view: vc.view, background: nil)
+            loadingIndicator.startAnimating(view: vc.view)
             return true
         } else {
             print("user not logged in")
@@ -62,17 +72,11 @@ class AnimelistViewModel {
         }
     }
     
-    func statusSelected(_ status: UserAnimeStatus?) {
-        let url = urlManager.getAnimelistURLForStatus(status)
-        print("my url is \(url)")
-        getAnimelistData(url: url)
-    }
-    
     func getAvailableStatuses() -> [SelectableView] {
         return availableStatuses
     }
     
-    func cellSelected(index: Int) {
+    func statusSelected(index: Int) {
         startLoadingAnimation()
         var previouslySelectedIndex = 0
         for i in 0...availableStatuses.count-1 {
@@ -82,30 +86,23 @@ class AnimelistViewModel {
         }
         availableStatuses[previouslySelectedIndex].isSelected = false
         availableStatuses[index].isSelected = true
-        statusSelected(availableStatuses[index].status) //passed the status to fetch animer
+        getAnimelistData(status: availableStatuses[index].status) //passed the status to fetch animer
         vc?.updateCollectionView()
     }
     
     func loginButtonClicked() {
         guard let vc = vc else { return }
         handler.authenticate(vc) {
-            print("ALL DONE")
             self.setUIIfLogged(vc: vc)
         }
         
     }
     
     func tableViewItemSelectedAt(_ index: Int) {
-        if let picker = vc?.storyboard?.instantiateViewController(withIdentifier: "MyListViewController") as? MyAnimeStatusViewController {
-            if let sheet = picker.sheetPresentationController {
-                sheet.detents = [.large()]
-            }
+        if let controller = vc?.storyboard?.instantiateViewController(withIdentifier: "AnimeDetailViewController") as? AnimeDetailViewController {
             var anime = userAnimelist?.data[index].node
-            anime?.myListStatus = userAnimelist?.data[index].list_status
-         //   print("anime with list status \(anime?.myListStatus)")
-            picker.anime = anime
-            picker.fromAnimelist = true
-            vc?.present(picker, animated: true)
+            controller.id = anime?.id
+            vc?.navigationController?.pushViewController(controller, animated: true)
         }
     }
     
@@ -116,7 +113,7 @@ class AnimelistViewModel {
     }
     
     private func getPagingData(url: String) {
-        fetchAnimelist(url: url) { list in
+        fetchAnimelist(url: url) { list, error in
             if let list = list {
                 self.userAnimelist?.data.append(contentsOf: list.data)
                 print("my list is \(list.data.count)")
@@ -128,55 +125,68 @@ class AnimelistViewModel {
                     self.nextPage = nil
                 }
                 self.vc?.updateTableViewWith(self.userAnimelist?.data, scrollToTop: false)
-                self.stopLoadingAnimation()
             }
             self.isFetching = false
         }
+        self.stopLoadingAnimation()
     }
     
-    private func getAnimelistData(url: String) {
-        fetchAnimelist(url: url) { list in
+    private func getAnimelistData(status: UserAnimeStatus?) {
+        fetchAnimelist(url: urlManager.getAnimelistURLForStatus(status)) { list, error in
             if let list = list {
-                self.userAnimelist = list
-                self.vc?.updateTableViewWith(self.userAnimelist?.data, scrollToTop: true)
-                self.stopLoadingAnimation()
-                if let nextPage = list.paging?.next {
-                    self.nextPage = nextPage
-                    print("next page is \(nextPage)")
+                if list.data.count > 0 {
+                   print("!!!!!!!!!!!!! first item is \(list.data[0])")
+                    self.userAnimelist = list
+                  //  print("!!!!!!!!!!!!!! userAnimelist \(self.userAnimelist?.data[0])")
+                    self.vc?.updateTableViewWith(self.userAnimelist?.data, scrollToTop: true)
+                    if let nextPage = list.paging?.next {
+                        self.nextPage = nextPage
+                        print("next page is \(nextPage)")
+                    } else {
+                        self.nextPage = nil
+                    }
                 } else {
-                    self.nextPage = nil
+                    self.vc?.setUpEmptyList()
                 }
             } else {
-                print("no items in this list")
-                //TODO: stop loading and show info about not having an animelist
+                self.vc?.setUpErrorView(message: error ?? "No description.")
             }
             self.isFetching = false
         }
+        self.stopLoadingAnimation()
     }
     
     private func startLoadingAnimation() {
         guard let vc = vc else { return }
-        vc.loadingOverlay.isHidden = false
-        loadingIndicator.startAnimating(view: vc.view, background: .clear)
+        loadingIndicator.startAnimating(view: vc.view)
     }
     
     private func stopLoadingAnimation() {
         guard let vc = vc else { return }
         loadingIndicator.stopAnimating()
-        vc.loadingOverlay.isHidden = true
     }
     
-    private func fetchAnimelist(url: String, completion: @escaping (UserAnimelist?) -> Void) {
+    private func fetchAnimelist(url: String, completion: @escaping (UserAnimelist?, String?) -> Void) {
         if !isFetching {
             print("fetching")
             isFetching = true
-            DataDownloader.dataDownloader.fetchData(url) { (userList: UserAnimelist?) in
+            DataDownloader.dataDownloader.fetchData(url) { (userList: UserAnimelist?, error: AFError?) in
                 if let list = userList {
-                    completion(list)
+                    completion(list, nil)
                 } else {
-                    completion(nil)
+                    completion(nil, error?.localizedDescription)
                 }
             }
+        }
+    }
+    
+}
+
+extension AnimelistViewModel: NetworkManagerDelegate {
+    
+    func connectionRestored() {
+        if userAnimelist == nil {
+            checkStatusAndFetch()
         }
     }
     

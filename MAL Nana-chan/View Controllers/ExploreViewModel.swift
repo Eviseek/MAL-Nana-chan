@@ -5,7 +5,7 @@
 //  Created by iOS dev on 19.03.2023.
 //
 
-import Foundation
+import Alamofire
 import UIKit
 
 class ExploreViewModel {
@@ -14,7 +14,7 @@ class ExploreViewModel {
     private let defaults = UserDefaults.standard
     private let networkManager = NetworkManager.shared
     
-    var popularSection: Section<Anime>? = nil
+    var popularSection: Section<Manga>? = nil
     
     var recentSearchesArr: [String] = [String]()
     
@@ -28,9 +28,15 @@ class ExploreViewModel {
         downloadData()
     }
     
+    func tryAgainButtonClicked() {
+        downloadData()
+    }
+    
     private func downloadData() {
-        guard let vc = vc else { return }
-        ActivityIndicator.indicator.startAnimating(view: vc.view, background: nil)
+        guard let vc = vc else {
+            return
+        }
+        ActivityIndicator.indicator.startAnimating(view: vc.view)
         fetchData {
             ActivityIndicator.indicator.stopAnimating()
         }
@@ -39,28 +45,30 @@ class ExploreViewModel {
     private func fetchData(completion: @escaping () -> Void) {
         
         var errorOccured = false
+        var errorMsg = "No description."
         
         let group = DispatchGroup()
         
         group.enter()
-        DataDownloader.dataDownloader.fetchData(URLs.jikanRecommendationsAnimeURL.rawValue) { (result: Recommendation?) in
+        DataDownloader.dataDownloader.fetchData(URLs.jikanRecommendationsAnimeURL.rawValue) { (result: Recommendation?, error: AFError?) in
             print("result is?")
             if let result = result {
                 print(result)
                 self.vc?.fillUpRecommendations(recommendation: result)
             } else {
+                errorMsg = error?.localizedDescription ?? "No description."
                 errorOccured = true
             }
             group.leave()
         }
         
         group.enter()
-        DataDownloader.dataDownloader.fetchData(URLs.animePopularURL.rawValue) { (result: Response<Anime>?) in
+        DataDownloader.dataDownloader.fetchData(URLs.mangaFavoriteURL.rawValue) { (result: Response<Manga>?, error: AFError?) in
             if let result = result {
-                self.popularSection = Section(name: "Popular anime", response: result)
-                self.vc?.fillPopularAnime(section: self.popularSection!)
+                self.popularSection = Section(name: "Popular manga", response: result)
+                self.vc?.fillPopularManga(section: self.popularSection!)
             } else {
-                print("NOT FETCHED popular anime")
+                errorMsg = error?.localizedDescription ?? "No description."
                 errorOccured = true
             }
             group.leave()
@@ -69,8 +77,7 @@ class ExploreViewModel {
         
         group.notify(queue: DispatchQueue.main) {
             if errorOccured {
-                self.vc?.showErrorDialog(message: "Something went wrong.")
-                self.vc?.setUpErrorView()
+                self.vc?.setUpErrorView(message: errorMsg)
             }
             completion()
         }

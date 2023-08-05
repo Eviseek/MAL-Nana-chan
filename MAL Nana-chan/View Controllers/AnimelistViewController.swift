@@ -13,9 +13,14 @@ class AnimelistViewController: UIViewController {
     
     @IBOutlet weak var notLoggedView: UIView!
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var loadingOverlay: UIView!
     @IBOutlet weak var collectionview: UICollectionView!
     @IBOutlet weak var listTableView: UITableView!
+    
+    @IBOutlet weak var emptyListLabel: UILabel!
+    
+    @IBOutlet weak var errorView: UIView!
+    @IBOutlet weak var errorMsgLabel: UILabel!
+    
     
     private var viewModel = AnimelistViewModel()
     private var data: [AnimelistData]? = nil
@@ -32,7 +37,6 @@ class AnimelistViewController: UIViewController {
         viewModel.viewWillAppear()
     }
     
-    
     private func setUpTableview() {
         let nib = UINib(nibName: "AnimelistItemTableViewCell", bundle: nil)
         listTableView.register(nib, forCellReuseIdentifier: "AnimelistItemTableViewCell")
@@ -47,18 +51,35 @@ class AnimelistViewController: UIViewController {
         
     }
     
+    func setUpErrorView(message: String) {
+        errorMsgLabel.text = message
+        notLoggedView.isHidden = true
+        listTableView.isHidden = true
+        errorView.isHidden = false
+    }
+    
     func updateTableViewWith(_ list: [AnimelistData]?, scrollToTop: Bool) {
-        if list == nil {
-            self.showErrorDialog(message: "Something went wrong.")
-        } else {
-            print("RELOAD")
-            print("data are \(data)")
-            self.data = list
-            if scrollToTop {
-                listTableView.setContentOffset(.zero, animated: true)
-            }
-            listTableView.reloadData()
+        listTableView.isHidden = false
+
+        notLoggedView.isHidden = true
+        errorView.isHidden = true
+        emptyListLabel.isHidden = true
+        
+        self.data = list
+      //  print("my data are \(data)")
+        
+        if scrollToTop {
+            listTableView.setContentOffset(.zero, animated: true)
         }
+        
+        listTableView.reloadData()
+    }
+    
+    func setUpEmptyList() {
+        errorView.isHidden = true
+        notLoggedView.isHidden = true
+        listTableView.isHidden = true
+        emptyListLabel.isHidden = false
     }
     
     func updateCollectionView() {
@@ -68,6 +89,11 @@ class AnimelistViewController: UIViewController {
     @IBAction func loginButtonClicked(_ sender: UIButton) {
         viewModel.loginButtonClicked()
     }
+    
+    @IBAction func tryAgainButtonClicked(_ sender: UIButton) {
+        viewModel.tryAgainButtonClicked()
+    }
+    
     
 }
 
@@ -99,15 +125,13 @@ extension AnimelistViewController: UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("view clicked")
-        viewModel.cellSelected(index: indexPath.item)
-        //TODO: show another view
-        
+        viewModel.statusSelected(index: indexPath.item)
     }
+    
     //TODO: dodelat collection view flow layout - roztahnout cell, pridat animaci
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.bounds.size
     }
-    
     
 }
 
@@ -119,17 +143,27 @@ extension AnimelistViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "AnimelistItemTableViewCell") as? AnimelistItemTableViewCell {
-            let item = data?[indexPath.row].node
-            cell.setProgress(item?.myListStatus?.episodesWatchedCount ?? 0, total: item?.episodesCount ?? 0)
+            let anime = data?[indexPath.row].node
+            let myList = data?[indexPath.row].list_status
             cell.selectionStyle = .none
-            cell.itemTitleLabel.text = item?.title
-            cell.itemScoreLabel.text = item?.score?.description
-            cell.itemTypeLabel.text = item?.mediaType?.getType()
-            if let season = item?.startSeason?.season.stringValue(), let year = item?.startSeason?.year {
+            cell.anime = anime
+            cell.parentVC = self
+            cell.itemTitleLabel.text = anime?.title
+            cell.itemScoreLabel.text = anime?.score?.description
+            cell.itemTypeLabel.text = anime?.mediaType?.getType()
+            cell.itemStatusLabel.text = anime?.status?.getStatus()
+            if let season = anime?.startSeason?.season.stringValue(), let year = anime?.startSeason?.year {
                 cell.itemSeasonLabel.text = ("\(season) \(year.description)")
             }
-            if let url = URL(string: item?.mainPicture?.medium ?? "") {
+            if let url = URL(string: anime?.mainPicture?.medium ?? "") {
                 cell.itemImageView.af.setImage(withURL: url)
+            }
+            cell.itemListScoreLabel.text = myList?.score.description
+            cell.itemListStatusLabel.text = myList?.status.getStringValue()
+            cell.itemListPriorityLabel.text = myList?.priority?.getPriorityString() ?? "Low"
+            if let progress = myList?.episodesWatchedCount?.description {
+                print("episode progress is \(progress)")
+                cell.itemListProgressLabel.text = ("\(progress)/\(anime?.episodesCount?.description ?? "?")")
             }
             return cell
         }

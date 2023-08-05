@@ -21,12 +21,12 @@ class ActivityIndicator {
         activityIndicator = NVActivityIndicatorView(frame: frame, type: .lineScalePulseOut, color: UIColor(named: "mal_color"))
     }
     
-    func startAnimating(view: UIView, background: UIColor?) {
+    func startAnimating(view: UIView, bg: UIColor? = nil) {
         parentFrame = UIView()
-        if let background = background {
-            parentFrame.backgroundColor = background
+        if let bg = bg {
+            parentFrame.backgroundColor = bg
         } else {
-            parentFrame.backgroundColor = .white
+            parentFrame.backgroundColor = view.backgroundColor
         }
         parentFrame.frame = view.bounds
         view.addSubview(parentFrame)

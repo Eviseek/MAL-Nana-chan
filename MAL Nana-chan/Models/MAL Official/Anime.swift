@@ -96,7 +96,7 @@ struct MyAnimeListStatus: Codable {
     var isRewatching: Bool?
     var startDate: String?
     let finishDate: String?
-    var priority: Int?
+    var priority: Priority?
     var rewatchedCount: Int?
     var rewarchValue: Int?
     var tags: [String]?

@@ -30,7 +30,7 @@ struct DataDownloader {
     }
     
     
-    func fetchData<T>(_ url: String, completion: @escaping (T?) -> Void) where T: Codable {
+    func fetchData<T>(_ url: String, completion: @escaping (T?, AFError?) -> Void) where T: Codable {
         
         if (url.contains("myanimelist")) {
             
@@ -39,14 +39,14 @@ struct DataDownloader {
             AF.request(url, encoding: enc, headers: getHeader()).responseDecodable(of: T.self, completionHandler: { response in
                
              //  debugPrint(response)
-                completion(response.value)
+                completion(response.value, response.error)
             })
             
         } else {
             
             AF.request(url).responseDecodable(of: T.self, completionHandler: { response in
              //   debugPrint(response)
-                completion(response.value)
+                completion(response.value, response.error)
             })
             
         }

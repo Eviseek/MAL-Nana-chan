@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 class ProfileDetailViewModel {
     
@@ -17,7 +18,7 @@ class ProfileDetailViewModel {
     
     func viewDidLoad(vc: ProfileDetailViewController) {
         self.vc = vc
-        indicator.startAnimating(view: vc.view, background: nil)
+        indicator.startAnimating(view: vc.view)
         fetchMyProfile()
     }
     
@@ -27,7 +28,7 @@ class ProfileDetailViewModel {
     }
     
     private func fetchMyProfile() {
-        DataDownloader.dataDownloader.fetchData(URLs.myUserProfileURL.rawValue) { (user: User?) in
+        DataDownloader.dataDownloader.fetchData(URLs.myUserProfileURL.rawValue) { (user: User?, error: AFError?) in
             if let user = user {
                 self.user = user
                 self.vc?.updateViewWith(user)

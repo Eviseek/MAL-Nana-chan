@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-protocol NetworkManagerDelegate {
+protocol NetworkManagerDelegate: AnyObject {
     func connectionRestored()
 }
 
@@ -18,9 +18,9 @@ class NetworkManager {
     
     let reachabilityManager = Alamofire.NetworkReachabilityManager(host: "www.google.com")
     
-    var reachabilityDelegate: NetworkManagerDelegate?
+    weak var reachabilityDelegate: NetworkManagerDelegate?
     
-    private var lastStatus: NetworkReachabilityManager.NetworkReachabilityStatus = .unknown
+    var lastStatus: NetworkReachabilityManager.NetworkReachabilityStatus = .unknown
     
     func startNetworkReachabilityObserver() {
         

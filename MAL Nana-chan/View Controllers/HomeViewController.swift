@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
     private var viewModel = HomeViewModel()
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var errorMsgLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +38,8 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
     }
     
-    func setUpErrorView() {
+    func setUpErrorView(message: String) {
+        errorMsgLabel.text = message
         tableView.isHidden = true
     }
     

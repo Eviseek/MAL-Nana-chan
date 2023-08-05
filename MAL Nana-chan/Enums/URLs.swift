@@ -14,6 +14,8 @@ enum URLs: String {
     case animeSeasonalURL = "https://api.myanimelist.net/v2/anime/season"
     case animeSuggestionsURL = "https://api.myanimelist.net/v2/anime/suggestions"
     
+    case mangaFavoriteURL = "https://api.myanimelist.net/v2/manga/ranking?ranking_type=favorite&fields=mean"
+    
     case animeURLAll = "https://api.myanimelist.net/v2/anime/{id}?fields=synopsis,mean,status,num_episodes,start_season,media_type,average_episode_duration,genres,recommendations,related_anime,related_manga,my_list_status,alternative_titles"
     
     case mangaURLAll = "https://api.myanimelist.net/v2/manga/{id}?fields=synopsis,mean,status,num_chapters,num_volumes,genres,recommendations,related_anime,related_manga,my_list_status,alternative_titles"
@@ -32,6 +34,7 @@ enum URLs: String {
     //GET Jikan urls
     case jikanPromoURL = "https://api.jikan.moe/v4/watch/promos"
     case jikanRecommendationsAnimeURL = "https://api.jikan.moe/v4/recommendations/anime"
+    case jikanTopMangaURL = "https://api.jikan.moe/v4/top/manga"
     
     case myUserProfileURL = "https://api.myanimelist.net/v2/users/@me"
     

@@ -7,7 +7,7 @@
 
 //TODO: paging attribute is needed, so either change results to Response type or make another var?
 
-import Foundation
+import Alamofire
 import UIKit
 
 class SearchResultsViewModel {
@@ -60,7 +60,7 @@ class SearchResultsViewModel {
             
             if viewController?.segmentedControl.selectedSegmentIndex == 0 {
                 if let nextUrl = animeResults?.paging?.next {
-                    DataDownloader.dataDownloader.fetchData(nextUrl, completion: { (results: Response<Anime>?) in
+                    DataDownloader.dataDownloader.fetchData(nextUrl, completion: { (results: Response<Anime>?, _: AFError?) in
                         self.animeResults?.paging = results?.paging
                         if let data = results?.data {
                             self.animeResults?.data.append(contentsOf: data)
@@ -75,7 +75,7 @@ class SearchResultsViewModel {
                 print("my next url is", mangaResults?.paging?.next)
                 if let nextUrl = mangaResults?.paging?.next {
                     
-                    DataDownloader.dataDownloader.fetchData(nextUrl, completion: { (results: Response<Manga>?) in
+                    DataDownloader.dataDownloader.fetchData(nextUrl, completion: { (results: Response<Manga>?, _: AFError?) in
                         self.mangaResults?.paging = results?.paging
                         print("my next paging" ,results?.paging?.next)
                         if let data = results?.data {
@@ -117,7 +117,7 @@ class SearchResultsViewModel {
                 
                 print("ANIME")
                 
-                DataDownloader.dataDownloader.fetchData(url, completion: { (results: Response<Anime>?) in
+                DataDownloader.dataDownloader.fetchData(url, completion: { (results: Response<Anime>?, _: AFError?) in
                     // print(URLs.animeSearchURL.rawValue.appending(query))
                     if let data = results {
                         self.animeResults = data
@@ -129,7 +129,7 @@ class SearchResultsViewModel {
                 
                 print("MANGA")
                 
-                DataDownloader.dataDownloader.fetchData(url, completion: { (results: Response<Manga>?) in
+                DataDownloader.dataDownloader.fetchData(url, completion: { (results: Response<Manga>?, _: AFError?) in
                     // print(URLs.animeSearchURL.rawValue.appending(query))
                     if let data = results {
                         self.mangaResults = data

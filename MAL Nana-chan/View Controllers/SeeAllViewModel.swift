@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 
 //TODO: paging!
@@ -33,7 +34,7 @@ class SeeAllViewModel<T: Codable> {
     init() {}
     
     func viewDidLoad(viewController: SeeAllViewController<T>, section: Section<T>) {
-        indicator.startAnimating(view: viewController.view, background: nil)
+        indicator.startAnimating(view: viewController.view)
         self.vc = viewController
         self.section = section
         self.nextPage = section.response.paging?.next
@@ -82,7 +83,7 @@ class SeeAllViewModel<T: Codable> {
     
     private func fetchData(url: String, completion: @escaping () -> ()) {
         if section?.type == .anime {
-            DataDownloader.dataDownloader.fetchData(url, completion: { (result: Response<Anime>?) in
+            DataDownloader.dataDownloader.fetchData(url, completion: { (result: Response<Anime>?, _ :AFError?) in
                 if let result = result {
                     self.animeSection?.response.data.append(contentsOf: result.data)
                     self.animeSection?.response.paging = result.paging
@@ -96,7 +97,7 @@ class SeeAllViewModel<T: Codable> {
                 
             })
         } else if section?.type == .manga {
-            DataDownloader.dataDownloader.fetchData(url, completion: { (result: Response<Manga>?) in
+            DataDownloader.dataDownloader.fetchData(url, completion: { (result: Response<Manga>?, _ : AFError?) in
                 if let result = result {
                     self.mangaSection?.response.data.append(contentsOf: result.data)
                     self.mangaSection?.response.paging = result.paging

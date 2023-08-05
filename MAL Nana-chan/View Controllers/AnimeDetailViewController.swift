@@ -41,8 +41,11 @@ class AnimeDetailViewController: UIViewController {
     @IBOutlet weak var relatedMangaContainerView: UIView!
     @IBOutlet weak var relatedAnimeContainerView: UIView!
     
+    @IBOutlet weak var seeMoreButton: UIButton!
+    
     var id: Int? = nil
     private var viewModel = AnimeDetailViewModel()
+    private var contentSize: Double = 150.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,14 +66,17 @@ class AnimeDetailViewController: UIViewController {
         let relatedNib = UINib(nibName: Identifiers.animeCVCell.rawValue, bundle: nil)
         relatedAnimeCollectionView.register(relatedNib, forCellWithReuseIdentifier: Identifiers.animeCVCell.rawValue)
         relatedAnimeCollectionView.dataSource = self
+        relatedAnimeCollectionView.delegate = self
         relatedAnimeCollectionViewHeight.constant = Sizes.itemCollectionViewCellHeight.rawValue
         
         relatedMangaCollectionView.register(relatedNib, forCellWithReuseIdentifier: Identifiers.animeCVCell.rawValue)
         relatedMangaCollectionView.dataSource = self
+        relatedMangaCollectionView.delegate = self
         relatedMangaCollectionViewHeight.constant = Sizes.itemCollectionViewCellHeight.rawValue
         
         recommendationsCollectionView.register(relatedNib, forCellWithReuseIdentifier: Identifiers.animeCVCell.rawValue)
         recommendationsCollectionView.dataSource = self
+        recommendationsCollectionView.delegate = self
         recommendationsCollectionViewHeight.constant = Sizes.itemCollectionViewCellHeight.rawValue
     }
     
@@ -128,6 +134,7 @@ class AnimeDetailViewController: UIViewController {
             recommendationsCollectionView.reloadData()
         }
         
+        contentSize = synopsisTextView.contentSize.height //saving contentSize to use it with expand later
         if synopsisTextView.contentSize.height < 150 {
             synopsisTextViewHeight.constant = synopsisTextView.contentSize.height
             seeMoreSynopsisLabel.removeFromSuperview()
@@ -151,7 +158,16 @@ class AnimeDetailViewController: UIViewController {
     }
     
     @IBAction func seeMoreSynopsisButton(_ sender: UIButton) {
-        synopsisTextViewHeight.constant = synopsisTextView.contentSize.height
+        if synopsisTextViewHeight.constant <= 150 {
+            synopsisTextViewHeight.constant = contentSize
+            seeMoreButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+            seeMoreButton.setTitle("See less", for: .normal)
+        } else {
+            synopsisTextViewHeight.constant = 150
+            seeMoreButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+            seeMoreButton.setTitle("See more", for: .normal)
+        }
+        
     }
     
 }
@@ -223,6 +239,11 @@ extension AnimeDetailViewController: UICollectionViewDataSource, UICollectionVie
         }
         
         return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.selectedCollectionViewItem(at: indexPath.item, cv: collectionView)
+        print("selectedItemAt \(indexPath.item)")
     }
     
     

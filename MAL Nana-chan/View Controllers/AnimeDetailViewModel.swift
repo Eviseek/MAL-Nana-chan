@@ -5,7 +5,8 @@
 //  Created by iOS dev on 06.02.2023.
 //
 
-import Foundation
+import UIKit
+import Alamofire
 
 class AnimeDetailViewModel {
     
@@ -23,7 +24,7 @@ class AnimeDetailViewModel {
     
     func viewDidLoad(viewController: AnimeDetailViewController) {
         self.viewController = viewController
-        indicator.startAnimating(view: viewController.view, background: nil)
+        indicator.startAnimating(view: viewController.view)
         self.id = viewController.id
         if let _ = id {
             fetchAnime()
@@ -32,7 +33,7 @@ class AnimeDetailViewModel {
     
     private func fetchAnime() {
         guard let id = id else { return }
-        dataDownloader.fetchData(URLs.animeURLAll.rawValue.getURLWithId(id)) { (anime: Anime?) in
+        dataDownloader.fetchData(URLs.animeURLAll.rawValue.getURLWithId(id)) { (anime: Anime?, error: AFError?) in
             self.anime = anime
             if anime != nil {
                 self.viewController?.updateView()
@@ -50,6 +51,40 @@ class AnimeDetailViewModel {
             }
             picker.anime = anime
             viewController?.present(picker, animated: true)
+        }
+    }
+    
+    func selectedCollectionViewItem(at index: Int, cv: UICollectionView) {
+        var type: ItemType = .anime
+        var id: Int? = nil
+        
+        if cv == viewController?.relatedMangaCollectionView {
+            type = .manga
+            id = anime?.relatedManga?[index].node.id
+        }
+        
+        if cv == viewController?.relatedAnimeCollectionView {
+            type = .anime
+            id = anime?.relatedAnime?[index].node.id
+        }
+        
+        if cv == viewController?.recommendationsCollectionView {
+            print("clicked rec")
+            type = .anime
+            id = anime?.recommendations?[index].node.id
+        }
+        
+        switch type {
+        case .anime:
+            if let controller = viewController?.storyboard?.instantiateViewController(withIdentifier: "AnimeDetailViewController") as? AnimeDetailViewController {
+                controller.id = id
+                viewController?.navigationController?.pushViewController(controller, animated: true)
+            }
+        case .manga:
+            if let controller = viewController?.storyboard?.instantiateViewController(withIdentifier: "MangaDetailViewController") as? MangaDetailViewController {
+                controller.id = id
+                viewController?.navigationController?.pushViewController(controller, animated: true)
+            }
         }
     }
     

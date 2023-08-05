@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 class MangaDetailViewModel {
     
@@ -19,13 +20,13 @@ class MangaDetailViewModel {
     func viewDidLoad(vc: MangaDetailViewController, id: Int) {
         self.vc = vc
         self.id = id
-        indicator.startAnimating(view: vc.view, background: nil)
+        indicator.startAnimating(view: vc.view)
         fetchManga()
     }
     
     private func fetchManga() {
         guard let id = id else { return }
-        DataDownloader.dataDownloader.fetchData(URLs.mangaURLAll.rawValue.getURLWithId(id)) { (manga: Manga?) in
+        DataDownloader.dataDownloader.fetchData(URLs.mangaURLAll.rawValue.getURLWithId(id)) { (manga: Manga?, error: AFError?) in
             self.manga = manga
             if manga != nil {
                 self.vc?.updateViewWith(manga!)
