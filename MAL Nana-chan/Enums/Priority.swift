@@ -21,3 +21,11 @@ enum Priority: Int, Codable {
     }
     
 }
+
+class PriorityManager {
+    
+    func getPriorityList() -> [String] {
+        return ["Low", "Medium", "High"]
+    }
+    
+}

@@ -143,8 +143,8 @@ extension AnimelistViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "AnimelistItemTableViewCell") as? AnimelistItemTableViewCell {
-            let anime = data?[indexPath.row].node
-            let myList = data?[indexPath.row].list_status
+            var anime = data?[indexPath.row].node
+            anime?.myListStatus = data?[indexPath.row].list_status
             cell.selectionStyle = .none
             cell.anime = anime
             cell.parentVC = self
@@ -158,10 +158,10 @@ extension AnimelistViewController: UITableViewDelegate, UITableViewDataSource {
             if let url = URL(string: anime?.mainPicture?.medium ?? "") {
                 cell.itemImageView.af.setImage(withURL: url)
             }
-            cell.itemListScoreLabel.text = myList?.score.description
-            cell.itemListStatusLabel.text = myList?.status.getStringValue()
-            cell.itemListPriorityLabel.text = myList?.priority?.getPriorityString() ?? "Low"
-            if let progress = myList?.episodesWatchedCount?.description {
+            cell.itemListScoreLabel.text = anime?.myListStatus?.score.description
+            cell.itemListStatusLabel.text = anime?.myListStatus?.status.getStringValue()
+            cell.itemListPriorityLabel.text = anime?.myListStatus?.priority?.getPriorityString() ?? "Low"
+            if let progress = anime?.myListStatus?.episodesWatchedCount?.description {
                 print("episode progress is \(progress)")
                 cell.itemListProgressLabel.text = ("\(progress)/\(anime?.episodesCount?.description ?? "?")")
             }

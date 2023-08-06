@@ -15,7 +15,6 @@ class AnimeDetailViewModel {
     let dataDownloader = DataDownloader()
     
     var anime: Anime? = nil
-    var manga: Manga? = nil
     
     private var viewController: AnimeDetailViewController? = nil
     var id: Int?
@@ -85,6 +84,22 @@ class AnimeDetailViewModel {
                 controller.id = id
                 viewController?.navigationController?.pushViewController(controller, animated: true)
             }
+        }
+    }
+    
+    func openingsEndingsButtonClicked() {
+        if let controller = viewController?.storyboard?.instantiateViewController(withIdentifier: "ThemesDetailViewController") as? ThemesDetailViewController {
+            print("id is \(anime?.id)")
+            controller.id = anime?.id
+            viewController?.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
+    
+    func openMoreInformation() {
+        if let controller = viewController?.storyboard?.instantiateViewController(withIdentifier: "MoreInformationViewController") as? MoreInformationViewController {
+            print("id is \(anime?.id)")
+            controller.id = anime?.id
+            viewController?.navigationController?.pushViewController(controller, animated: true)
         }
     }
     

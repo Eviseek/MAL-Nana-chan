@@ -146,11 +146,11 @@ class AnimeDetailViewController: UIViewController {
     }
     
     @IBAction func openOpeningsAndEndings(_ sender: UIButton) {
-        //TODO: send action to viewModel
+        viewModel.openingsEndingsButtonClicked()
     }
     
     @IBAction func openMoreInformation(_ sender: UIButton) {
-        //TODO: send action to viewModel
+        viewModel.openMoreInformation()
     }
     
     @IBAction func addToList(_ sender: UIButton) {

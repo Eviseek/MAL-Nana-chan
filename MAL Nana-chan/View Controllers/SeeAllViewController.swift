@@ -40,6 +40,7 @@ class SeeAllViewController<T: Codable>: UIViewController, UITableViewDataSource,
     }
     
     private func setUpUI() {
+        self.view.backgroundColor = .white
         tableView = UITableView()
         self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false

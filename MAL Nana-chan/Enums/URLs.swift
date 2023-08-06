@@ -35,6 +35,8 @@ enum URLs: String {
     case jikanPromoURL = "https://api.jikan.moe/v4/watch/promos"
     case jikanRecommendationsAnimeURL = "https://api.jikan.moe/v4/recommendations/anime"
     case jikanTopMangaURL = "https://api.jikan.moe/v4/top/manga"
+    case jikanThemesURL = "https://api.jikan.moe/v4/anime/{id}/themes"
+    case jikanMoreInfoURL = "https://api.jikan.moe/v4/anime/{id}/full"
     
     case myUserProfileURL = "https://api.myanimelist.net/v2/users/@me"
     
@@ -95,6 +97,13 @@ struct URLManager {
         let withYear = original.replacingOccurrences(of: "{year}", with: year.description)
         let completedURL = withYear.replacingOccurrences(of: "{season}", with: season.rawValue)
         return completedURL.lowercased()
+    }
+    
+    func getURLForId(_ id: Int, url: String) -> String {
+        if url.contains("{id}") {
+            return url.replacingOccurrences(of: "{id}", with: id.description)
+        }
+        return url
     }
     
 }

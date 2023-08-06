@@ -29,14 +29,21 @@ class MyAnimeStatusViewController: UIViewController {
     @IBOutlet weak var itemStatusLabel: UILabel!
     @IBOutlet weak var myStatusLabel: UILabel!
     @IBOutlet weak var itemEpisodesNumLabel: UILabel!
+    @IBOutlet weak var itemEpisodesWatchedLabel: UILabel!
+    @IBOutlet weak var priorityLabel: UILabel!
+    @IBOutlet weak var itemScoreLabel: UILabel!
     
-    @IBOutlet weak var itemScoreTextField: UITextField!
+    @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var scoreSlider: UISlider!
+    @IBOutlet weak var priorityPicker: UIPickerView!
     
     private let manager = UserAnimeStatusManager()
     private let viewModel = MyAnimeStatusModel()
     
     var anime: Anime?
     var fromAnimelist: Bool?
+    
+    private let priorities = ["Low", "Medium", "High"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +63,13 @@ class MyAnimeStatusViewController: UIViewController {
         droppedButton.layer.cornerRadius = 5
         removeFromListButton.layer.cornerRadius = 5
         moreDetailsButton.layer.cornerRadius = 5
+        
+        priorityPicker.dataSource = self
+        priorityPicker.delegate = self
+        
         setUpButtonTags()
-        setLabels(anime!)
+        setValuesForView(anime!)
+        
         if !(fromAnimelist ?? false) {
             moreAndRemoveView.removeFromSuperview()
         }
@@ -73,38 +85,33 @@ class MyAnimeStatusViewController: UIViewController {
         droppedButton.tag = manager.getTagForStatus(.dropped)
     }
     
-    private func setLabels(_ anime: Anime) {
+    private func setValuesForView(_ anime: Anime) {
         itemTitleLabel.text = anime.title
         itemStatusLabel.text = anime.status?.getStatus()
-        itemEpisodesNumLabel.text = anime.episodesCount?.description
-        itemScoreTextField.text = anime.myListStatus?.score.description ?? "0"
+        
         myStatusLabel.text = anime.myListStatus?.status.getStringValue() ?? "?"
+        itemEpisodesWatchedLabel.text = anime.myListStatus?.episodesWatchedCount?.description
+        itemEpisodesNumLabel.text = anime.episodesCount?.description
+        
+        if let episodesTotal = anime.episodesCount, episodesTotal != 0 {
+            progressBar.progress = Float(Double(anime.myListStatus?.episodesWatchedCount ?? 0) / Double(episodesTotal))
+        } else {
+            itemEpisodesNumLabel.text = "N/A"
+        }
+        
+        scoreSlider.minimumValue = 0
+        scoreSlider.maximumValue = 10
+        scoreSlider.value = Float(anime.myListStatus?.score ?? 0)
+        itemScoreLabel.text = anime.myListStatus?.score.description
+        
+        priorityLabel.text = anime.myListStatus?.priority?.getPriorityString() ?? "Low"
+        
         if anime.myListStatus == nil {
             print("my status is nil")
             //TODO: change save button to add
         }
+        
     }
-    
-    //TODO: move to model?
-    //function that is accessing statusView and its stackViews to find buttons and change their appearance
-//    func changeButtonsState(_ selectedTag: Int) {
-//        for subview in statusContentView.subviews { //accessing subviews of statusContentView
-//            if subview is UIStackView { //if subviews is stackView then access it again
-//                for button in subview.subviews {
-//                    if button is UIButton { //find button in stackView
-//                        if let button = button as? UIButton {
-//                            changeButtonAppearance(button, selectedTag) //change its appearance
-//                        }
-//                    }
-//                }
-//            } else if subview is UIButton { //one button is not in stack view, so change appearance of this one as well
-//                if let button = subview as? UIButton {
-//                    changeButtonAppearance(button, selectedTag)
-//                }
-//            }
-//        }
-//    }
-    
     
     func setUnselectedState(for tag: Int) {
         print("set unselected")
@@ -142,5 +149,32 @@ class MyAnimeStatusViewController: UIViewController {
     @IBAction func moreDetailsClicked(_ sender: UIButton) {
         viewModel.moreDetailsButtonClicked()
     }
+    
+    @IBAction func scoreSliderValueChanged(_ sender: UISlider) {
+        itemScoreLabel.text = (Int(scoreSlider.value)).description
+    }
+    
+}
+
+extension MyAnimeStatusViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+            return priorities[row]
+        }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return priorities.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        priorityLabel.text = priorities[row]
+    }
+    
+    
+    
     
 }
