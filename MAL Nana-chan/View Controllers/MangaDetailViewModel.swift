@@ -27,13 +27,14 @@ class MangaDetailViewModel {
     private func fetchManga() {
         guard let id = id else { return }
         DataDownloader.dataDownloader.fetchData(URLs.mangaURLAll.rawValue.getURLWithId(id)) { (manga: Manga?, error: AFError?) in
-            self.manga = manga
-            if manga != nil {
-                self.vc?.updateViewWith(manga!)
-                self.indicator.stopAnimating()
+            if let manga = manga {
+                print("my manga is \(manga)")
+                self.manga = manga
+                self.vc?.updateViewWith(manga)
             } else {
-                self.vc?.noDataView()
+                //TODO: show error
             }
+            self.indicator.stopAnimating()
         }
     }
     
@@ -44,6 +45,13 @@ class MangaDetailViewModel {
             }
             picker.manga = manga
             vc?.present(picker, animated: true)
+        }
+    }
+    
+    func seeMoreInfoButtonClicked() {
+        if let controller = vc?.storyboard?.instantiateViewController(withIdentifier: "MangaMoreInformationViewController") as? MangaMoreInformationViewController {
+            controller.id = manga?.id
+            vc?.navigationController?.pushViewController(controller, animated: true)
         }
     }
     

@@ -11,14 +11,15 @@ import AlamofireImage
 
 class AnimeDetailViewController: UIViewController {
     
-    @IBOutlet weak var seeMoreSynopsisLabel: UILabel!
+    //constraints
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var relatedAnimeCollectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var relatedMangaCollectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var recommendationsCollectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var collectionViewWidth: NSLayoutConstraint!
-    @IBOutlet weak var titlesViewHeight: NSLayoutConstraint!
     @IBOutlet weak var synopsisTextViewHeight: NSLayoutConstraint!
+    
+    //UI labels
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
@@ -29,19 +30,29 @@ class AnimeDetailViewController: UIViewController {
     @IBOutlet weak var synonymsListLabel: UILabel!
     @IBOutlet weak var englishListLabel: UILabel!
     @IBOutlet weak var japaneseListLabel: UILabel!
+    @IBOutlet weak var errorMsgLabel: UILabel!
+    
     @IBOutlet weak var synopsisTextView: UITextView!
     @IBOutlet weak var mainImageImageView: UIImageView!
+    
+    //UI CollectionViews
     @IBOutlet weak var genreCollectionView: UICollectionView!
     @IBOutlet weak var relatedAnimeCollectionView: UICollectionView!
     @IBOutlet weak var relatedMangaCollectionView: UICollectionView!
     @IBOutlet weak var recommendationsCollectionView: UICollectionView!
-    @IBOutlet weak var infoView: UIView!
     
+    //UI Views
+    @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var recommendationsContainerView: UIView!
     @IBOutlet weak var relatedMangaContainerView: UIView!
     @IBOutlet weak var relatedAnimeContainerView: UIView!
+    @IBOutlet weak var errorView: UIView!
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    //UI buttons
     @IBOutlet weak var seeMoreButton: UIButton!
+    @IBOutlet weak var myListButton: UIButton!
     
     var id: Int? = nil
     private var viewModel = AnimeDetailViewModel()
@@ -50,9 +61,13 @@ class AnimeDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        viewModel.viewDidLoad(viewController: self)
+        guard let id = id else {
+            
+            return
+        }
+        
+        viewModel.viewDidLoad(viewController: self, id: id)
         setUpViews()
-        print("synopsis content size \(synopsisTextView.contentSize.height)")
     }
     
     private func setUpViews() {
@@ -80,7 +95,16 @@ class AnimeDetailViewController: UIViewController {
         recommendationsCollectionViewHeight.constant = Sizes.itemCollectionViewCellHeight.rawValue
     }
     
+    func setUpErrorView(message: String?) {
+        scrollView.isHidden = true
+        errorView.isHidden = false
+        errorMsgLabel.text = message ?? "No description."
+    }
+    
     func updateView() {
+        scrollView.isHidden = false
+        errorView.isHidden = true
+        
         let anime = viewModel.anime
         itemNameLabel.text = anime?.title
         if let score = anime?.score {
@@ -109,9 +133,19 @@ class AnimeDetailViewController: UIViewController {
         for synonyms in anime?.alternativeTitle?.synonyms ?? [] {
             synonymsText.append(synonyms + ", ")
         }
-        synonymsListLabel.text = synonymsText
-        englishListLabel.text = anime?.alternativeTitle?.en ?? "None"
-        japaneseListLabel.text = anime?.alternativeTitle?.ja ?? "None"
+        
+        if !(synonymsText.isEmpty) {
+            synonymsListLabel.text = synonymsText
+        }
+        
+        if let alternative = anime?.alternativeTitle?.en, !(alternative.isEmpty) {
+            englishListLabel.text = alternative
+        }
+        
+        if let jap = anime?.alternativeTitle?.ja, !(jap.isEmpty) {
+            japaneseListLabel.text = jap
+        }
+        
         genreCollectionView.reloadData()
         
         if anime?.relatedAnime?.isEmpty ?? true {
@@ -137,12 +171,9 @@ class AnimeDetailViewController: UIViewController {
         contentSize = synopsisTextView.contentSize.height //saving contentSize to use it with expand later
         if synopsisTextView.contentSize.height < 150 {
             synopsisTextViewHeight.constant = synopsisTextView.contentSize.height
-            seeMoreSynopsisLabel.removeFromSuperview()
+            seeMoreButton.removeFromSuperview()
         }
         
-    }
-    
-    func noData() {
     }
     
     @IBAction func openOpeningsAndEndings(_ sender: UIButton) {
@@ -167,7 +198,10 @@ class AnimeDetailViewController: UIViewController {
             seeMoreButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
             seeMoreButton.setTitle("See more", for: .normal)
         }
-        
+    }
+    
+    @IBAction func tryAgainButtonClicked(_ sender: UIButton) {
+        viewModel.tryAgainButtonClicked()
     }
     
 }

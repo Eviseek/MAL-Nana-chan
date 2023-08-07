@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct MoreInformation: Codable {
-    let data: Information?
+struct AnimeMoreInformation: Codable {
+    let data: AnimeInformation?
 }
 
-struct Information: Codable {
+struct AnimeInformation: Codable {
     var producers: [JikanObject]?
     var licensors: [JikanObject]?
     var studios: [JikanObject]?

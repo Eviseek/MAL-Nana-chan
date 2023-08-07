@@ -24,7 +24,7 @@ class MangaDetailViewController: UIViewController {
     @IBOutlet weak var genresCollectionViewHeight: NSLayoutConstraint!
     
     @IBOutlet weak var synopsisTextView: UITextView!
-    @IBOutlet weak var seeMoreSynopsisButton: UIButton!
+    @IBOutlet weak var seeMoreButton: UIButton!
     
     @IBOutlet weak var synonymsLabel: UILabel!
     @IBOutlet weak var enSynonymsLabel: UILabel!
@@ -37,7 +37,7 @@ class MangaDetailViewController: UIViewController {
     @IBOutlet weak var relatedAnimeCollectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var relatedMangaCollectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var recommendationsCollectionViewHeight: NSLayoutConstraint!
-    
+    @IBOutlet weak var synopsisTextViewHeight: NSLayoutConstraint!
     
     @IBOutlet weak var relatedAnimeCollectionView: UICollectionView!
     @IBOutlet weak var relatedMangaCollectionView: UICollectionView!
@@ -47,14 +47,14 @@ class MangaDetailViewController: UIViewController {
     var id: Int?
     
     private var manga: Manga?
+    private var contentSize: Double = 150.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("manga id is \(id)")
-        
         guard let id = id else { return } //TODO: show alert and then dismiss controller
         
+        setUpController()
         viewModel.viewDidLoad(vc: self, id: id)
     }
     
@@ -88,44 +88,76 @@ class MangaDetailViewController: UIViewController {
         }
         scoreLabel.text = manga.score?.description ?? "N/A"
         typeLabel.text = manga.mediaType?.getType()
+        print("media type \(manga.mediaType)")
         statusLabel.text = manga.status?.getStatus()
         volumesLabel.text = manga.volumesCount?.description ?? "N/A"
         chaptersLabel.text = manga.chaptersCount?.description ?? "N/A"
         
-        synopsisTextView.text = manga.synopsis
+        if let synopsis = manga.synopsis, !(synopsis.isEmpty) {
+            synopsisTextView.text = synopsis
+        } else {
+            synopsisTextView.text = "No synopsis"
+        }
+        
+        synopsisTextView.sizeToFit()
         
         var synonyms = ""
         for synonym in manga.alternativeTitles?.synonyms ?? [String]() {
             synonyms += synonym + ", "
         }
-        synonymsLabel.text = synonyms
         
-        enSynonymsLabel.text = manga.alternativeTitles?.en ?? "None"
+        if !(synonyms.isEmpty) {
+            synonymsLabel.text = synonyms
+        }
         
-        jpSynonymsLabel.text = manga.alternativeTitles?.ja ?? "None"
+        if let alternatives = manga.alternativeTitles?.en, !(alternatives.isEmpty) {
+            enSynonymsLabel.text = alternatives
+        }
+        
+        if let jp = manga.alternativeTitles?.ja, !(jp.isEmpty) {
+            jpSynonymsLabel.text = jp
+        }
         
         genresCollectionView.reloadData()
         relatedAnimeCollectionView.reloadData()
         relatedMangaCollectionView.reloadData()
         recommendationsCollectionView.reloadData()
         
-    }
-    
-    func noDataView() {
+        contentSize = synopsisTextView.contentSize.height //saving contentSize to use it with expand later
+        if synopsisTextView.contentSize.height < 150 {
+            synopsisTextViewHeight.constant = synopsisTextView.contentSize.height
+            seeMoreButton.removeFromSuperview()
+        }
         
     }
     
     @IBAction func seeMoreSynopsisButtonClicked(_ sender: UIButton) {
+        if synopsisTextViewHeight.constant <= 150 {
+            synopsisTextViewHeight.constant = contentSize
+            seeMoreButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+            seeMoreButton.setTitle("See less", for: .normal)
+        } else {
+            synopsisTextViewHeight.constant = 150
+            seeMoreButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+            seeMoreButton.setTitle("See more", for: .normal)
+        }
     }
     
     @IBAction func myListButtonClicked(_ sender: UIButton) {
+        viewModel.addToListClicked()
+    }
+    
+    @IBAction func seeMoreInfoButtonClicked(_ sender: UIButton) {
+        viewModel.seeMoreInfoButtonClicked()
     }
     
 }
 
 extension MangaDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == genresCollectionView {
+            print("manga genres \(manga?.genres)")
             return manga?.genres?.count ?? 0
         }
         if collectionView == relatedAnimeCollectionView {

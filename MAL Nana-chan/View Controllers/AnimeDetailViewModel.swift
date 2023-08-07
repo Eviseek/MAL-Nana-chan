@@ -11,45 +11,48 @@ import Alamofire
 class AnimeDetailViewModel {
     
     private let indicator = ActivityIndicator()
+    private let dataDownloader = DataDownloader()
+    private let networkManager = NetworkManager()
     
-    let dataDownloader = DataDownloader()
+    private var vc: AnimeDetailViewController? = nil
     
-    var anime: Anime? = nil
-    
-    private var viewController: AnimeDetailViewController? = nil
     var id: Int?
+    var anime: Anime? = nil
     
     init() {}
     
-    func viewDidLoad(viewController: AnimeDetailViewController) {
-        self.viewController = viewController
-        indicator.startAnimating(view: viewController.view)
-        self.id = viewController.id
-        if let _ = id {
-            fetchAnime()
+    func viewDidLoad(viewController: AnimeDetailViewController, id: Int) {
+        self.vc = viewController
+        self.id = id
+        
+        if !(TokenHandler.isUserLoggedIn) {
+            vc?.myListButton.removeFromSuperview()
         }
+        
+        fetchAnimeForId(id)
     }
     
-    private func fetchAnime() {
-        guard let id = id else { return }
+    private func fetchAnimeForId(_ id: Int) {
+        guard let vc = vc else { return }
+        indicator.startAnimating(view: vc.view)
         dataDownloader.fetchData(URLs.animeURLAll.rawValue.getURLWithId(id)) { (anime: Anime?, error: AFError?) in
-            self.anime = anime
-            if anime != nil {
-                self.viewController?.updateView()
-                self.indicator.stopAnimating()
+            if let anime = anime {
+                self.anime = anime
+                self.vc?.updateView()
             } else {
-                self.viewController?.noData()
+                self.vc?.setUpErrorView(message: error?.localizedDescription)
             }
+            self.indicator.stopAnimating()
         }
     }
     
     func addToListClicked() {
-        if let picker = viewController?.storyboard?.instantiateViewController(withIdentifier: "MyAnimeStatusViewController") as? MyAnimeStatusViewController {
+        if let picker = vc?.storyboard?.instantiateViewController(withIdentifier: "MyAnimeStatusViewController") as? MyAnimeStatusViewController {
             if let sheet = picker.sheetPresentationController {
                 sheet.detents = [.medium(), .large()]
             }
             picker.anime = anime
-            viewController?.present(picker, animated: true)
+            vc?.present(picker, animated: true)
         }
     }
     
@@ -57,17 +60,17 @@ class AnimeDetailViewModel {
         var type: ItemType = .anime
         var id: Int? = nil
         
-        if cv == viewController?.relatedMangaCollectionView {
+        if cv == vc?.relatedMangaCollectionView {
             type = .manga
             id = anime?.relatedManga?[index].node.id
         }
         
-        if cv == viewController?.relatedAnimeCollectionView {
+        if cv == vc?.relatedAnimeCollectionView {
             type = .anime
             id = anime?.relatedAnime?[index].node.id
         }
         
-        if cv == viewController?.recommendationsCollectionView {
+        if cv == vc?.recommendationsCollectionView {
             print("clicked rec")
             type = .anime
             id = anime?.recommendations?[index].node.id
@@ -75,34 +78,47 @@ class AnimeDetailViewModel {
         
         switch type {
         case .anime:
-            if let controller = viewController?.storyboard?.instantiateViewController(withIdentifier: "AnimeDetailViewController") as? AnimeDetailViewController {
+            if let controller = vc?.storyboard?.instantiateViewController(withIdentifier: "AnimeDetailViewController") as? AnimeDetailViewController {
                 controller.id = id
-                viewController?.navigationController?.pushViewController(controller, animated: true)
+                vc?.navigationController?.pushViewController(controller, animated: true)
             }
         case .manga:
-            if let controller = viewController?.storyboard?.instantiateViewController(withIdentifier: "MangaDetailViewController") as? MangaDetailViewController {
+            if let controller = vc?.storyboard?.instantiateViewController(withIdentifier: "MangaDetailViewController") as? MangaDetailViewController {
                 controller.id = id
-                viewController?.navigationController?.pushViewController(controller, animated: true)
+                vc?.navigationController?.pushViewController(controller, animated: true)
             }
         }
     }
     
     func openingsEndingsButtonClicked() {
-        if let controller = viewController?.storyboard?.instantiateViewController(withIdentifier: "ThemesDetailViewController") as? ThemesDetailViewController {
+        if let controller = vc?.storyboard?.instantiateViewController(withIdentifier: "ThemesDetailViewController") as? ThemesDetailViewController {
             print("id is \(anime?.id)")
             controller.id = anime?.id
-            viewController?.navigationController?.pushViewController(controller, animated: true)
+            vc?.navigationController?.pushViewController(controller, animated: true)
         }
     }
     
     func openMoreInformation() {
-        if let controller = viewController?.storyboard?.instantiateViewController(withIdentifier: "MoreInformationViewController") as? MoreInformationViewController {
+        if let controller = vc?.storyboard?.instantiateViewController(withIdentifier: "MoreInformationViewController") as? MoreInformationViewController {
             print("id is \(anime?.id)")
             controller.id = anime?.id
-            viewController?.navigationController?.pushViewController(controller, animated: true)
+            vc?.navigationController?.pushViewController(controller, animated: true)
         }
     }
     
+    func tryAgainButtonClicked() {
+        if anime?.title != nil, let id = id {
+            fetchAnimeForId(id)
+        }
+    }
+}
+
+extension AnimeDetailViewModel: NetworkManagerDelegate {
     
+    func connectionRestored() {
+        if anime?.title != nil, let id = id {
+            fetchAnimeForId(id)
+        }
+    }
     
 }

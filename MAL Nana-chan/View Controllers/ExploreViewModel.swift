@@ -140,7 +140,7 @@ class ExploreViewModel {
                 print("time between is \(timeBetween)")
                 if timeBetween >= 1 {
                     print("bigger than one")
-                    //TODO: delete array
+                    defaults.removeObject(forKey: Identifiers.RecentSearches.rawValue)
                 }
             }
         }

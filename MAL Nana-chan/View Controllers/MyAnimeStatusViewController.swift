@@ -86,6 +86,7 @@ class MyAnimeStatusViewController: UIViewController {
     }
     
     private func setValuesForView(_ anime: Anime) {
+        
         itemTitleLabel.text = anime.title
         itemStatusLabel.text = anime.status?.getStatus()
         
@@ -107,8 +108,11 @@ class MyAnimeStatusViewController: UIViewController {
         priorityLabel.text = anime.myListStatus?.priority?.getPriorityString() ?? "Low"
         
         if anime.myListStatus == nil {
-            print("my status is nil")
-            //TODO: change save button to add
+            saveButton.setTitle("Add", for: .normal)
+            itemEpisodesWatchedLabel.text = "0"
+            itemScoreLabel.text = "0"
+            priorityLabel.text = "None"
+            myStatusLabel.text = "None"
         }
         
     }

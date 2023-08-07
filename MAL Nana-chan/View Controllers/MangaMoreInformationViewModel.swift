@@ -1,27 +1,26 @@
 //
-//  MoreInformationViewModel.swift
+//  MangaMoreInformationViewModel.swift
 //  MAL Nana-chan
 //
-//  Created by Eva Chlpikova on 06.08.2023.
+//  Created by Eva Chlpikova on 07.08.2023.
 //
 
 import Foundation
 import Alamofire
 
-class MoreInformationViewModel {
+class MangaMoreInformationViewModel {
     
-    private var vc: MoreInformationViewController? = nil
+    private var vc: MangaMoreInformationViewController? = nil
     private var id: Int? = nil
+    private var information: MangaInformation? = nil
     
+    private let indicator = ActivityIndicator()
     private let dataDownloader = DataDownloader()
     private let urlManager = URLManager()
-    private let indicator = ActivityIndicator()
-    
-    private var information: AnimeInformation? = nil
     
     init() {}
     
-    func viewDidLoad(vc: MoreInformationViewController, id: Int) {
+    func viewDidLoad(vc: MangaMoreInformationViewController, id: Int) {
         indicator.startAnimating(view: vc.view)
         self.vc = vc
         self.id = id
@@ -29,7 +28,7 @@ class MoreInformationViewModel {
     }
     
     private func fetchInformation(id: Int) {
-        dataDownloader.fetchData(urlManager.getURLForId(id, url: URLs.jikanAnimeMoreInfoURL.rawValue)) { (result: AnimeMoreInformation?, error: AFError?) in
+        dataDownloader.fetchData(urlManager.getURLForId(id, url: URLs.jikanMangaMoreInfoURL.rawValue)) { (result: MangaMoreInformation?, error: AFError?) in
             if let data = result?.data {
                 self.information = data
                 self.vc?.setUpUIWith(self.information!)

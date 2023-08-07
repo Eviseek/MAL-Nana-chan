@@ -1,23 +1,19 @@
 //
-//  MoreInformationViewController.swift
+//  MangaMoreInformationViewController.swift
 //  MAL Nana-chan
 //
-//  Created by Eva Chlpikova on 06.08.2023.
+//  Created by Eva Chlpikova on 07.08.2023.
 //
 
 import UIKit
 
-class MoreInformationViewController: UIViewController {
+class MangaMoreInformationViewController: UIViewController {
     
-    @IBOutlet weak var studiosTextView: UITextView!
-    @IBOutlet weak var producersTextView: UITextView!
-    @IBOutlet weak var licensorsTextView: UITextView!
+    @IBOutlet weak var authorsTextView: UITextView!
+    @IBOutlet weak var serializationsTextView: UITextView!
+    @IBOutlet weak var demographicsTextView: UITextView!
     
-    @IBOutlet weak var studiosView: UIView!
-    @IBOutlet weak var producersView: UIView!
-    @IBOutlet weak var licensorsView: UIView!
-    
-    private let viewModel = MoreInformationViewModel()
+    private let viewModel = MangaMoreInformationViewModel()
     
     var id: Int? = nil
     
@@ -28,47 +24,46 @@ class MoreInformationViewController: UIViewController {
         
         setUpTextViews()
         viewModel.viewDidLoad(vc: self, id: id)
-        
     }
     
     private func setUpTextViews() {
-        studiosTextView.isUserInteractionEnabled = true
-        studiosTextView.isEditable = false
-        studiosTextView.linkTextAttributes = [
+        authorsTextView.isUserInteractionEnabled = true
+        authorsTextView.isEditable = false
+        authorsTextView.linkTextAttributes = [
             .font: UIFont.systemFont(ofSize: 15),
             .foregroundColor: UIColor.blue,
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
         
-        producersTextView.isUserInteractionEnabled = true
-        producersTextView.isEditable = false
-        producersTextView.linkTextAttributes = [
+        serializationsTextView.isUserInteractionEnabled = true
+        serializationsTextView.isEditable = false
+        serializationsTextView.linkTextAttributes = [
             .font: UIFont.systemFont(ofSize: 15),
             .foregroundColor: UIColor.blue,
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
         
-        licensorsTextView.isUserInteractionEnabled = true
-        licensorsTextView.isEditable = false
-        licensorsTextView.linkTextAttributes = [
+        demographicsTextView.isUserInteractionEnabled = true
+        demographicsTextView.isEditable = false
+        demographicsTextView.linkTextAttributes = [
             .font: UIFont.systemFont(ofSize: 15),
             .foregroundColor: UIColor.blue,
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
     }
     
-    func setUpUIWith(_ information: AnimeInformation) {
+    func setUpUIWith(_ information: MangaInformation) {
         
-        if let objects = information.studios {
-            studiosTextView.attributedText = getAttributedText(objects: objects)
+        if let objects = information.authors {
+            authorsTextView.attributedText = getAttributedText(objects: objects)
         }
         
-        if let objects = information.producers {
-            producersTextView.attributedText = getAttributedText(objects: objects)
+        if let objects = information.serializations {
+            serializationsTextView.attributedText = getAttributedText(objects: objects)
         }
         
-        if let objects = information.licensors {
-            licensorsTextView.attributedText = getAttributedText(objects: objects)
+        if let objects = information.demographics {
+            demographicsTextView.attributedText = getAttributedText(objects: objects)
         }
         
     }

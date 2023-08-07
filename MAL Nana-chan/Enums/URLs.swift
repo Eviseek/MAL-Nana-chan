@@ -18,7 +18,7 @@ enum URLs: String {
     
     case animeURLAll = "https://api.myanimelist.net/v2/anime/{id}?fields=synopsis,mean,status,num_episodes,start_season,media_type,average_episode_duration,genres,recommendations,related_anime,related_manga,my_list_status,alternative_titles"
     
-    case mangaURLAll = "https://api.myanimelist.net/v2/manga/{id}?fields=synopsis,mean,status,num_chapters,num_volumes,genres,recommendations,related_anime,related_manga,my_list_status,alternative_titles"
+    case mangaURLAll = "https://api.myanimelist.net/v2/manga/{id}?fields=synopsis,mean,status,num_chapters,num_volumes,media_type,genres,recommendations,related_anime,related_manga,my_list_status,alternative_titles"
     
     case animeSearchURL = "https://api.myanimelist.net/v2/anime?q={query}&fields=mean,status,num_episodes,media_type,start_season,my_list_status"
     case mangaSearchURL = "https://api.myanimelist.net/v2/manga?q={query}&fields=mean,status,num_chapters,media_type,start_date"
@@ -36,7 +36,8 @@ enum URLs: String {
     case jikanRecommendationsAnimeURL = "https://api.jikan.moe/v4/recommendations/anime"
     case jikanTopMangaURL = "https://api.jikan.moe/v4/top/manga"
     case jikanThemesURL = "https://api.jikan.moe/v4/anime/{id}/themes"
-    case jikanMoreInfoURL = "https://api.jikan.moe/v4/anime/{id}/full"
+    case jikanAnimeMoreInfoURL = "https://api.jikan.moe/v4/anime/{id}/full"
+    case jikanMangaMoreInfoURL = "https://api.jikan.moe/v4/manga/{id}/full"
     
     case myUserProfileURL = "https://api.myanimelist.net/v2/users/@me"
     
