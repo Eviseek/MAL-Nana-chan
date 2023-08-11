@@ -111,14 +111,14 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="episodes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2LX-CC-epP">
-                        <rect key="frame" x="194.33333333333334" y="72.333333333333329" width="62.000000000000028" height="18"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="chapters" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2LX-CC-epP">
+                        <rect key="frame" x="194.33333333333334" y="72.333333333333329" width="60.333333333333343" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manga season" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mJN-oB-Nfr">
-                        <rect key="frame" x="125" y="93.333333333333329" width="100" height="18"/>
+                        <rect key="frame" x="125" y="93.333333333333329" width="331" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -143,7 +143,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manga Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPO-8B-DNs">
-                        <rect key="frame" x="125" y="9.9999999999999982" width="100" height="19.333333333333329"/>
+                        <rect key="frame" x="125" y="9.9999999999999982" width="331" height="19.333333333333329"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -167,6 +167,7 @@
                     <constraint firstItem="dPO-8B-DNs" firstAttribute="leading" secondItem="9Tb-MR-fB5" secondAttribute="trailing" constant="5" id="SXf-Sa-7Dt"/>
                     <constraint firstItem="mJN-oB-Nfr" firstAttribute="trailing" secondItem="dPO-8B-DNs" secondAttribute="trailing" id="U7D-yA-0mM"/>
                     <constraint firstAttribute="bottom" secondItem="9Tb-MR-fB5" secondAttribute="bottom" priority="999" id="W2m-Vw-lHT"/>
+                    <constraint firstAttribute="trailing" secondItem="dPO-8B-DNs" secondAttribute="trailing" constant="10" id="Xat-Js-wiU"/>
                     <constraint firstItem="mJN-oB-Nfr" firstAttribute="trailing" secondItem="dPO-8B-DNs" secondAttribute="trailing" id="XzT-zF-4gm"/>
                     <constraint firstItem="dPO-8B-DNs" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="eCG-Kv-gJo"/>
                     <constraint firstItem="2LX-CC-epP" firstAttribute="leading" secondItem="79O-mg-Q4F" secondAttribute="trailing" constant="5" id="kw9-gB-yEc"/>

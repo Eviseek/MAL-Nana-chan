@@ -48,7 +48,14 @@ class MyAnimeStatusViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let anime = anime else { return }
+        print("!!!! status and anime is \(anime)")
+        
+        guard let anime = anime else {
+            self.showErrorDialog(message: "Something went wrong.")
+            return
+        }
+        
+        print("!!!! status and anime is \(anime)")
         
         setUpUIView()
   

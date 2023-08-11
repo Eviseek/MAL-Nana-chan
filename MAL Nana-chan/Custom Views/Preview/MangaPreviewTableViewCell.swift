@@ -26,13 +26,11 @@ class MangaPreviewTableViewCell: UITableViewCell {
     var manga: Manga? = nil
     var vc: UIViewController? = nil
     
-    private var mainStoryboard = UIStoryboard()
+    private var mainStoryboard: UIStoryboard? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
-        mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
         typeContainerView.layer.cornerRadius = 5
         
@@ -55,7 +53,14 @@ class MangaPreviewTableViewCell: UITableViewCell {
     }
     
     @IBAction func myListClicked(_ sender: UIButton) {
-        if let picker = mainStoryboard.instantiateViewController(withIdentifier: "MyMangaStatusViewController") as? MyMangaStatusViewController {
+        
+        if vc?.storyboard == nil {
+            mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        } else {
+            mainStoryboard = vc?.storyboard
+        }
+        
+        if let picker = mainStoryboard?.instantiateViewController(withIdentifier: "MyMangaStatusViewController") as? MyMangaStatusViewController {
             if let sheet = picker.sheetPresentationController {
                 sheet.detents = [.medium(), .large()]
             }

@@ -7,13 +7,12 @@
 
 import UIKit
 
-//TODO: remove vc?
-
 class AnimePreviewTableViewCell: UITableViewCell {
 
+    //UI ImageViews
     @IBOutlet weak var itemImageView: UIImageView!
     
-    
+    //UI Labels
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var seasonLabel: UILabel!
@@ -21,20 +20,19 @@ class AnimePreviewTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var episodesTitleLabel: UILabel!
     
+    //UI Views
     @IBOutlet weak var typeContainerView: UIView!
-    
     @IBOutlet weak var myListView: UIView!
+    
+    //UI Buttons
     @IBOutlet weak var myListButton: UIButton!
     
-    var item: Anime? = nil
+    var anime: Anime? = nil
     var vc: UIViewController? = nil
-    
-    private var storyboard = UIStoryboard()
+    var storyboard: UIStoryboard? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         typeContainerView.layer.cornerRadius = 5
         
@@ -45,7 +43,6 @@ class AnimePreviewTableViewCell: UITableViewCell {
         if !TokenHandler.isUserLoggedIn {
             myListView.isHidden = true
         }
-        
     }
     
     func updateEpisodesLabel(number: Int) {
@@ -57,13 +54,21 @@ class AnimePreviewTableViewCell: UITableViewCell {
     }
     
     @IBAction func myListClicked(_ sender: UIButton) {
-        print("my list clicked")
-        if let picker = storyboard.instantiateViewController(withIdentifier: "MyAnimeStatusViewController") as? MyAnimeStatusViewController {
+        
+        if vc?.storyboard == nil {
+            print("storyboard was nil")
+            storyboard = UIStoryboard(name: "Main", bundle: nil)
+        } else {
+            print("there was a storyboard")
+            storyboard = vc?.storyboard
+        }
+        
+        if let picker = storyboard?.instantiateViewController(withIdentifier: "MyAnimeStatusViewController") as? MyAnimeStatusViewController {
             print("i am here")
         if let sheet = picker.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
         }
-        picker.anime = item
+        picker.anime = anime
       //  picker.fromAnimelist = false
         vc?.present(picker, animated: true)
         }

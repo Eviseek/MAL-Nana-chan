@@ -27,26 +27,21 @@ class SearchResultsViewModel {
     
     func viewDidLoad(viewController: SearchResultsViewController) {
         self.viewController = viewController
-        searchButtonClicked()
+        searchButtonClickedFor(.anime)
     }
     
-    func searchButtonClicked() {
+    func searchButtonClickedFor(_ selectedType: ItemType) {
         
         pagingDone = false
         loadingInProgress = false
         
-        //checking if we're searching for anime or manga
-        if viewController?.segmentedControl.selectedSegmentIndex == 0 {
-            selectedType = .anime
-        } else if viewController?.segmentedControl.selectedSegmentIndex == 1 {
-            selectedType = .manga
-        }
+        self.selectedType = selectedType
         
         let query = viewController?.query
         
         if (query?.count ?? 0) > 2 {
             saveToDefaults(query: query!)
-            searchForQuery(query!, type: selectedType)
+            searchForQuery(query!, type: self.selectedType)
         } else {
             showAlert()
         }
@@ -58,7 +53,7 @@ class SearchResultsViewModel {
             
             loadingInProgress = true
             
-            if viewController?.segmentedControl.selectedSegmentIndex == 0 {
+            if selectedType == .anime {
                 if let nextUrl = animeResults?.paging?.next {
                     DataDownloader.dataDownloader.fetchData(nextUrl, completion: { (results: Response<Anime>?, _: AFError?) in
                         self.animeResults?.paging = results?.paging
@@ -71,7 +66,7 @@ class SearchResultsViewModel {
                 } else {
                     self.pagingDone = true
                 }
-            } else if viewController?.segmentedControl.selectedSegmentIndex == 1 {
+            } else if selectedType == .manga {
                 print("my next url is", mangaResults?.paging?.next)
                 if let nextUrl = mangaResults?.paging?.next {
                     
@@ -82,7 +77,7 @@ class SearchResultsViewModel {
                             self.mangaResults?.data.append(contentsOf: data)
                         }
                         self.loadingInProgress = false
-                        self.viewController?.animeResultsTableView.reloadData()
+                        self.viewController?.mangaResultsTableView.reloadData()
                     })
                 } else {
                     self.pagingDone = true
@@ -121,6 +116,7 @@ class SearchResultsViewModel {
                     // print(URLs.animeSearchURL.rawValue.appending(query))
                     if let data = results {
                         self.animeResults = data
+                        self.viewController?.updateTableView(.anime)
                     }
                     self.viewController?.animeResultsTableView.reloadData()
                 })
@@ -129,12 +125,14 @@ class SearchResultsViewModel {
                 
                 print("MANGA")
                 
-                DataDownloader.dataDownloader.fetchData(url, completion: { (results: Response<Manga>?, _: AFError?) in
+                DataDownloader.dataDownloader.fetchData(url, completion: { (results: Response<Manga>?, error: AFError?) in
                     // print(URLs.animeSearchURL.rawValue.appending(query))
                     if let data = results {
                         self.mangaResults = data
+                        self.viewController?.updateTableView(.manga)
+                    } else {
+                        self.viewController?.setUpErrorView(message: error?.localizedDescription ?? "")
                     }
-                    self.viewController?.animeResultsTableView.reloadData()
                 })
                 
             }

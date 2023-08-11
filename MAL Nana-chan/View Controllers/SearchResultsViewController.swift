@@ -45,13 +45,30 @@ class SearchResultsViewController: UIViewController {
         mangaResultsTableView.delegate = self
     }
     
+    func updateTableView(_ type: ItemType) {
+        if selectedType == .anime {
+            animeResultsTableView.isHidden = false
+            mangaResultsTableView.isHidden = true
+            animeResultsTableView.reloadData()
+        } else {
+            animeResultsTableView.isHidden = true
+            mangaResultsTableView.isHidden = false
+            mangaResultsTableView.reloadData()
+        }
+    }
+    
+    func setUpErrorView(message: String) {
+        print("ERROR!!!!")
+    }
+    
     @IBAction func itemTypeChanged(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             selectedType = .anime
         } else {
+            print("!!!!selected type is manga")
             selectedType = .manga
         }
-        viewModel.searchButtonClicked()
+        viewModel.searchButtonClickedFor(selectedType)
     }
 }
 
@@ -60,65 +77,74 @@ extension SearchResultsViewController: UITableViewDataSource {
         if selectedType == .anime {
             return viewModel.animeResults?.data.count ?? 0
         } else if selectedType == .manga {
+            print("manga count is \(viewModel.mangaResults?.data.count)")
             return viewModel.mangaResults?.data.count ?? 0
         }
         return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "AnimePreviewTableViewCell", for: indexPath) as? AnimePreviewTableViewCell {
-            if segmentedControl.selectedSegmentIndex == 0 {
-                let anime = viewModel.animeResults?.data[indexPath.row].node
-                var seasonText = ""
-                cell.vc = self
-                cell.selectionStyle = .none
-                cell.titleLabel.text = anime?.title
-                if let season = anime?.startSeason?.season {
-                    seasonText = season.stringValue()
-                    seasonText += " "
+        
+        print("selected type is \(selectedType)")
+        
+        if selectedType == .anime {
+            print("inside anime, anime selected")
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "AnimePreviewTableViewCell") as? AnimePreviewTableViewCell {
+                    let anime = viewModel.animeResults?.data[indexPath.row].node
+                    var seasonText = ""
+                    cell.vc = self
+                    cell.anime = anime
+                    cell.selectionStyle = .none
+                    cell.titleLabel.text = anime?.title
+                    if let season = anime?.startSeason?.season {
+                        seasonText = season.stringValue()
+                        seasonText += " "
+                    }
+                    if let year = anime?.startSeason?.year {
+                        seasonText += year.description
+                    }
+                    cell.seasonLabel.text = seasonText
+                    if let score = anime?.score {
+                        cell.scoreLabel.text = score.description
+                    }
+                    cell.typeLabel.text = anime?.mediaType?.getType()
+                    cell.updateEpisodesLabel(number: anime?.episodesCount ?? 0)
+                    if (anime?.episodesCount ?? 0) > 0 {
+                        cell.episodesNumberLabel.text = anime?.episodesCount?.description
+                    }
+                    
+                    if let url = URL(string: anime?.mainPicture?.medium ?? "") {
+                        cell.itemImageView?.af.setImage(withURL: url)
+                    }
+                    
+                    return cell
                 }
-                if let year = anime?.startSeason?.year {
-                    seasonText += year.description
-                }
-                cell.seasonLabel.text = seasonText
-                if let score = anime?.score {
-                    cell.scoreLabel.text = score.description
-                }
-                cell.typeLabel.text = anime?.mediaType?.getType()
-                cell.updateEpisodesLabel(number: anime?.episodesCount ?? 0)
-                if (anime?.episodesCount ?? 0) > 0 {
-                    cell.episodesNumberLabel.text = anime?.episodesCount?.description
-                }
-                
-                if let url = URL(string: anime?.mainPicture?.medium ?? "") {
-                    cell.itemImageView?.af.setImage(withURL: url)
-                }
-                
-                return cell
-                
-            } else {
-                let manga = viewModel.mangaResults?.data[indexPath.row].node
-                cell.vc = self
-                cell.selectionStyle = .none
-                cell.titleLabel.text = manga?.title
-                cell.seasonLabel.text = manga?.startDate?.extractSeason()
-                if let score = manga?.score {
-                    cell.scoreLabel.text = score.description
-                }
-                cell.typeLabel.text = manga?.mediaType?.getType()
-                cell.updateEpisodesLabel(number: manga?.chaptersCount ?? 0)
-                if (manga?.chaptersCount ?? 0) > 0 {
-                    cell.episodesNumberLabel.text = manga?.chaptersCount?.description
-                }
-                
-                if let url = URL(string: manga?.mainPicture?.medium ?? "") {
-                    cell.itemImageView?.af.setImage(withURL: url)
-                }
-                
-                return cell
-                
             }
-        }
+            
+            if selectedType == .manga {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "MangaPreviewTableViewCell") as? MangaPreviewTableViewCell {
+                    let manga = viewModel.mangaResults?.data[indexPath.row].node
+                    cell.vc = self
+                    cell.manga = manga
+                    cell.selectionStyle = .none
+                    cell.titleLabel.text = manga?.title
+                    cell.seasonLabel.text = manga?.startDate?.extractSeason()
+                    
+                    cell.chaptersNumberLabel.text = manga?.chaptersCount?.description
+                    
+                    if let score = manga?.score {
+                        cell.scoreLabel.text = score.description
+                    }
+                    cell.typeLabel.text = manga?.mediaType?.getType()
+                    
+                    if let url = URL(string: manga?.mainPicture?.medium ?? "") {
+                        cell.mangaImageView?.af.setImage(withURL: url)
+                    }
+                    
+                    return cell
+                }
+            }
+        
         return UITableViewCell()
     }
     
@@ -127,7 +153,11 @@ extension SearchResultsViewController: UITableViewDataSource {
 extension SearchResultsViewController: UITableViewDelegate, UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
-        if position > (animeResultsTableView.contentSize.height - 100 - scrollView.frame.height) {
+        var mytv: UITableView = animeResultsTableView
+        if selectedType == .manga {
+            mytv = mangaResultsTableView
+        }
+        if position > (mytv.contentSize.height - 100 - scrollView.frame.height) {
             if !(viewModel.pagingDone) && !(viewModel.loadingInProgress) {
                 viewModel.loadMore()
             }
@@ -143,7 +173,7 @@ extension SearchResultsViewController: UITableViewDelegate, UIScrollViewDelegate
 extension SearchResultsViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         query = searchBar.text
-        viewModel.searchButtonClicked()
+        viewModel.searchButtonClickedFor(selectedType)
         UIView.animate(withDuration: 0.5, delay: 0, animations: {
             self.animeResultsTableView.contentOffset.y = 0
         })

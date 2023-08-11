@@ -93,7 +93,7 @@ class SeeAllViewController<T: Codable>: UIViewController, UITableViewDataSource,
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: "AnimePreviewTableViewCell") as? AnimePreviewTableViewCell {
                 var anime = anime[indexPath.row].node
-                cell.item = anime
+                cell.anime = anime
                 cell.vc = self
                 cell.selectionStyle = .none
                 cell.titleLabel.text = anime.title

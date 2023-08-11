@@ -78,6 +78,12 @@ class MangaDetailViewController: UIViewController {
         recommendationsCollectionView.register(relatedNib, forCellWithReuseIdentifier: Identifiers.animeCVCell.rawValue)
         recommendationsCollectionView.dataSource = self
         recommendationsCollectionViewHeight.constant = Sizes.itemCollectionViewCellHeight.rawValue
+        
+        //removing related anime, manga and recs
+        relatedAnimeContainerView.removeFromSuperview()
+        relatedMangaContainerView.removeFromSuperview()
+        recommendationsContainerView.removeFromSuperview()
+        
     }
     
     func updateViewWith(_ manga: Manga) {
@@ -88,7 +94,6 @@ class MangaDetailViewController: UIViewController {
         }
         scoreLabel.text = manga.score?.description ?? "N/A"
         typeLabel.text = manga.mediaType?.getType()
-        print("media type \(manga.mediaType)")
         statusLabel.text = manga.status?.getStatus()
         volumesLabel.text = manga.volumesCount?.description ?? "N/A"
         chaptersLabel.text = manga.chaptersCount?.description ?? "N/A"
@@ -119,9 +124,6 @@ class MangaDetailViewController: UIViewController {
         }
         
         genresCollectionView.reloadData()
-        relatedAnimeCollectionView.reloadData()
-        relatedMangaCollectionView.reloadData()
-        recommendationsCollectionView.reloadData()
         
         contentSize = synopsisTextView.contentSize.height //saving contentSize to use it with expand later
         if synopsisTextView.contentSize.height < 150 {
@@ -157,18 +159,7 @@ extension MangaDetailViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == genresCollectionView {
-            print("manga genres \(manga?.genres)")
             return manga?.genres?.count ?? 0
-        }
-        if collectionView == relatedAnimeCollectionView {
-            return manga?.relatedAnime?.count ?? 0
-        }
-        if collectionView == relatedMangaCollectionView {
-            print("related MANGA is \(manga?.relatedManga)")
-            return manga?.relatedManga?.count ?? 0
-        }
-        if collectionView == recommendationsCollectionView {
-            return manga?.recommendations?.count ?? 0
         }
         return 0
     }
@@ -178,45 +169,6 @@ extension MangaDetailViewController: UICollectionViewDelegate, UICollectionViewD
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.GenreCollectionViewCell.rawValue, for: indexPath) as? GenreCollectionViewCell {
                 cell.genreLabel.text = manga?.genres?[indexPath.item].name
                 genresCollectionViewHeight.constant = collectionView.contentSize.height //TODO: lepsi umisteni?
-                return cell
-            }
-        }
-        
-        if collectionView == relatedAnimeCollectionView {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.animeCVCell.rawValue, for: indexPath) as? AnimeCollectionViewCell {
-                var item = manga?.relatedAnime?[indexPath.item]
-//                cell.itemTypeView.isHidden = false
-//                cell.itemTitleLabel.text = item?.node.title
-//                if let url = URL(string: item?.node.mainPicture?.medium ?? "") {
-//                    cell.itemImageView.af.setImage(withURL: url)
-//                }
-//                cell.itemTypeLabel.text = item?.relation_type_formatted
-                return cell
-            }
-        }
-        
-        if collectionView == relatedMangaCollectionView {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.animeCVCell.rawValue, for: indexPath) as? AnimeCollectionViewCell {
-//                if let item = manga?.relatedManga?[indexPath.item] {
-//                    cell.itemTypeView.isHidden = false
-//                    cell.itemTitleLabel.text = item.node.title
-//                    if let url = URL(string: item.node.mainPicture?.medium ?? "") {
-//                        cell.itemImageView.af.setImage(withURL: url)
-//                    }
-//                    cell.itemTypeLabel.text = item.relation_type_formatted
-//                }
-                return cell
-            }
-        }
-        
-        if collectionView == recommendationsCollectionView {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.animeCVCell.rawValue, for: indexPath) as? AnimeCollectionViewCell {
-//                var item = manga?.recommendations?[indexPath.item]
-//                cell.itemTypeView.isHidden = true
-//                cell.itemTitleLabel.text = item?.node.title
-//                if let url = URL(string: item?.node.mainPicture?.medium ?? "") {
-//                    cell.itemImageView.af.setImage(withURL: url)
-//                }
                 return cell
             }
         }
