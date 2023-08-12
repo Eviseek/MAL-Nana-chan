@@ -38,43 +38,63 @@ struct DataDownloader {
             
             AF.request(url, encoding: enc, headers: getHeader()).responseDecodable(of: T.self, completionHandler: { response in
                
-             //  debugPrint(response)
+              // debugPrint(response)
                 completion(response.value, response.error)
             })
             
         } else {
             
             AF.request(url).responseDecodable(of: T.self, completionHandler: { response in
-             //   debugPrint(response)
+              //  debugPrint(response)
                 completion(response.value, response.error)
             })
             
         }
     }
     
-    func changeList(_ url: String, params: MyAnimeListStatus, completion: @escaping () -> Void) {
+    func changeAnimeList(_ url: String, params: MyAnimeListStatus, completion: @escaping () -> Void) {
         
-//        var listHeaders: HTTPHeaders = []
-//        listHeaders.add(name: "status", value: params.status.rawValue)
-//        listHeaders.add(name: "score", value: params.score.description)
-//        if let episodesCount = params.episodesWatchedCount {
-//            listHeaders.add(name: "num_watched_episodes", value: episodesCount.description)
-//        }
-//        if let token = TokenHandler.handler.getToken() {
-//            listHeaders.add(name: "Authorization", value: "Bearer " + token)
-//        }
-//
-//        print("my headers look: \(listHeaders)")
-        
-        var parameters = [
+        let parameters = [
             "status": params.status.rawValue,
-            "score" : "0"
-        ]
+            "score" : params.score,
+            "num_watched_episodes": params.episodesWatchedCount!,
+            "priority": params.priority?.rawValue ?? 0
+        ] as [String : Any]
         
         print("parameters \(parameters)")
         
         AF.request(url, method: .put, parameters: parameters, headers: getHeader()).response { AFdata in
             debugPrint(AFdata)
+            completion()
+        }
+            
+    }
+    
+    func changeMangaList(_ url: String, params: MyMangaListStatus, completion: @escaping () -> Void) {
+        
+        let parameters = [
+            "status": params.status.rawValue,
+            "score" : params.score,
+            "num_chapters_read": params.chaptersReadCount!,
+            "num_volumes_read": params.volumesReadCount!,
+            "priority": params.priority?.rawValue ?? 0
+        ] as [String : Any]
+        
+        print("parameters \(parameters)")
+        
+        AF.request(url, method: .put, parameters: parameters, headers: getHeader()).response { AFdata in
+            debugPrint(AFdata)
+            completion()
+        }
+            
+    }
+    
+    func deleteList(_ url: String, completion: @escaping () -> Void) {
+        
+        AF.request(url, method: .delete, headers: getHeader()).response { response in
+            debugPrint(response)
+            print("response desc \(response.description)")
+            print("response data \(response.data)")
             completion()
         }
             

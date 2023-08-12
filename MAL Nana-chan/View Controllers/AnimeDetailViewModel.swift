@@ -71,7 +71,7 @@ class AnimeDetailViewModel {
         }
         
         if cv == vc?.recommendationsCollectionView {
-            print("clicked rec")
+           // print("clicked rec")
             type = .anime
             id = anime?.recommendations?[index].node.id
         }
@@ -92,7 +92,7 @@ class AnimeDetailViewModel {
     
     func openingsEndingsButtonClicked() {
         if let controller = vc?.storyboard?.instantiateViewController(withIdentifier: "ThemesDetailViewController") as? ThemesDetailViewController {
-            print("id is \(anime?.id)")
+         //   print("id is \(anime?.id)")
             controller.id = anime?.id
             vc?.navigationController?.pushViewController(controller, animated: true)
         }
@@ -100,7 +100,7 @@ class AnimeDetailViewModel {
     
     func openMoreInformation() {
         if let controller = vc?.storyboard?.instantiateViewController(withIdentifier: "MoreInformationViewController") as? MoreInformationViewController {
-            print("id is \(anime?.id)")
+         //   print("id is \(anime?.id)")
             controller.id = anime?.id
             vc?.navigationController?.pushViewController(controller, animated: true)
         }

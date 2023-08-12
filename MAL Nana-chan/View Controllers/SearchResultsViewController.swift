@@ -58,6 +58,7 @@ class SearchResultsViewController: UIViewController {
     }
     
     func setUpErrorView(message: String) {
+        self.showErrorDialog(message: message)
         print("ERROR!!!!")
     }
     
@@ -65,7 +66,7 @@ class SearchResultsViewController: UIViewController {
         if sender.selectedSegmentIndex == 0 {
             selectedType = .anime
         } else {
-            print("!!!!selected type is manga")
+            //print("!!!!selected type is manga")
             selectedType = .manga
         }
         viewModel.searchButtonClickedFor(selectedType)
@@ -77,7 +78,7 @@ extension SearchResultsViewController: UITableViewDataSource {
         if selectedType == .anime {
             return viewModel.animeResults?.data.count ?? 0
         } else if selectedType == .manga {
-            print("manga count is \(viewModel.mangaResults?.data.count)")
+            //print("manga count is \(viewModel.mangaResults?.data.count)")
             return viewModel.mangaResults?.data.count ?? 0
         }
         return 0
@@ -88,7 +89,7 @@ extension SearchResultsViewController: UITableViewDataSource {
         print("selected type is \(selectedType)")
         
         if selectedType == .anime {
-            print("inside anime, anime selected")
+            //print("inside anime, anime selected")
             if let cell = tableView.dequeueReusableCell(withIdentifier: "AnimePreviewTableViewCell") as? AnimePreviewTableViewCell {
                     let anime = viewModel.animeResults?.data[indexPath.row].node
                     var seasonText = ""

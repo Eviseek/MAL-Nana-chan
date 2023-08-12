@@ -50,7 +50,7 @@ class AnimeSectionTableViewCell: UITableViewCell {
     
     func fillCollectionView(section: Section<Anime>) {
         self.itemSection = section
-        print("collection view \(section)")
+       // print("collection view \(section)")
         sectionCollectionView.reloadData()
     }
     
@@ -84,7 +84,7 @@ extension AnimeSectionTableViewCell: UICollectionViewDelegateFlowLayout, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("selected \(itemSection?.response.data[indexPath.item].node.id)")
+       // print("selected \(itemSection?.response.data[indexPath.item].node.id)")
         itemSelected(id: itemSection?.response.data[indexPath.item].node.id ?? 0)
     }
     

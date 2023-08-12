@@ -20,6 +20,9 @@ class MangaDetailViewModel {
     func viewDidLoad(vc: MangaDetailViewController, id: Int) {
         self.vc = vc
         self.id = id
+        if !TokenHandler.isUserLoggedIn {
+            vc.addToListButton.removeFromSuperview()
+        }
         indicator.startAnimating(view: vc.view)
         fetchManga()
     }
@@ -28,7 +31,7 @@ class MangaDetailViewModel {
         guard let id = id else { return }
         DataDownloader.dataDownloader.fetchData(URLs.mangaURLAll.rawValue.getURLWithId(id)) { (manga: Manga?, error: AFError?) in
             if let manga = manga {
-                print("my manga is \(manga)")
+                //print("my manga is \(manga)")
                 self.manga = manga
                 self.vc?.updateViewWith(manga)
             } else {
@@ -53,6 +56,10 @@ class MangaDetailViewModel {
             controller.id = manga?.id
             vc?.navigationController?.pushViewController(controller, animated: true)
         }
+    }
+    
+    func mangaStatusUpdated(_ status: MyMangaListStatus?) {
+        manga?.myListStatus = status
     }
     
 }

@@ -49,7 +49,7 @@ class MangaSectionTableViewCell: UITableViewCell {
     
     func fillCollectionView(section: Section<Manga>) {
         self.itemSection = section
-        print("collection view \(section)")
+        //print("collection view \(section)")
         sectionCollectionView.reloadData()
     }
     

@@ -37,9 +37,12 @@ class AnimelistViewModel {
     }
     
     func viewWillAppear() {
-        if userAnimelist == nil {
-            //TODO: make different check for view did load and then became active again
+        if userAnimelist == nil, TokenHandler.isUserLoggedIn == true {
+            vc?.showLoggedView()
             checkStatusAndFetch()
+        } else if TokenHandler.isUserLoggedIn == false {
+            userAnimelist = nil
+            vc?.showNotLoggedView()
         }
     }
     
@@ -49,26 +52,26 @@ class AnimelistViewModel {
     
     private func checkStatusAndFetch() {
         guard let vc = vc else { return }
-        if setUIIfLogged(vc: vc) {
+        loadingIndicator.startAnimating(view: vc.view)
+      //  print("checkStatusAndFetch")
             for availableStatus in availableStatuses { //if user logged, check which status is selected and fetch it
+               // print("status is \(availableStatus) \(availableStatus.isSelected)")
                 if availableStatus.isSelected {
+                  //  print("selected status \(availableStatus)")
                     getAnimelistData(status: availableStatus.status)
                 }
             }
-        }
     }
-    
-    private func setUIIfLogged(vc: AnimelistViewController) -> Bool {
-        print("if logged called")
+
+    private func checkIfLogged(vc: AnimelistViewController) {
+        //print("if logged called")
         if TokenHandler.isUserLoggedIn {
-            print("user logged in")
-            vc.notLoggedView.isHidden = true
+            //print("user logged in")
+            vc.showLoggedView()
             loadingIndicator.startAnimating(view: vc.view)
-            return true
         } else {
-            print("user not logged in")
-            vc.notLoggedView.isHidden = false
-            return false
+            //print("user not logged in")
+            vc.showNotLoggedView()
         }
     }
     
@@ -93,7 +96,10 @@ class AnimelistViewModel {
     func loginButtonClicked() {
         guard let vc = vc else { return }
         handler.authenticate(vc) {
-            self.setUIIfLogged(vc: vc)
+            self.checkIfLogged(vc: vc)
+            if TokenHandler.isUserLoggedIn {
+                self.getAnimelistData(status: .none)
+            }
         }
         
     }
@@ -116,11 +122,11 @@ class AnimelistViewModel {
         fetchAnimelist(url: url) { list, error in
             if let list = list {
                 self.userAnimelist?.data.append(contentsOf: list.data)
-                print("my list is \(list.data.count)")
+               // print("my list is \(list.data.count)")
                 self.userAnimelist?.paging = list.paging
                 if let nextPage = list.paging?.next {
                     self.nextPage = nextPage
-                    print("next page is \(nextPage)")
+              //      print("next page is \(nextPage)")
                 } else {
                     self.nextPage = nil
                 }
@@ -135,13 +141,12 @@ class AnimelistViewModel {
         fetchAnimelist(url: urlManager.getAnimelistURLForStatus(status)) { list, error in
             if let list = list {
                 if list.data.count > 0 {
-                   print("!!!!!!!!!!!!! first item is \(list.data[0])")
                     self.userAnimelist = list
                   //  print("!!!!!!!!!!!!!! userAnimelist \(self.userAnimelist?.data[0])")
                     self.vc?.updateTableViewWith(self.userAnimelist?.data, scrollToTop: true)
                     if let nextPage = list.paging?.next {
                         self.nextPage = nextPage
-                        print("next page is \(nextPage)")
+                    //    print("next page is \(nextPage)")
                     } else {
                         self.nextPage = nil
                     }
@@ -168,7 +173,7 @@ class AnimelistViewModel {
     
     private func fetchAnimelist(url: String, completion: @escaping (UserAnimelist?, String?) -> Void) {
         if !isFetching {
-            print("fetching")
+            //print("fetching")
             isFetching = true
             DataDownloader.dataDownloader.fetchData(url) { (userList: UserAnimelist?, error: AFError?) in
                 if let list = userList {

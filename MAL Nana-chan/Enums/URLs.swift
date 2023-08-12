@@ -27,9 +27,13 @@ enum URLs: String {
     
     case myAnimelistURL = "https://api.myanimelist.net/v2/users/@me/animelist?fields=list_status,mean,status,num_episodes,media_type,start_season" //all my animelist
     case myAnimelistWithStatusURL = "https://api.myanimelist.net/v2/users/@me/animelist?fields=list_status,mean,status,num_episodes,media_type,start_season&status={status}" //only specific status, like watching, plan to watch, etc
+    
+    case animeGetListURL = "https://api.myanimelist.net/v2/anime/{id}?fields=my_list_status"
+    case mangaGetListURL = "https://api.myanimelist.net/v2/manga/{id}?fields=my_list_status"
 
-    //url to save changes to animelist
-    case patchAnimelistURL = "https://api.myanimelist.net/v2/anime/{id}/my_list_status"
+    //url to save changes to anime or manga list
+    case animeListStatusURL = "https://api.myanimelist.net/v2/anime/{id}/my_list_status"
+    case mangaListStatusURL = "https://api.myanimelist.net/v2/manga/{id}/my_list_status"
     
     //GET Jikan urls
     case jikanPromoURL = "https://api.jikan.moe/v4/watch/promos"
@@ -40,6 +44,7 @@ enum URLs: String {
     case jikanMangaMoreInfoURL = "https://api.jikan.moe/v4/manga/{id}/full"
     
     case myUserProfileURL = "https://api.myanimelist.net/v2/users/@me"
+
     
     //Home View Controller URLs
     

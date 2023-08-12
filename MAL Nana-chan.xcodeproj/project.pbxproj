@@ -87,6 +87,8 @@
 		DD73CEF22A8191B4001587BF /* MangaMoreInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD73CEF12A8191B4001587BF /* MangaMoreInformationViewController.swift */; };
 		DD73CEF42A8191C0001587BF /* MangaMoreInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD73CEF32A8191C0001587BF /* MangaMoreInformationViewModel.swift */; };
 		DD73CEF62A819357001587BF /* MangaMoreInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD73CEF52A819357001587BF /* MangaMoreInformation.swift */; };
+		DD73CEF82A87E072001587BF /* SkeletonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD73CEF72A87E072001587BF /* SkeletonManager.swift */; };
+		DD73CEFA2A88206B001587BF /* DateFormatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD73CEF92A88206B001587BF /* DateFormatManager.swift */; };
 		DDBD8C9E2A65B52700E84461 /* ProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBD8C9D2A65B52700E84461 /* ProfileDetailViewController.swift */; };
 		DDBD8CA02A65B53100E84461 /* ProfileDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBD8C9F2A65B53100E84461 /* ProfileDetailViewModel.swift */; };
 		DDBD8CA22A65B74E00E84461 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBD8CA12A65B74E00E84461 /* User.swift */; };
@@ -224,6 +226,8 @@
 		DD73CEF12A8191B4001587BF /* MangaMoreInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaMoreInformationViewController.swift; sourceTree = "<group>"; };
 		DD73CEF32A8191C0001587BF /* MangaMoreInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaMoreInformationViewModel.swift; sourceTree = "<group>"; };
 		DD73CEF52A819357001587BF /* MangaMoreInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaMoreInformation.swift; sourceTree = "<group>"; };
+		DD73CEF72A87E072001587BF /* SkeletonManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonManager.swift; sourceTree = "<group>"; };
+		DD73CEF92A88206B001587BF /* DateFormatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatManager.swift; sourceTree = "<group>"; };
 		DDBD8C9D2A65B52700E84461 /* ProfileDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailViewController.swift; sourceTree = "<group>"; };
 		DDBD8C9F2A65B53100E84461 /* ProfileDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailViewModel.swift; sourceTree = "<group>"; };
 		DDBD8CA12A65B74E00E84461 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -389,6 +393,8 @@
 				6AD269CF298E89C300931579 /* Custom Views */,
 				6AF2CD81298EC0DB00F32BE8 /* Enums */,
 				6ABCA00C29D2379C00374CD7 /* ActivityIndicator.swift */,
+				DD73CEF72A87E072001587BF /* SkeletonManager.swift */,
+				DD73CEF92A88206B001587BF /* DateFormatManager.swift */,
 			);
 			path = "MAL Nana-chan";
 			sourceTree = "<group>";
@@ -873,6 +879,7 @@
 				6AF2CD8F298EC58700F32BE8 /* AnimeSource.swift in Sources */,
 				6AD269CD298E89BA00931579 /* AnimeSectionTableViewCell.swift in Sources */,
 				DD3AC3F42A8003C100739153 /* Theme.swift in Sources */,
+				DD73CEFA2A88206B001587BF /* DateFormatManager.swift in Sources */,
 				DDE175B92A508F9300334FC7 /* LoginViewModel.swift in Sources */,
 				DDE7C4C12A6D96EC002C548A /* MangaPreviewTableViewCell.swift in Sources */,
 				DD6BCE8F2A6719DB00F05E32 /* Token.swift in Sources */,
@@ -893,6 +900,7 @@
 				6AB660F829C7913E007DCD27 /* ExploreViewController.swift in Sources */,
 				6ABCA00B29CF15D200374CD7 /* MangaStatus.swift in Sources */,
 				6A9FD11129903677006DCEE9 /* Sizes.swift in Sources */,
+				DD73CEF82A87E072001587BF /* SkeletonManager.swift in Sources */,
 				DD73CEF22A8191B4001587BF /* MangaMoreInformationViewController.swift in Sources */,
 				6ABCA00D29D2379C00374CD7 /* ActivityIndicator.swift in Sources */,
 				6AD26996298E879C00931579 /* AppDelegate.swift in Sources */,
@@ -1129,6 +1137,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1161,6 +1170,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

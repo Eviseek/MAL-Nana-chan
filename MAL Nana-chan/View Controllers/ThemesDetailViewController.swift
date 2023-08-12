@@ -98,7 +98,7 @@ extension ThemesDetailViewController: UITableViewDataSource, UITableViewDelegate
         var url = "https://www.youtube.com/results?search_query={query}"
         let encodedPart = theme.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         url = url.replacingOccurrences(of: "{query}", with: encodedPart ?? "")
-        print("my url is \(url)")
+        //print("my url is \(url)")
         
 
         if let url = URL(string: url) {

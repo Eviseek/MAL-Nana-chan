@@ -33,8 +33,8 @@ class ProfileDetailViewController: UIViewController {
             userImageView.af.setImage(withURL: url)
         }
         genderLabel.text = profile.gender ?? "Not specified."
-        birthdayLabel.text = profile.birthday ?? "Not specified."
-        joinedAtLabel.text = profile.joinedAt
+        birthdayLabel.text = profile.birthday?.convertToReadableDateString(originalFormat: "yyyy-mm-dd") ?? "Not specified."
+        joinedAtLabel.text = profile.joinedAt.convertToReadableDateString(originalFormat: "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ")
     }
     
     func noData() {

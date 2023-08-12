@@ -34,7 +34,7 @@ class ThemesDetailViewModel {
         dataDownloader.fetchData(urlManager.getURLForId(id, url: URLs.jikanThemesURL.rawValue)) { (result: Theme?, error: AFError?) in
             if let data = result?.data {
                 self.themes = data
-                print("themes are \(self.themes)")
+                //print("themes are \(self.themes)")
                 self.vc?.fillTableViewWith(self.themes!)
             } else {
                 self.vc?.setUpErrorView(message: error?.localizedDescription)

@@ -148,14 +148,14 @@ class SeeAllViewController<T: Codable>: UIViewController, UITableViewDataSource,
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("selected!!!")
+        //print("selected!!!")
         viewModel.itemSelectedAt(indexPath.row)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
         if position > (tableView.contentSize.height-100 - scrollView.frame.size.height) && !viewModel.isFetching {
-            print("fetch more")
+            //print("fetch more")
             viewModel.scrolledToBottom()
         }
     }

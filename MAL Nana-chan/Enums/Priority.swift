@@ -20,6 +20,14 @@ enum Priority: Int, Codable {
         }
     }
     
+    func getPriorityInt() -> Int {
+        switch self {
+        case .low: return Priority.low.rawValue
+        case .medium: return Priority.medium.rawValue
+        case .high: return Priority.high.rawValue
+        }
+    }
+    
 }
 
 class PriorityManager {

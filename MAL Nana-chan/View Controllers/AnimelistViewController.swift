@@ -34,6 +34,7 @@ class AnimelistViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+      //  print("view will appear !!!!!!!!!!")
         viewModel.viewWillAppear()
     }
     
@@ -49,6 +50,18 @@ class AnimelistViewController: UIViewController {
         collectionview.delegate = self
         collectionview.dataSource = self
         
+    }
+    
+    func showNotLoggedView() {
+        listTableView.isHidden = true
+        notLoggedView.isHidden = false
+        errorView.isHidden = true
+    }
+    
+    func showLoggedView() {
+        listTableView.isHidden = false
+        notLoggedView.isHidden = true
+        errorView.isHidden = true
     }
     
     func setUpErrorView(message: String) {
@@ -107,7 +120,7 @@ extension AnimelistViewController: UICollectionViewDataSource, UICollectionViewD
             let status = viewModel.getAvailableStatuses()[indexPath.item]
             cell.statusLabel.text = status.name
             if status.isSelected {
-                print("cell selected at \(indexPath.item)")
+                //print("cell selected at \(indexPath.item)")
                 cell.statusLabel.font = UIFont.systemFont(ofSize: cell.statusLabel.font.pointSize, weight: .bold)
                 cell.selectedLineView.isHidden = false
                 let visibleRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
@@ -124,7 +137,7 @@ extension AnimelistViewController: UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("view clicked")
+        //print("view clicked")
         viewModel.statusSelected(index: indexPath.item)
     }
     
@@ -137,7 +150,7 @@ extension AnimelistViewController: UICollectionViewDataSource, UICollectionViewD
 
 extension AnimelistViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("data count is \(data?.count)")
+        //print("data count is \(data?.count)")
         return data?.count ?? 0
     }
     
@@ -162,7 +175,7 @@ extension AnimelistViewController: UITableViewDelegate, UITableViewDataSource {
             cell.itemListStatusLabel.text = anime?.myListStatus?.status.getStringValue()
             cell.itemListPriorityLabel.text = anime?.myListStatus?.priority?.getPriorityString() ?? "Low"
             if let progress = anime?.myListStatus?.episodesWatchedCount?.description {
-                print("episode progress is \(progress)")
+                //print("episode progress is \(progress)")
                 cell.itemListProgressLabel.text = ("\(progress)/\(anime?.episodesCount?.description ?? "?")")
             }
             return cell
@@ -177,7 +190,7 @@ extension AnimelistViewController: UITableViewDelegate, UITableViewDataSource {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
         if position > (listTableView.contentSize.height-50 - scrollView.frame.size.height) && !viewModel.isFetching {
-            print("fetch more")
+            //print("fetch more")
             viewModel.scrolledToBottom()
         } else {
            // print("priiint")

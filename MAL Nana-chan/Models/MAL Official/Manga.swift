@@ -73,7 +73,7 @@ struct MyMangaListStatus: Codable {
     var isRereading: Bool?
     var startDate: String?
     let finishDate: String?
-    var priority: Int?
+    var priority: Priority?
     var rereadCount: Int?
     var rereadValue: Int?
     var tags: [String]?

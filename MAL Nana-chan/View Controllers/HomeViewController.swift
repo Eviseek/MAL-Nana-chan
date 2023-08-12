@@ -65,7 +65,7 @@ extension HomeViewController: UITableViewDataSource {
         if (viewModel.hasPromo) {
             if (indexPath.row == 0) {
                 if let ytCell = tableView.dequeueReusableCell(withIdentifier: Identifiers.YTEmbedTableViewCell.rawValue) as? YoutubeEmbedTableViewCell {
-                    print("Youtube ID", viewModel.promoId)
+                  //  print("Youtube ID", viewModel.promoId)
                     ytCell.setUpPlayer(with: viewModel.promoId ?? "")
                     return ytCell
                 }

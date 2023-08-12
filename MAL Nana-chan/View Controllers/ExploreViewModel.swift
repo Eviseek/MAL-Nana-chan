@@ -53,7 +53,7 @@ class ExploreViewModel {
         DataDownloader.dataDownloader.fetchData(URLs.jikanRecommendationsAnimeURL.rawValue) { (result: Recommendation?, error: AFError?) in
             print("result is?")
             if let result = result {
-                print(result)
+          //      print(result)
                 self.vc?.fillUpRecommendations(recommendation: result)
             } else {
                 errorMsg = error?.localizedDescription ?? "No description."
@@ -105,7 +105,7 @@ class ExploreViewModel {
     func viewWillAppear() {
         vc?.recentSearchesView.isHidden = true
         recentSearchesArr = getRecentSearches()
-        print("recentSearchesArr is \(recentSearchesArr)")
+      //  print("recentSearchesArr is \(recentSearchesArr)")
         vc?.refreshRecentSearches()
     }
     
@@ -135,11 +135,11 @@ class ExploreViewModel {
     private func checkRecentSearchesTime() {
         let previous = defaults.object(forKey: "RecentSearchesLastSave") as? Date
         if let previous = previous {
-            print("previous is \(previous)")
+          //  print("previous is \(previous)")
             if let timeBetween = Calendar.current.dateComponents([.day], from: previous, to: Date()).day {
-                print("time between is \(timeBetween)")
+            //    print("time between is \(timeBetween)")
                 if timeBetween >= 1 {
-                    print("bigger than one")
+             //       print("bigger than one")
                     defaults.removeObject(forKey: Identifiers.RecentSearches.rawValue)
                 }
             }

@@ -12,7 +12,7 @@ extension String {
     
     func extractSeason() -> String {
         let dateString = self
-        let dateFormatter = DateFormatter()
+        let dateFormatter = DateFormatManager.shared.dateFormatter
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let date = dateFormatter.date(from: dateString)
         
@@ -29,6 +29,37 @@ extension String {
       
         return "Unknown season"
     }
+    
+    func convertToReadableDateString(originalFormat: String, newFormat: String = "dd MMM yyyy") -> String {
+        let dateFormatter = DateFormatManager.shared.dateFormatter
+        dateFormatter.dateFormat = originalFormat
+        let date = dateFormatter.date(from: self)
+        
+        let secondDayFormatter = DateFormatter()
+        secondDayFormatter.dateFormat = newFormat
+
+        if let date = date {
+            return secondDayFormatter.string(from: date)
+        } else {
+            return "Not specified."
+        }
+    }
+    
+    func convertToDate(finalFormat: String = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ") -> Date? {
+        let formatter = DateFormatManager.shared.dateFormatter
+        formatter.dateFormat = finalFormat
+        return formatter.date(from: self)
+    }
+}
+
+extension Date {
+    
+    func convertToString(originalFormat: String) -> String {
+        let formatter = DateFormatManager.shared.dateFormatter
+        formatter.dateFormat = originalFormat
+        return formatter.string(from: self)
+    }
+    
 }
 
 extension UIViewController {

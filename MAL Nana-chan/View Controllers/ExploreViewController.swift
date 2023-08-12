@@ -98,7 +98,7 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         if tableView == exploreTableView {
-            print("this is explore")
+           // print("this is explore")
             if recommendations.count >= numberOfRec {
                 return (1 + numberOfRec) //1 is for the popular anime collection view and the rest for to show only a limited number of recommendations
             }
@@ -118,14 +118,14 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
                         exploreCVCell.sectionSeeAllButton.isHidden = true
                         exploreCVCell.parentVC = self
                     } else {
-                        print("no popular manga here")
+                      //  print("no popular manga here")
                     }
                     return exploreCVCell
                 }
             }
             
             if let exploreCell = tableView.dequeueReusableCell(withIdentifier: "RecommendationTableViewCell", for: indexPath) as? RecommendationTableViewCell {
-                print("this is index \(indexPath.row)")
+               // print("this is index \(indexPath.row)")
                 //TODO: download and get data from jikan
                 let leftRec = recommendations[indexPath.row].entry[0]
                 let rightRec = recommendations[indexPath.row].entry[1]
@@ -156,7 +156,7 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
             viewModel.searchButtonClicked(query: viewModel.recentSearchesArr[indexPath.row])
         }
         if tableView == exploreTableView && indexPath.row > 0 { //recommendations start at 1st position
-            print("clicked")
+           // print("clicked")
             viewModel.recommendationSelected(with: recommendations[indexPath.row])
         }
     }
@@ -166,7 +166,7 @@ extension ExploreViewController: UITableViewDataSource, UITableViewDelegate {
 extension ExploreViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("clicked")
+      //  print("clicked")
         viewModel.searchButtonClicked(query: searchBar.text)
     }
     

@@ -96,7 +96,7 @@ class SearchResultsViewModel {
         case .manga:
             if let controller = viewController?.storyboard?.instantiateViewController(withIdentifier: "MangaDetailViewController") as? MangaDetailViewController {
                 controller.id = mangaResults?.data[index].node.id
-                print("id of selected manga is \(mangaResults?.data[index].node.id)")
+               // print("id of selected manga is \(mangaResults?.data[index].node.id)")
                 viewController?.navigationController?.pushViewController(controller, animated: true)
             }
         }
@@ -110,7 +110,7 @@ class SearchResultsViewModel {
             
             if type == .anime  {
                 
-                print("ANIME")
+               // print("ANIME")
                 
                 DataDownloader.dataDownloader.fetchData(url, completion: { (results: Response<Anime>?, _: AFError?) in
                     // print(URLs.animeSearchURL.rawValue.appending(query))
@@ -123,7 +123,7 @@ class SearchResultsViewModel {
                 
             } else {
                 
-                print("MANGA")
+              //  print("MANGA")
                 
                 DataDownloader.dataDownloader.fetchData(url, completion: { (results: Response<Manga>?, error: AFError?) in
                     // print(URLs.animeSearchURL.rawValue.appending(query))
@@ -153,7 +153,7 @@ class SearchResultsViewModel {
     
     private func saveToDefaults(query: String) {
         
-        print("saving to defaults")
+       // print("saving to defaults")
         
         recentSearchesArr = defaults.object(forKey: Identifiers.RecentSearches.rawValue) as? [String] ?? [String]()
         

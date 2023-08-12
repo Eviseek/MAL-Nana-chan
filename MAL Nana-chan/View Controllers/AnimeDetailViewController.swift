@@ -149,10 +149,10 @@ class AnimeDetailViewController: UIViewController {
         genreCollectionView.reloadData()
         
         if anime?.relatedAnime?.isEmpty ?? true {
-            print(anime?.relatedAnime)
+           // print(anime?.relatedAnime)
             relatedAnimeContainerView.removeFromSuperview()
         } else {
-            print("many related anime")
+          //  print("many related anime")
             relatedAnimeCollectionView.reloadData()
         }
         
@@ -215,7 +215,7 @@ extension AnimeDetailViewController: UICollectionViewDataSource, UICollectionVie
             return viewModel.anime?.relatedAnime?.count ?? 0
         }
         if collectionView == relatedMangaCollectionView {
-            print("erlated MANGA is \(viewModel.anime?.relatedManga)")
+           // print("erlated MANGA is \(viewModel.anime?.relatedManga)")
             return viewModel.anime?.relatedManga?.count ?? 0
         }
         if collectionView == recommendationsCollectionView {
@@ -277,7 +277,7 @@ extension AnimeDetailViewController: UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.selectedCollectionViewItem(at: indexPath.item, cv: collectionView)
-        print("selectedItemAt \(indexPath.item)")
+       // print("selectedItemAt \(indexPath.item)")
     }
     
     

@@ -25,9 +25,9 @@ class MyAnimeStatusViewController: UIViewController {
     @IBOutlet weak var moreAndRemoveView: UIStackView!
     
     //UI labels
-    @IBOutlet weak var itemTitleLabel: UILabel!
-    @IBOutlet weak var itemStatusLabel: UILabel!
-    @IBOutlet weak var myStatusLabel: UILabel!
+    @IBOutlet weak var animeTitleLabel: UILabel!
+    @IBOutlet weak var animeStatusLabel: UILabel!
+    @IBOutlet weak var myAnimeStatusLabel: UILabel!
     @IBOutlet weak var itemEpisodesNumLabel: UILabel!
     @IBOutlet weak var itemEpisodesWatchedLabel: UILabel!
     @IBOutlet weak var priorityLabel: UILabel!
@@ -43,22 +43,17 @@ class MyAnimeStatusViewController: UIViewController {
     var anime: Anime?
     var fromAnimelist: Bool?
     
-    private let priorities = ["Low", "Medium", "High"]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("!!!! status and anime is \(anime)")
         
         guard let anime = anime else {
             self.showErrorDialog(message: "Something went wrong.")
             return
         }
         
-        print("!!!! status and anime is \(anime)")
+        //print("!!!! status and anime is \(anime)")
         
         setUpUIView()
-  
         viewModel.viewDidLoad(vc: self, anime: anime)
     }
     
@@ -75,29 +70,32 @@ class MyAnimeStatusViewController: UIViewController {
         priorityPicker.delegate = self
         
         setUpButtonTags()
-        setValuesForView(anime!)
         
-        if !(fromAnimelist ?? false) {
-            moreAndRemoveView.removeFromSuperview()
-        }
+        moreDetailsButton.removeFromSuperview()
+        
+//        if !(fromAnimelist ?? false) {
+//            moreAndRemoveView.removeFromSuperview()
+//        }
     }
     
     private func setUpButtonTags() {
-        print("set up buttons tags")
+        //print("set up buttons tags")
         planToWatchButton.tag = manager.getTagForStatus(.planToWatch)
-        print("tag for status plan to watch: \(manager.getTagForStatus(.planToWatch))")
+        //print("tag for status plan to watch: \(manager.getTagForStatus(.planToWatch))")
         completedButton.tag = manager.getTagForStatus(.completed)
         onHoldButton.tag = manager.getTagForStatus(.onHold)
         watchingButton.tag = manager.getTagForStatus(.watching)
         droppedButton.tag = manager.getTagForStatus(.dropped)
     }
     
-    private func setValuesForView(_ anime: Anime) {
+    func setUpUIWith(_ anime: Anime) {
         
-        itemTitleLabel.text = anime.title
-        itemStatusLabel.text = anime.status?.getStatus()
+        //print("!!!!!!!! my title \(anime.title)")
         
-        myStatusLabel.text = anime.myListStatus?.status.getStringValue() ?? "?"
+        animeTitleLabel.text = anime.title
+        animeStatusLabel.text = anime.status?.getStatus()
+        
+        myAnimeStatusLabel.text = anime.myListStatus?.status.getStringValue() ?? "?"
         itemEpisodesWatchedLabel.text = anime.myListStatus?.episodesWatchedCount?.description
         itemEpisodesNumLabel.text = anime.episodesCount?.description
         
@@ -119,13 +117,13 @@ class MyAnimeStatusViewController: UIViewController {
             itemEpisodesWatchedLabel.text = "0"
             itemScoreLabel.text = "0"
             priorityLabel.text = "None"
-            myStatusLabel.text = "None"
+            myAnimeStatusLabel.text = "None"
         }
         
     }
     
     func setUnselectedState(for tag: Int) {
-        print("set unselected")
+        //print("set unselected")
         if let button = view.viewWithTag(tag) as? UIButton {
             button.backgroundColor = .systemGray5
             button.tintColor = UIColor(named: "mal_color")
@@ -133,7 +131,7 @@ class MyAnimeStatusViewController: UIViewController {
     }
     
     func setSelectedState(for tag: Int) {
-        print("set selected")
+        //print("set selected")
         if let button = view.viewWithTag(tag) as? UIButton {
             button.backgroundColor = UIColor(named: "mal_color")
             button.tintColor = .white
@@ -170,19 +168,20 @@ class MyAnimeStatusViewController: UIViewController {
 extension MyAnimeStatusViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-            return priorities[row]
-        }
+        return viewModel.priorityList[row].getPriorityString()
+    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return priorities.count
+        return viewModel.priorityList.count
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        priorityLabel.text = priorities[row]
+        viewModel.priorityChangedTo(viewModel.priorityList[row])
+        priorityLabel.text = viewModel.priorityList[row].getPriorityString()
     }
     
     

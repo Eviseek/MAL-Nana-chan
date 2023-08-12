@@ -43,7 +43,10 @@ class MangaDetailViewController: UIViewController {
     @IBOutlet weak var relatedMangaCollectionView: UICollectionView!
     @IBOutlet weak var recommendationsCollectionView: UICollectionView!
     
+    @IBOutlet weak var addToListButton: UIButton!
+    
     private var viewModel = MangaDetailViewModel()
+    
     var id: Int?
     
     private var manga: Manga?
@@ -83,7 +86,6 @@ class MangaDetailViewController: UIViewController {
         relatedAnimeContainerView.removeFromSuperview()
         relatedMangaContainerView.removeFromSuperview()
         recommendationsContainerView.removeFromSuperview()
-        
     }
     
     func updateViewWith(_ manga: Manga) {
