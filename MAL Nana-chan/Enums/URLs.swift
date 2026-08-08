@@ -36,10 +36,25 @@ enum URLs: String {
     case mangaListStatusURL = "https://api.myanimelist.net/v2/manga/{id}/my_list_status"
     
     //GET Jikan urls
-    case jikanPromoURL = "https://api.jikan.moe/v4/watch/promos"
+
+    // DISABLED 2026-08-08 — these two return HTTP 504 from Jikan itself:
+    //   {"status":504,"type":"BadResponseException",
+    //    "message":"Jikan failed to connect to MyAnimeList..."}
+    // Jikan scrapes MAL's website, and MAL appears to have changed the pages
+    // these endpoints read. Verified down over repeated clean probes; the whole
+    // video family is affected (watch/promos, watch/promos/popular,
+    // anime/{id}/videos). Nothing to fix on our side — re-enable when Jikan
+    // recovers, and check https://status.jikan.moe first.
+    //
+    // Note: /anime/{id}/full (jikanAnimeMoreInfoURL below) still returns 200 and
+    // already carries `theme.openings` / `theme.endings`, so the Themes screen
+    // could be sourced from there instead if this stays broken.
+    //
+    // case jikanPromoURL = "https://api.jikan.moe/v4/watch/promos"
+    // case jikanThemesURL = "https://api.jikan.moe/v4/anime/{id}/themes"
+
     case jikanRecommendationsAnimeURL = "https://api.jikan.moe/v4/recommendations/anime"
     case jikanTopMangaURL = "https://api.jikan.moe/v4/top/manga"
-    case jikanThemesURL = "https://api.jikan.moe/v4/anime/{id}/themes"
     case jikanAnimeMoreInfoURL = "https://api.jikan.moe/v4/anime/{id}/full"
     case jikanMangaMoreInfoURL = "https://api.jikan.moe/v4/manga/{id}/full"
     

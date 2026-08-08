@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Day: String, Codable {
+enum Day: String, APIEnum {
     case monday
     case tuesday
     case wednesday
@@ -16,4 +16,6 @@ enum Day: String, Codable {
     case saturday
     case sunday
     case other
+
+    static let unknownValue = Day.other
 }

@@ -7,8 +7,10 @@
 
 import Foundation
 
-enum NSFWValue: String, Codable {
+enum NSFWValue: String, APIEnum {
     case white
     case gray
     case black
+
+    static let unknownValue = NSFWValue.white
 }

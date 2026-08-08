@@ -31,16 +31,25 @@ class ThemesDetailViewModel {
     }
     
     private func fetchThemes(id: Int) {
-        dataDownloader.fetchData(urlManager.getURLForId(id, url: URLs.jikanThemesURL.rawValue)) { (result: Theme?, error: AFError?) in
-            if let data = result?.data {
-                self.themes = data
-                //print("themes are \(self.themes)")
-                self.vc?.fillTableViewWith(self.themes!)
-            } else {
-                self.vc?.setUpErrorView(message: error?.localizedDescription)
-            }
-            self.indicator.stopAnimating()
-        }
+
+        // DISABLED 2026-08-08 — Jikan's /anime/{id}/themes returns 504 (see URLs.swift).
+        //
+        // Showing the existing error view rather than just deleting the call, so
+        // the screen doesn't sit on a spinner forever. The "try again" button
+        // still works and will start succeeding the moment the endpoint is
+        // re-enabled above.
+        indicator.stopAnimating()
+        vc?.setUpErrorView(message: "Theme songs are temporarily unavailable.")
+
+        // dataDownloader.fetchData(urlManager.getURLForId(id, url: URLs.jikanThemesURL.rawValue)) { (result: Theme?, error: AFError?) in
+        //     if let data = result?.data {
+        //         self.themes = data
+        //         self.vc?.fillTableViewWith(self.themes!)
+        //     } else {
+        //         self.vc?.setUpErrorView(message: error?.localizedDescription)
+        //     }
+        //     self.indicator.stopAnimating()
+        // }
     }
     
     func tryAgainButtonClicked() {

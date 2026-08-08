@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MangaMediaType: String, Codable {
+enum MangaMediaType: String, APIEnum {
     case unknown
     case manga
     case novel
@@ -17,6 +17,8 @@ enum MangaMediaType: String, Codable {
     case manhua
     case oel
     case light_novel
+
+    static let unknownValue = MangaMediaType.unknown
     
     
     func getType() -> String {
