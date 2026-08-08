@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F06986DBEEBE283200346BE /* Pods_MAL_Nana_chan_MAL_Nana_chanUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B266B36F218B070803A3B45C /* Pods_MAL_Nana_chan_MAL_Nana_chanUITests.framework */; };
 		6A9FD10E2990224A006DCEE9 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9FD10D2990224A006DCEE9 /* URLs.swift */; };
 		6A9FD11129903677006DCEE9 /* Sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9FD11029903677006DCEE9 /* Sizes.swift */; };
 		6A9FD113299196D2006DCEE9 /* AnimeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9FD112299196D2006DCEE9 /* AnimeDetailViewController.swift */; };
@@ -62,8 +61,6 @@
 		6AF2CD91298EC5F400F32BE8 /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF2CD90298EC5F400F32BE8 /* Rating.swift */; };
 		6AF2CD93298EC6D000F32BE8 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF2CD92298EC6D000F32BE8 /* Response.swift */; };
 		6AF2CD95298EC9A300F32BE8 /* DataDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF2CD94298EC9A300F32BE8 /* DataDownloader.swift */; };
-		8025BFBBE8322F9423D6728F /* Pods_MAL_Nana_chanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FB31D41D3C6318FFF8112C /* Pods_MAL_Nana_chanTests.framework */; };
-		CFEE35991A38D20105081586 /* Pods_MAL_Nana_chan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A2977A77402BD6558967761 /* Pods_MAL_Nana_chan.framework */; };
 		DD3AC3EE2A7983F000739153 /* MyInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC3ED2A7983F000739153 /* MyInterceptor.swift */; };
 		DD3AC3F02A7987CF00739153 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC3EF2A7987CF00739153 /* NetworkManager.swift */; };
 		DD3AC3F22A7EE23300739153 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC3F12A7EE23300739153 /* Priority.swift */; };
@@ -116,6 +113,13 @@
 		DDE7C4C12A6D96EC002C548A /* MangaPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE7C4BF2A6D96EC002C548A /* MangaPreviewTableViewCell.swift */; };
 		DDE7C4C22A6D96EC002C548A /* MangaPreviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDE7C4C02A6D96EC002C548A /* MangaPreviewTableViewCell.xib */; };
 		DDE7C4C82A6DADE4002C548A /* AnimePreviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDE7C4C72A6DADE4002C548A /* AnimePreviewTableViewCell.xib */; };
+		59C000000000000000000001 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 59B000000000000000000001 /* Alamofire */; };
+		59C000000000000000000002 /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 59B000000000000000000002 /* AlamofireImage */; };
+		59C000000000000000000003 /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 59B000000000000000000003 /* OAuthSwift */; };
+		59C000000000000000000004 /* NVActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = 59B000000000000000000004 /* NVActivityIndicatorView */; };
+		59C000000000000000000005 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 59B000000000000000000005 /* SkeletonView */; };
+		59C000000000000000000006 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 59B000000000000000000006 /* KeychainAccess */; };
+		59C000000000000000000007 /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 59B000000000000000000007 /* YouTubeiOSPlayerHelper */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,9 +140,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2792666752414AAFDAD54C97 /* Pods-MAL Nana-chanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAL Nana-chanTests.debug.xcconfig"; path = "Target Support Files/Pods-MAL Nana-chanTests/Pods-MAL Nana-chanTests.debug.xcconfig"; sourceTree = "<group>"; };
-		52EF4DB6DC1BF38CC9AB8F9B /* Pods-MAL Nana-chan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAL Nana-chan.debug.xcconfig"; path = "Target Support Files/Pods-MAL Nana-chan/Pods-MAL Nana-chan.debug.xcconfig"; sourceTree = "<group>"; };
-		53BB488EFBA6511805C5BB5A /* Pods-MAL Nana-chan-MAL Nana-chanUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAL Nana-chan-MAL Nana-chanUITests.release.xcconfig"; path = "Target Support Files/Pods-MAL Nana-chan-MAL Nana-chanUITests/Pods-MAL Nana-chan-MAL Nana-chanUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6A9FD10D2990224A006DCEE9 /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		6A9FD11029903677006DCEE9 /* Sizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sizes.swift; sourceTree = "<group>"; };
 		6A9FD112299196D2006DCEE9 /* AnimeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeDetailViewController.swift; sourceTree = "<group>"; };
@@ -197,12 +198,6 @@
 		6AF2CD90298EC5F400F32BE8 /* Rating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
 		6AF2CD92298EC6D000F32BE8 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		6AF2CD94298EC9A300F32BE8 /* DataDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDownloader.swift; sourceTree = "<group>"; };
-		73B13226B44B503628C20ECE /* Pods-MAL Nana-chan-MAL Nana-chanUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAL Nana-chan-MAL Nana-chanUITests.debug.xcconfig"; path = "Target Support Files/Pods-MAL Nana-chan-MAL Nana-chanUITests/Pods-MAL Nana-chan-MAL Nana-chanUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		7A2977A77402BD6558967761 /* Pods_MAL_Nana_chan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MAL_Nana_chan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7BF71A9A72D8EC0C2E98184D /* Pods-MAL Nana-chan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAL Nana-chan.release.xcconfig"; path = "Target Support Files/Pods-MAL Nana-chan/Pods-MAL Nana-chan.release.xcconfig"; sourceTree = "<group>"; };
-		A413DACE2A85E229DB3DCC45 /* Pods-MAL Nana-chanTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAL Nana-chanTests.release.xcconfig"; path = "Target Support Files/Pods-MAL Nana-chanTests/Pods-MAL Nana-chanTests.release.xcconfig"; sourceTree = "<group>"; };
-		B266B36F218B070803A3B45C /* Pods_MAL_Nana_chan_MAL_Nana_chanUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MAL_Nana_chan_MAL_Nana_chanUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2FB31D41D3C6318FFF8112C /* Pods_MAL_Nana_chanTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MAL_Nana_chanTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD3AC3ED2A7983F000739153 /* MyInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInterceptor.swift; sourceTree = "<group>"; };
 		DD3AC3EF2A7987CF00739153 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		DD3AC3F12A7EE23300739153 /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
@@ -262,7 +257,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CFEE35991A38D20105081586 /* Pods_MAL_Nana_chan.framework in Frameworks */,
+				59C000000000000000000001 /* Alamofire in Frameworks */,
+				59C000000000000000000002 /* AlamofireImage in Frameworks */,
+				59C000000000000000000003 /* OAuthSwift in Frameworks */,
+				59C000000000000000000004 /* NVActivityIndicatorView in Frameworks */,
+				59C000000000000000000005 /* SkeletonView in Frameworks */,
+				59C000000000000000000006 /* KeychainAccess in Frameworks */,
+				59C000000000000000000007 /* YouTubeiOSPlayerHelper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +271,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8025BFBBE8322F9423D6728F /* Pods_MAL_Nana_chanTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,26 +278,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F06986DBEEBE283200346BE /* Pods_MAL_Nana_chan_MAL_Nana_chanUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0AB7D46D86BAD3FDAC98716B /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				52EF4DB6DC1BF38CC9AB8F9B /* Pods-MAL Nana-chan.debug.xcconfig */,
-				7BF71A9A72D8EC0C2E98184D /* Pods-MAL Nana-chan.release.xcconfig */,
-				73B13226B44B503628C20ECE /* Pods-MAL Nana-chan-MAL Nana-chanUITests.debug.xcconfig */,
-				53BB488EFBA6511805C5BB5A /* Pods-MAL Nana-chan-MAL Nana-chanUITests.release.xcconfig */,
-				2792666752414AAFDAD54C97 /* Pods-MAL Nana-chanTests.debug.xcconfig */,
-				A413DACE2A85E229DB3DCC45 /* Pods-MAL Nana-chanTests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		6A9FD10F29902617006DCEE9 /* Anime */ = {
 			isa = PBXGroup;
 			children = (
@@ -363,7 +349,6 @@
 				6AD269AB298E87A100931579 /* MAL Nana-chanTests */,
 				6AD269B5298E87A100931579 /* MAL Nana-chanUITests */,
 				6AD26993298E879C00931579 /* Products */,
-				0AB7D46D86BAD3FDAC98716B /* Pods */,
 				D5C64B6A1DB937E2607ADC5E /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -522,9 +507,6 @@
 		D5C64B6A1DB937E2607ADC5E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7A2977A77402BD6558967761 /* Pods_MAL_Nana_chan.framework */,
-				B266B36F218B070803A3B45C /* Pods_MAL_Nana_chan_MAL_Nana_chanUITests.framework */,
-				D2FB31D41D3C6318FFF8112C /* Pods_MAL_Nana_chanTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -617,17 +599,24 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6AD269BC298E87A100931579 /* Build configuration list for PBXNativeTarget "MAL Nana-chan" */;
 			buildPhases = (
-				855DB300865D1F5DCB6BCB69 /* [CP] Check Pods Manifest.lock */,
 				6AD2698E298E879C00931579 /* Sources */,
 				6AD2698F298E879C00931579 /* Frameworks */,
 				6AD26990298E879C00931579 /* Resources */,
-				C71B9593DBF095B20619D833 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "MAL Nana-chan";
+			packageProductDependencies = (
+				59B000000000000000000001 /* Alamofire */,
+				59B000000000000000000002 /* AlamofireImage */,
+				59B000000000000000000003 /* OAuthSwift */,
+				59B000000000000000000004 /* NVActivityIndicatorView */,
+				59B000000000000000000005 /* SkeletonView */,
+				59B000000000000000000006 /* KeychainAccess */,
+				59B000000000000000000007 /* YouTubeiOSPlayerHelper */,
+			);
 			productName = "MAL Nana-chan";
 			productReference = 6AD26992298E879C00931579 /* MAL Nana-chan.app */;
 			productType = "com.apple.product-type.application";
@@ -636,7 +625,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6AD269BF298E87A100931579 /* Build configuration list for PBXNativeTarget "MAL Nana-chanTests" */;
 			buildPhases = (
-				4D9F2A9A0E1089FBFC67201F /* [CP] Check Pods Manifest.lock */,
 				6AD269A4298E87A100931579 /* Sources */,
 				6AD269A5298E87A100931579 /* Frameworks */,
 				6AD269A6298E87A100931579 /* Resources */,
@@ -655,11 +643,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6AD269C2298E87A100931579 /* Build configuration list for PBXNativeTarget "MAL Nana-chanUITests" */;
 			buildPhases = (
-				39EEBEC394820B05FCCE6A12 /* [CP] Check Pods Manifest.lock */,
 				6AD269AE298E87A100931579 /* Sources */,
 				6AD269AF298E87A100931579 /* Frameworks */,
 				6AD269B0298E87A100931579 /* Resources */,
-				5934578E8F98405A9691FFC2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -707,6 +693,15 @@
 			productRefGroup = 6AD26993298E879C00931579 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
+			packageReferences = (
+				59A000000000000000000001 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				59A000000000000000000002 /* XCRemoteSwiftPackageReference "AlamofireImage" */,
+				59A000000000000000000003 /* XCRemoteSwiftPackageReference "OAuthSwift" */,
+				59A000000000000000000004 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
+				59A000000000000000000005 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				59A000000000000000000006 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				59A000000000000000000007 /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */,
+			);
 			targets = (
 				6AD26991298E879C00931579 /* MAL Nana-chan */,
 				6AD269A7298E87A100931579 /* MAL Nana-chanTests */,
@@ -754,109 +749,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		39EEBEC394820B05FCCE6A12 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MAL Nana-chan-MAL Nana-chanUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4D9F2A9A0E1089FBFC67201F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MAL Nana-chanTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5934578E8F98405A9691FFC2 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MAL Nana-chan-MAL Nana-chanUITests/Pods-MAL Nana-chan-MAL Nana-chanUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MAL Nana-chan-MAL Nana-chanUITests/Pods-MAL Nana-chan-MAL Nana-chanUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MAL Nana-chan-MAL Nana-chanUITests/Pods-MAL Nana-chan-MAL Nana-chanUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		855DB300865D1F5DCB6BCB69 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MAL Nana-chan-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C71B9593DBF095B20619D833 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MAL Nana-chan/Pods-MAL Nana-chan-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MAL Nana-chan/Pods-MAL Nana-chan-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MAL Nana-chan/Pods-MAL Nana-chan-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6AD2698E298E879C00931579 /* Sources */ = {
@@ -1121,7 +1013,6 @@
 		};
 		6AD269BD298E87A100931579 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 52EF4DB6DC1BF38CC9AB8F9B /* Pods-MAL Nana-chan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1154,7 +1045,6 @@
 		};
 		6AD269BE298E87A100931579 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7BF71A9A72D8EC0C2E98184D /* Pods-MAL Nana-chan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1186,7 +1076,6 @@
 		};
 		6AD269C0298E87A100931579 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2792666752414AAFDAD54C97 /* Pods-MAL Nana-chanTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1207,7 +1096,6 @@
 		};
 		6AD269C1298E87A100931579 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A413DACE2A85E229DB3DCC45 /* Pods-MAL Nana-chanTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1228,7 +1116,6 @@
 		};
 		6AD269C3298E87A100931579 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 73B13226B44B503628C20ECE /* Pods-MAL Nana-chan-MAL Nana-chanUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1247,7 +1134,6 @@
 		};
 		6AD269C4298E87A100931579 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 53BB488EFBA6511805C5BB5A /* Pods-MAL Nana-chan-MAL Nana-chanUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1304,6 +1190,103 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		59A000000000000000000001 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.2;
+			};
+		};
+		59A000000000000000000002 /* XCRemoteSwiftPackageReference "AlamofireImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/AlamofireImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.0;
+			};
+		};
+		59A000000000000000000003 /* XCRemoteSwiftPackageReference "OAuthSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/OAuthSwift/OAuthSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.0;
+			};
+		};
+		59A000000000000000000004 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ninjaprox/NVActivityIndicatorView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
+		59A000000000000000000005 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.30.4;
+			};
+		};
+		59A000000000000000000006 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.2;
+			};
+		};
+		59A000000000000000000007 /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/youtube/youtube-ios-player-helper.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		59B000000000000000000001 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59A000000000000000000001 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		59B000000000000000000002 /* AlamofireImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59A000000000000000000002 /* XCRemoteSwiftPackageReference "AlamofireImage" */;
+			productName = AlamofireImage;
+		};
+		59B000000000000000000003 /* OAuthSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59A000000000000000000003 /* XCRemoteSwiftPackageReference "OAuthSwift" */;
+			productName = OAuthSwift;
+		};
+		59B000000000000000000004 /* NVActivityIndicatorView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59A000000000000000000004 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;
+			productName = NVActivityIndicatorView;
+		};
+		59B000000000000000000005 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59A000000000000000000005 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
+		59B000000000000000000006 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59A000000000000000000006 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		59B000000000000000000007 /* YouTubeiOSPlayerHelper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59A000000000000000000007 /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */;
+			productName = YouTubeiOSPlayerHelper;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6AD2698A298E879C00931579 /* Project object */;
 }
