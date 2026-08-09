@@ -20,3 +20,8 @@ DerivedData/
 # versions so every checkout and CI run builds the same code.
 .swiftpm/
 .build/
+
+## Local secrets
+# Holds the MyAnimeList client id, read into Info.plist at build time.
+# Copy Config/Secrets.example.xcconfig to Config/Secrets.xcconfig to set it up.
+Config/Secrets.xcconfig

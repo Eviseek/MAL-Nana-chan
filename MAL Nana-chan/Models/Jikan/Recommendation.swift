@@ -2,56 +2,47 @@
 //  Recommendation.swift
 //  MAL Nana-chan
 //
-//  Created by Eva Chlpikova on 25.06.2023.
-//
 
 import Foundation
 
-
-struct Recommendation: Codable {
-    let data: [RecommendationData]
-    let pagination: Pagination?
+/// A user-written "if you liked X, try Y" pair from Jikan.
+struct Recommendation: Codable, Sendable {
+    let entry: [RecommendationEntry]
+    let content: String?
 }
 
-struct RecommendationData: Codable {
-    var entry: [RecEntry] 
-    var content: String?
+extension Recommendation {
+
+    /// The two titles being compared, or `nil` if Jikan sent a malformed pair.
+    var pair: (left: RecommendationEntry, right: RecommendationEntry)? {
+        guard entry.count >= 2 else { return nil }
+        return (entry[0], entry[1])
+    }
 }
 
-struct RecEntry: Codable {
-    var id: Int
-    var url: String
-    var images: RecImages
-    var title: String
-    
+struct RecommendationEntry: Codable, Sendable {
+    let id: Int
+    let url: String
+    let images: RecommendationImages
+    let title: String
+
     private enum CodingKeys: String, CodingKey {
         case id = "mal_id"
-        case url = "url"
-        case images = "images"
-        case title = "title"
+        case url
+        case images
+        case title
     }
-    
 }
 
-struct RecImages: Codable {
-    var jpg: JpgRecImages
-    var webp: WebpRecImages
+struct RecommendationImages: Codable, Sendable {
+    let jpg: RecommendationImageURL
+    let webp: RecommendationImageURL?
 }
 
-struct JpgRecImages: Codable {
-    var imageUrl: String
-    
+struct RecommendationImageURL: Codable, Sendable {
+    let imageUrl: String
+
     private enum CodingKeys: String, CodingKey {
         case imageUrl = "image_url"
     }
-    
-}
-
-struct WebpRecImages: Codable {
-    var imageUrl: String
-    
-    private enum CodingKeys: String, CodingKey {
-        case imageUrl = "image_url"
-    }
-    
 }
