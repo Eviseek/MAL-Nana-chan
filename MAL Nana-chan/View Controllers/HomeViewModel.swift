@@ -94,19 +94,31 @@ class HomeViewModel {
         }
         
         
-        group.enter()
-        dataDownloader.fetchData(URLs.jikanPromoURL.rawValue, completion: { (response: Promo?, error: AFError?) in
-            if let data = response?.data {
-                self.promoId = data[0].trailer?.youtube_id
-                self.contentSize += 1
-                self.hasPromo = true
-            } else {
-                errorMsg = error?.localizedDescription
-                errorOccured = true
-            }
-            group.leave()
-        })
-        
+        // DISABLED 2026-08-08 — Jikan's /watch/promos returns 504 (see URLs.swift).
+        //
+        // Leaving this in was worse than losing the trailer: the failure set
+        // errorOccured = true, and group.notify then replaced the *whole* Home
+        // screen with the error view — so a third-party trailer feed being down
+        // also hid the three MAL anime sections, which had loaded fine.
+        //
+        // hasPromo stays false, so HomeViewController simply doesn't render the
+        // trailer row and contentSize excludes it. Re-enable together with
+        // jikanPromoURL, and note data[0] needs a bounds check before it comes
+        // back — an empty data array would crash here.
+        //
+        // group.enter()
+        // dataDownloader.fetchData(URLs.jikanPromoURL.rawValue, completion: { (response: Promo?, error: AFError?) in
+        //     if let data = response?.data {
+        //         self.promoId = data[0].trailer?.youtube_id
+        //         self.contentSize += 1
+        //         self.hasPromo = true
+        //     } else {
+        //         errorMsg = error?.localizedDescription
+        //         errorOccured = true
+        //     }
+        //     group.leave()
+        // })
+
         group.notify(queue: DispatchQueue.main) {
             if errorOccured {
                 self.viewController?.setUpErrorView(message: errorMsg ?? "")

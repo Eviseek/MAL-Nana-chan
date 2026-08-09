@@ -140,15 +140,30 @@ class SearchResultsViewModel {
         
     }
     
-    //TODO: not needed, delete it
+    /// Everything legal in a query string *except* the sub-delimiters that would
+    /// end the `q` value early.
+    private static let searchQueryAllowed: CharacterSet = {
+        var allowed = CharacterSet.urlQueryAllowed
+        allowed.remove(charactersIn: "&+=?#")
+        return allowed
+    }()
+
+    /// Percent-encodes the search term only — not the finished URL.
+    ///
+    /// Encoding the whole URL with `.urlFragmentAllowed` (what this used to do)
+    /// leaves `&`, `+`, `=` and `#` untouched, because all of them are legal
+    /// inside a fragment. Searching for "Yes & No" therefore sent
+    /// `q=Yes%20&%20No&fields=...`, where the `&` closes `q` and the rest of the
+    /// title is parsed as another query item. `+` was worse: it survives
+    /// encoding and the server reads it back as a space.
     private func encodeURL(query: String) -> String? {
-        if selectedType == .anime {
-            let url = URLs.animeSearchURL.rawValue.replacingOccurrences(of: "{query}", with: query)
-            return url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)
-        } else {
-            let url = URLs.mangaSearchURL.rawValue.replacingOccurrences(of: "{query}", with: query)
-            return url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)
+
+        guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: Self.searchQueryAllowed) else {
+            return nil
         }
+
+        let template = selectedType == .anime ? URLs.animeSearchURL.rawValue : URLs.mangaSearchURL.rawValue
+        return template.replacingOccurrences(of: "{query}", with: encodedQuery)
     }
     
     private func saveToDefaults(query: String) {

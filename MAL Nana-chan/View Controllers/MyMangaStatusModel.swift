@@ -89,9 +89,11 @@ class MyMangaStatusModel {
         
         if let id = manga?.id {
             let url = urlManager.getURLForId(id, url: URLs.mangaListStatusURL.rawValue)
-            dataDownloader.changeMangaList(url, params: updatedMangaStatus!, completion: {
-                print("All done = manga")
-                //print("my manga status \(self.updatedMangaStatus)")
+            dataDownloader.changeMangaList(url, params: updatedMangaStatus!, completion: { error in
+                if let error = error {
+                    //TODO: surface this to the user instead of only logging it
+                    print("failed to save manga list status: \(error)")
+                }
                 self.vc?.dismiss(animated: true)
             })
         }
@@ -105,8 +107,11 @@ class MyMangaStatusModel {
         var url = URLs.mangaListStatusURL.rawValue
         if let id = manga?.id {
             url = urlManager.getURLForId(id, url: url)
-            dataDownloader.deleteList(url, completion: {
-                print("All deleted")
+            dataDownloader.deleteList(url, completion: { error in
+                if let error = error {
+                    //TODO: surface this to the user instead of only logging it
+                    print("failed to delete manga list status: \(error)")
+                }
                 self.vc?.dismiss(animated: true)
             })
         }

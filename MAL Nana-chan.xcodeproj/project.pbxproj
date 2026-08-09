@@ -64,6 +64,7 @@
 		DD3AC3EE2A7983F000739153 /* MyInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC3ED2A7983F000739153 /* MyInterceptor.swift */; };
 		DD3AC3F02A7987CF00739153 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC3EF2A7987CF00739153 /* NetworkManager.swift */; };
 		DD3AC3F22A7EE23300739153 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC3F12A7EE23300739153 /* Priority.swift */; };
+		5D1A0000000000000000E002 /* APIEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A0000000000000000E001 /* APIEnum.swift */; };
 		DD3AC3F42A8003C100739153 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC3F32A8003C100739153 /* Theme.swift */; };
 		DD3AC3F62A8004B800739153 /* ThemesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC3F52A8004B800739153 /* ThemesDetailViewController.swift */; };
 		DD3AC3F82A8004C200739153 /* ThemesDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC3F72A8004C200739153 /* ThemesDetailViewModel.swift */; };
@@ -201,6 +202,7 @@
 		DD3AC3ED2A7983F000739153 /* MyInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInterceptor.swift; sourceTree = "<group>"; };
 		DD3AC3EF2A7987CF00739153 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		DD3AC3F12A7EE23300739153 /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
+		5D1A0000000000000000E001 /* APIEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnum.swift; sourceTree = "<group>"; };
 		DD3AC3F32A8003C100739153 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		DD3AC3F52A8004B800739153 /* ThemesDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesDetailViewController.swift; sourceTree = "<group>"; };
 		DD3AC3F72A8004C200739153 /* ThemesDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesDetailViewModel.swift; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 				6A9FD11029903677006DCEE9 /* Sizes.swift */,
 				6AB93F5829CCE374002A529C /* ItemType.swift */,
 				DD3AC3F12A7EE23300739153 /* Priority.swift */,
+				5D1A0000000000000000E001 /* APIEnum.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -766,6 +769,7 @@
 				DD3AC3FB2A800A7D00739153 /* ThemeTableViewCell.swift in Sources */,
 				DD3AC3EE2A7983F000739153 /* MyInterceptor.swift in Sources */,
 				DD3AC3F22A7EE23300739153 /* Priority.swift in Sources */,
+				5D1A0000000000000000E002 /* APIEnum.swift in Sources */,
 				DDE7C4B82A6D8C3A002C548A /* MangaCollectionViewCell.swift in Sources */,
 				6AF2CD87298EC22B00F32BE8 /* AnimeStatus.swift in Sources */,
 				6AF2CD8F298EC58700F32BE8 /* AnimeSource.swift in Sources */,

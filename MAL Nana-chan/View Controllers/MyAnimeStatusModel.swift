@@ -93,8 +93,11 @@ class MyAnimeStatusModel {
         
         if let id = anime?.id {
             let url = urlManager.getURLForId(id, url: URLs.animeListStatusURL.rawValue)
-            dataDownloader.changeAnimeList(url, params: updatedAnimeStatus!, completion: {
-                //print("All done = anime")
+            dataDownloader.changeAnimeList(url, params: updatedAnimeStatus!, completion: { error in
+                if let error = error {
+                    //TODO: surface this to the user instead of only logging it
+                    print("failed to save anime list status: \(error)")
+                }
                 self.vc?.dismiss(animated: true)
             })
         }
@@ -108,8 +111,11 @@ class MyAnimeStatusModel {
         var url = URLs.animeListStatusURL.rawValue
         if let id = anime?.id {
             url = urlManager.getURLForId(id, url: url)
-            dataDownloader.deleteList(url, completion: {
-                //print("All deleted")
+            dataDownloader.deleteList(url, completion: { error in
+                if let error = error {
+                    //TODO: surface this to the user instead of only logging it
+                    print("failed to delete anime list status: \(error)")
+                }
                 self.vc?.dismiss(animated: true)
             })
         }
