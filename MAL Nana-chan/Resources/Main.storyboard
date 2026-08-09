@@ -56,36 +56,6 @@
             </objects>
             <point key="canvasLocation" x="961.53846153846155" y="-671.0900473933649"/>
         </scene>
-        <!--See All View Controller-->
-        <scene sceneID="ScZ-S5-ePp">
-            <objects>
-                <viewController storyboardIdentifier="SeeAllViewController" id="d0m-Tj-Wug" customClass="SeeAllViewController" customModule="MAL_Nana_chan" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="dYl-IV-Nba">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xFJ-go-iLg">
-                                <rect key="frame" x="0.0" y="47" width="390" height="763"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </tableView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="dXj-h4-jM1"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="xFJ-go-iLg" firstAttribute="leading" secondItem="dXj-h4-jM1" secondAttribute="leading" id="9Q9-jU-Feu"/>
-                            <constraint firstItem="xFJ-go-iLg" firstAttribute="top" secondItem="dXj-h4-jM1" secondAttribute="top" id="ti0-fb-Jox"/>
-                            <constraint firstItem="dXj-h4-jM1" firstAttribute="bottom" secondItem="xFJ-go-iLg" secondAttribute="bottom" id="uST-Mi-t3b"/>
-                            <constraint firstItem="dXj-h4-jM1" firstAttribute="trailing" secondItem="xFJ-go-iLg" secondAttribute="trailing" id="zFf-Kc-ItW"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="tableView" destination="xFJ-go-iLg" id="Z83-wT-viN"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="r1h-u3-oDi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1885" y="-692"/>
-        </scene>
         <!--Home-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -2277,7 +2247,7 @@
         <!--More Information View Controller-->
         <scene sceneID="rjq-l7-Y3i">
             <objects>
-                <viewController storyboardIdentifier="MoreInformationViewController" id="9i4-R7-6hy" customClass="MoreInformationViewController" customModule="MAL_Nana_chan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AnimeMoreInformationViewController" id="9i4-R7-6hy" customClass="AnimeMoreInformationViewController" customModule="MAL_Nana_chan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ldu-Nt-Md8">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
