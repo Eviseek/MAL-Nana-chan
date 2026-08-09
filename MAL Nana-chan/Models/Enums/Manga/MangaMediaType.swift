@@ -21,7 +21,7 @@ enum MangaMediaType: String, APIEnum {
     static let unknownValue = MangaMediaType.unknown
     
     
-    func getType() -> String {
+    var displayName: String {
         switch self {
         case .unknown: return "Unknown type"
         case .manga: return "Manga"

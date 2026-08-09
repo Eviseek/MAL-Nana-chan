@@ -2,8 +2,6 @@
 //  APIEnum.swift
 //  MAL Nana-chan
 //
-//  Created by Eva Chlpikova on 08.08.2026.
-//
 
 import Foundation
 

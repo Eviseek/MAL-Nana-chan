@@ -23,7 +23,7 @@ enum AnimeMediaType: String, APIEnum {
 
     static let unknownValue = AnimeMediaType.unknown
 
-    func getType() -> String {
+    var displayName: String {
         switch self {
         case .unknown: return "Unknown"
         case .tv: return "TV series"

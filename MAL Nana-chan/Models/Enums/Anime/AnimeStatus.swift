@@ -16,7 +16,7 @@ enum AnimeStatus: String, APIEnum {
 
     static let unknownValue = AnimeStatus.unknown
     
-    func getStatus() -> String {
+    var displayName: String {
         switch self {
         case .unknown: return "Unknown"
         case .finished_airing: return "Finished Airing"

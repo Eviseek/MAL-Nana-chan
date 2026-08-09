@@ -8,7 +8,7 @@
 import Foundation
 
 /// The raw values here are MAL's `Value` column, not its `Description` column.
-/// The API sends `"pg_13"`, never `"Teens 13 and Older"` — use `getRating()`
+/// The API sends `"pg_13"`, never `"Teens 13 and Older"` — use `displayName`
 /// when you need something to show the user.
 enum Rating: String, APIEnum {
 
@@ -22,7 +22,7 @@ enum Rating: String, APIEnum {
 
     static let unknownValue = Rating.unknown
 
-    func getRating() -> String {
+    var displayName: String {
         switch self {
         case .unknown: return "Unknown"
         case .g: return "G - All Ages"

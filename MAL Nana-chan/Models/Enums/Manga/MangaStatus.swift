@@ -19,7 +19,7 @@ enum MangaStatus: String, APIEnum {
 
     static let unknownValue = MangaStatus.unknown
 
-    func getStatus() -> String {
+    var displayName: String {
         switch self {
         case .unknown: return "Unknown"
         case .finished: return "Finished"
