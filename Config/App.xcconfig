@@ -1,0 +1,11 @@
+// Base configuration for the app target.
+//
+// Committed to git. It pulls in Secrets.xcconfig, which is NOT committed and
+// holds the MyAnimeList client id. `#include?` (with the question mark) does not
+// error when the file is absent, so a fresh clone still configures and builds —
+// it fails at launch with an explanatory message instead of failing to open.
+//
+// To set up a new checkout:
+//     cp Config/Secrets.example.xcconfig Config/Secrets.xcconfig
+// then paste your client id from https://myanimelist.net/apiconfig
+#include? "Secrets.xcconfig"
